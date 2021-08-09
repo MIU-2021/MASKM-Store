@@ -12,4 +12,6 @@ public class AdminController {
     public String getFirst(){
         return "HelloWorld MASKM Admin Page";
     }
+
+
 }
