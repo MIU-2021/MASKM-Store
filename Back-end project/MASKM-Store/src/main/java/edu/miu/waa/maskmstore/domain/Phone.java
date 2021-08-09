@@ -1,20 +1,21 @@
 package edu.miu.waa.maskmstore.domain;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
-
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
-public class Buyer {
+public class Phone {
     @Id
     @GeneratedValue
-    private Long id;
-    long Points;
+    long id;
+
+    String countryCode;
 }
