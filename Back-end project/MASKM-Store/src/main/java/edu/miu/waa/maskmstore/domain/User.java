@@ -14,4 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue
+    long id;
 }

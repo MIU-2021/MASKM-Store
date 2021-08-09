@@ -2,7 +2,6 @@ package edu.miu.waa.maskmstore.repository;
 
 
 import edu.miu.waa.maskmstore.domain.User;
-import org.springfram3ework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.persistence.NamedQueries;
