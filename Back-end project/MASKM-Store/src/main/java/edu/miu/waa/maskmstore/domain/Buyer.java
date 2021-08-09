@@ -15,5 +15,9 @@ import javax.persistence.*;
 @Entity
 
 public class Buyer {
+    @Id
+    @GeneratedValue
+    private Long id;
+
     long Points;
 }
