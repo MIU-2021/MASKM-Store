@@ -33,3 +33,36 @@ export const register = (user) => {
         })
         .catch(err => console.log(err));
 };
+
+export const CurrentUser = (userName) => {
+    return {
+        id: "1",
+        username: "miltonfre",
+        password: "dfsdf",
+        fName: "Milton",
+        lName: "Gonzalez",
+        phone:{
+
+        },
+        email: "miltonfre@gmail.com",
+        shippingAddress: {
+            id: "1",
+            country: "USA",
+            city: "Fairfield",
+            state: "IO",
+            addressLine: "1000 N 4th street",
+            zipCode: "52557",
+            addressType: "shipping"
+        },
+        billingAddress: {
+            id: "1",
+            country: "USA",
+            city: "Otumwa",
+            state: "IO",
+            addressLine: "300 river wath",
+            zipCode: "54886",
+            addressType: "billing"
+        },
+
+    }
+}
