@@ -24,6 +24,15 @@ public class Seller extends User{
     private long id;
 
     @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+
+    Address shippingAddress;
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    Address billingAddress;
+    @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     @JoinTable

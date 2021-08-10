@@ -45,16 +45,7 @@ public class User {
     Phone phone;
 
 
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
 
-    Address shippingAddress;
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-
-    Address billingAddress;
 
 
 
