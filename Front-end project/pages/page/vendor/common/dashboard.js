@@ -38,6 +38,7 @@ import { apexPieChart, lineChart1 } from "../../../../data/vendorData";
 import AddProduct from "../../../../components/common/AddProduct";
 import {Form, FormGroup, FormText} from "react-bootstrap";
 import EditProfile from "../../../../components/common/EditProfile";
+import EditProduct from "../../../../components/common/EditProduct";
 
 const SummaryData = [
   {
@@ -135,24 +136,7 @@ const TrendingProduct = ({ img, productName, price, sales }) => {
   );
 };
 
-const AllProduct = ({ img, productName, category, price, stock, sales }) => {
-  return (
-    <tr>
-      <th scope="row">
-        <Media src={img} className="blur-up lazyloaded" />
-      </th>
-      <td>{productName}e</td>
-      <td>{category}</td>
-      <td>{price}</td>
-      <td>{stock}</td>
-      <td>{sales}</td>
-      <td>
-        <i className="fa fa-pencil-square-o mr-1" aria-hidden="true"></i>
-        <i className="fa fa-trash-o ml-1" aria-hidden="true"></i>
-      </td>
-    </tr>
-  );
-};
+
 
 const OrderData = [
   {
@@ -260,8 +244,27 @@ const ProfileDetail = ({ title, detail }) => {
 };
 
 const Dashboard = () => {
+  const AllProduct = ({ img, productName, category, price, stock, sales }) => {
+    return (
+        <tr>
+          <th scope="row">
+            <Media src={img} className="blur-up lazyloaded" />
+          </th>
+          <td>{productName}e</td>
+          <td>{category}</td>
+          <td>{price}</td>
+          <td>{stock}</td>
+          <td>{sales}</td>
+          <td>
+            <i  onClick={() => {setActiveTab("8");setEditProductId(5);}} className="fa fa-pencil-square-o mr-1" aria-hidden="true"></i>
+            <i className="fa fa-trash-o ml-1" aria-hidden="true"></i>
+          </td>
+        </tr>
+    );
+  };
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("1");
+  const [EditProductId, setEditProductId] = useState();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
@@ -614,6 +617,18 @@ const Dashboard = () => {
                     </Col>
                   </Row>
                 </TabPane>
+                <TabPane tabId="8">
+                  <Row>
+                    <Col sm="12">
+                      <Card className="mt-0">
+                        <CardBody>
+                          <EditProduct EditProductId={EditProductId} />
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                </TabPane>
+
               </TabContent>
               <Modal isOpen={modal} toggle={toggle} centered>
                 <ModalHeader toggle={toggle}>Logging Out</ModalHeader>
