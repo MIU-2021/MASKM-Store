@@ -16,6 +16,10 @@ public class Phone {
     @Id
     @GeneratedValue
     long id;
-
+ //   @Pattern(regexp = )
     String countryCode;
+
+    String areaCode;
+
+    String number;
 }
