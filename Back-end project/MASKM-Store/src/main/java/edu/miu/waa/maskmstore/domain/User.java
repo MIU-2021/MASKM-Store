@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -45,6 +46,12 @@ public class User {
     @Fetch(FetchMode.JOIN)
     @JoinTable
     List<Address> addresses;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name="USER_ROLES",joinColumns =
+            {@JoinColumn(name="USER_ID")},inverseJoinColumns = {
+            @JoinColumn(name="ROLE_ID")})
+    private Set<Role> roles;
 
 
 }
