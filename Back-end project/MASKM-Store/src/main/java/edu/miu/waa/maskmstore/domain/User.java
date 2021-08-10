@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -40,5 +41,6 @@ public class User {
     @Valid
     @OneToMany
     List<Address> addresses;
+
 
 }

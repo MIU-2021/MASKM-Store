@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 public class Buyer {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     long Points;
 }
