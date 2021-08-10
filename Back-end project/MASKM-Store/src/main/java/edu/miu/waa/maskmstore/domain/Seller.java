@@ -3,8 +3,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
+import java.util.List;
 
 
 @Getter
@@ -12,15 +17,14 @@ import javax.validation.constraints.Digits;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
-public class Buyer extends User{
+public class Seller extends User{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Digits(integer = 6, fraction = 0)
-    long Points;
-
-
-
+    @Valid
+    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable
+    List<Product> products;
 }
