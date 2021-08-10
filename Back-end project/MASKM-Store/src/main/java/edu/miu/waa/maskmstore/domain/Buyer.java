@@ -19,7 +19,7 @@ public class Buyer extends User{
     private long id;
 
     @Digits(integer = 6, fraction = 0)
-    long Points;
+    long points;
 
 
 

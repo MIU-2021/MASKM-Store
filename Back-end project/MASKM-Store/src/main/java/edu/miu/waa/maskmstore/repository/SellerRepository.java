@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SellerRepository extends CrudRepository<Seller,Long> {
+    public Seller findSellerByUsername(String userName);
+    public Seller findSellerByEmail(String email);
 }
