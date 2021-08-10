@@ -170,11 +170,6 @@ const ProductSection = () => {
                           {symbol}
                           {product.price}
                         </h4>
-                        <ul className="color-variant">
-                          <li className="bg-light0"></li>
-                          <li className="bg-light1"></li>
-                          <li className="bg-light2"></li>
-                        </ul>
                       </div>
                     </div>
                   </Col>
