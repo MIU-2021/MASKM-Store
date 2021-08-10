@@ -20,7 +20,7 @@ import java.util.List;
 public class Seller extends User{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Valid
     @OneToMany(cascade = CascadeType.ALL)

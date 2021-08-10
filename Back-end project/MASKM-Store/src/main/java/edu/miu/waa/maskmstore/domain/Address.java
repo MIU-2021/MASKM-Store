@@ -26,24 +26,23 @@ public class Address {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-            @NotBlank
+    @NotBlank
     private String country;
 
-    @NotEmpty
     @NotBlank
 
     private String city;
 
     private String state;
 
-    @NotEmpty
     @NotBlank
-
     private String addressLine;
 
-    @NotEmpty
+
     @NotBlank
     @Digits(integer = 5, fraction = 0,message = "Size.Zip")
     long zipCode;
+
+    @NotBlank
+    String addressType;
 }

@@ -8,15 +8,15 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name="items_type")
-public class ItemType {
+@Table(name="items_category")
+public class ProductSubCategory {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	private String name;
-	
-	private String icon;
 
+	@ManyToOne
+	private ProductCategory productCategory;
 }
