@@ -1,11 +1,10 @@
 package edu.miu.waa.maskmstore.domain;
 
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter

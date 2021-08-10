@@ -1,10 +1,7 @@
 package edu.miu.waa.maskmstore.util;
 
-import edu.miu.waa.maskmstore.domain.Product;
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.Response;
-import edu.miu.waa.maskmstore.domain.ResponseAllProducts;
-
-import java.util.List;
 
 public class Utilities {
 

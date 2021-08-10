@@ -1,14 +1,12 @@
 package edu.miu.waa.maskmstore.controller;
 
-import edu.miu.waa.maskmstore.domain.Product;
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -36,11 +34,11 @@ public class ProductsController {
     }
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable long id){
-        return productsService.getProductById(id).get();
+        return productsService.getProductById(id).orElseThrow();
     }
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable long id){
-        productsService.deleteById(id);
+    public String deleteProduct(@PathVariable long id){
+        return "";
     }
 
 }

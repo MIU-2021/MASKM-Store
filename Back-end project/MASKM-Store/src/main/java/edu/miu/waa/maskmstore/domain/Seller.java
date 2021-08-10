@@ -1,4 +1,6 @@
 package edu.miu.waa.maskmstore.domain;
+import edu.miu.waa.maskmstore.domain.stock.Product;
+import edu.miu.waa.maskmstore.domain.stock.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,6 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Digits;
 import java.util.List;
 
 
@@ -26,5 +27,5 @@ public class Seller extends User{
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     @JoinTable
-    List<Product> products;
+    List<Stock> stocks;
 }

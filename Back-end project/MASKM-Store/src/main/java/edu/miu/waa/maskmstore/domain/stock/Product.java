@@ -1,17 +1,20 @@
-package edu.miu.waa.maskmstore.domain;
+package edu.miu.waa.maskmstore.domain.stock;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import edu.miu.waa.maskmstore.domain.Image;
+import edu.miu.waa.maskmstore.domain.ProductApprovedStatus;
+import edu.miu.waa.maskmstore.domain.ProductCategory;
+import edu.miu.waa.maskmstore.domain.Review;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -43,6 +46,7 @@ public class Product {
 
 
     private int rating=0;
+    private String status= ProductApprovedStatus.PENDING.getProductStatus();
 
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
@@ -56,6 +60,18 @@ public class Product {
 
     @OneToOne
     private ProductCategory productCategory;
+
+    @DateTimeFormat
+    private Date addedOn;
+
+    @OneToOne(mappedBy = "product")
+    private Stock stock;
+
+
+
+
+
+
 
 
 }
