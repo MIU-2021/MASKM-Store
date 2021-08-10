@@ -1,9 +1,6 @@
 package edu.miu.waa.maskmstore.domain.stock;
 
-import edu.miu.waa.maskmstore.domain.Image;
-import edu.miu.waa.maskmstore.domain.ProductApprovedStatus;
-import edu.miu.waa.maskmstore.domain.ProductCategory;
-import edu.miu.waa.maskmstore.domain.Review;
+import edu.miu.waa.maskmstore.domain.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -14,7 +11,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -62,12 +59,17 @@ public class Product {
     private ProductCategory productCategory;
 
     @DateTimeFormat
-    private Date addedOn;
+    private LocalDate addedOn;
 
-    @OneToOne(mappedBy = "product")
-    private Stock stock;
+//    @OneToOne(mappedBy = "product")
+//    private Stock stock;
 
 
+//    @ManyToOne
+//    @JoinColumn(name="orderid")
+//    private Order order;
+
+    private int quantity=0;
 
 
 

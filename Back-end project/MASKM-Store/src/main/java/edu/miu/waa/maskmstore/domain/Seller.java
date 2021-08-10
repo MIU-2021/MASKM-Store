@@ -23,9 +23,8 @@ public class Seller extends User{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    @Valid
-    @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    @JoinTable
-    List<Stock> stocks;
+//    @Valid
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @Fetch(FetchMode.JOIN)
+//    List<Stock> stocks;
 }

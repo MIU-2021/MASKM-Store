@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,6 +21,8 @@ public class ProductsServiceImpl implements ProductsService{
     ProductsRepository productsRepository;
     @Override
     public void addProduct(Product product) {
+
+        product.setAddedOn(LocalDate.now());
         productsRepository.save(product);
     }
 

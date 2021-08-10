@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain;
 
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,4 +31,11 @@ public class Order {
 
     @Transient
     private List<LineItem> lineItemList;
+
+    @ManyToMany
+    @JoinTable
+    private List<Buyer> buyers;
+
+//    @OneToMany(mappedBy="order")
+//    private List<Product> products;
 }

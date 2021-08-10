@@ -23,10 +23,12 @@ public class Stock {
     private String title;
     private int quantity;
 
-    @ManyToOne
-    @NotNull
-    private Seller seller;
+//    @ManyToOne
+//    @JoinColumn(name="SELLER_ID")
+//    @NotNull
+//    private Seller seller;
 
-    @OneToOne
-    private Product product;
+//    @OneToOne
+//    @JoinColumn(name = "PRODUCT_ID")
+//    private Product product;
 }

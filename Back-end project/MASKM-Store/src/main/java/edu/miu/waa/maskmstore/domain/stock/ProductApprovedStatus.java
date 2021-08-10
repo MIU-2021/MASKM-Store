@@ -1,4 +1,4 @@
-package edu.miu.waa.maskmstore.domain;
+package edu.miu.waa.maskmstore.domain.stock;
 
 public enum ProductApprovedStatus {
     APPROVED("Approved"),
