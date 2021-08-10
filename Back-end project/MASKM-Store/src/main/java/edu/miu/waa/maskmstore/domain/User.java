@@ -9,6 +9,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -36,9 +37,13 @@ public class User {
     @NotEmpty
     @Size(min = 3, max = 15,message = "{name.size}")
     String lName;
+    @Email
+    String email;
+
     @Valid
     @OneToOne
     Phone phone;
+
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
@@ -50,6 +55,7 @@ public class User {
     @Fetch(FetchMode.JOIN)
 
     Address billingAddress;
+
 
 
 }
