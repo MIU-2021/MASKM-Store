@@ -16,7 +16,7 @@ import javax.validation.constraints.Digits;
 public class Buyer extends User{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Digits(integer = 6, fraction = 0)
     long Points;

@@ -8,8 +8,10 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -23,6 +25,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private boolean featured=false;
+
     @NotBlank
     @NotEmpty
     private String title;
@@ -31,27 +35,27 @@ public class Product {
     @NotEmpty
     private String description;
 
-    @NotBlank
-    @NotEmpty
+//    @NotBlank
+//    @NotEmpty
     @OneToMany
     @JoinColumn(name = "image_id")
     private List<Image> images;
 
 
-    private int rating;
+    private int rating=0;
 
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     @JoinTable
     private List<Review> reviews;
 
-    @NotBlank
-    @NotEmpty
-    private double price;
 
+    @NotNull
+    @Digits(fraction = 2,message = "Price Not Valid", integer = 5)
+    private double price=0;
 
-
-
+    @OneToOne
+    private ProductCategory productCategory;
 
 
 }

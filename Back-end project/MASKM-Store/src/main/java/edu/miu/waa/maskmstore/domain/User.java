@@ -23,7 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    Long id;
+    long id;
     @NotEmpty
     @Size(min = 3, max = 15,message = "{name.size}")
     String username;
