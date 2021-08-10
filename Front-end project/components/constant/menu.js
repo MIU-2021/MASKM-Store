@@ -160,6 +160,11 @@ export const MENUITEMS = [
    {
       title: 'Pages', type: 'sub', children: [
          {
+            title: 'admin', type: 'sub', tag: 'new', children: [
+               { path: '/page/admin/admin-dashboard', title: 'admin Dashboard', type: 'link' },
+            ]
+         },
+         {
             title: 'vendor', type: 'sub', tag: 'new', children: [
                { path: '/page/vendor/vendor-dashboard', title: 'Seller Dashboard', type: 'link' },
                { path: '/page/vendor/vendor-profile', title: 'Seller Profile', type: 'link' },

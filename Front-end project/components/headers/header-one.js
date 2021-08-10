@@ -82,18 +82,7 @@ const HeaderOne = ({
             <Col>
               <div className="main-menu">
                 <div className="menu-left">
-                  <div className="navbar">
 
-                      <div className="bar-style">
-                        <i
-                          className="fa fa-bars sidebar-bar"
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-
-                    {/*SideBar Navigation Component*/}
-
-                  </div>
                   <div className="brand-logo">
                     <LogoImage logo={logoName} />
                   </div>
