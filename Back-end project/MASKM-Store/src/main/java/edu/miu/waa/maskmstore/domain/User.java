@@ -23,7 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    long id;
+    Long id;
     @NotEmpty
     @Size(min = 3, max = 15,message = "{name.size}")
     String username;
@@ -41,10 +41,16 @@ public class User {
     Phone phone;
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
-    @JoinTable
-    List<Address> addresses;
+
+    Address shippingAddress;
+
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+
+    Address billingAddress;
 
 
 }
