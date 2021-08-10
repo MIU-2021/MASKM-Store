@@ -27,7 +27,7 @@ public class Review {
 
     @NotEmpty
     @NotBlank
-    private String review;
+    private String comment;
 
     @ManyToOne
     private Product product;
