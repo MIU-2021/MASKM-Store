@@ -45,7 +45,6 @@ public class User {
     @Fetch(FetchMode.JOIN)
 
     Address shippingAddress;
-
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
