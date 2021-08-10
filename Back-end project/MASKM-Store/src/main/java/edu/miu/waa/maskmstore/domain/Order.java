@@ -36,6 +36,4 @@ public class Order {
     @JoinTable
     private List<Buyer> buyers;
 
-//    @OneToMany(mappedBy="order")
-//    private List<Product> products;
 }

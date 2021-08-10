@@ -2,10 +2,6 @@ package edu.miu.waa.maskmstore.domain;
 
 
 import edu.miu.waa.maskmstore.domain.stock.Product;
-import org.aspectj.weaver.ast.Or;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 

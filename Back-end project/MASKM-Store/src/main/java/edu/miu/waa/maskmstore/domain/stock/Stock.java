@@ -7,28 +7,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Digits;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class Stock {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue
+    long id;
 
-    private String title;
+    @OneToOne
+    @JoinColumn(name = "PRODUCT_ID")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "SELLER_ID")
+    private Seller seller;
+
+    @Digits(integer = 5,fraction = 0)
     private int quantity;
-
-//    @ManyToOne
-//    @JoinColumn(name="SELLER_ID")
-//    @NotNull
-//    private Seller seller;
-
-//    @OneToOne
-//    @JoinColumn(name = "PRODUCT_ID")
-//    private Product product;
 }

@@ -35,14 +35,17 @@ public class Product {
     @NotEmpty
     private String description;
 
-//    @NotBlank
-//    @NotEmpty
     @OneToMany
     @JoinColumn(name = "image_id")
     private List<Image> images;
 
 
-    private int rating=0;
+    private double rating=0;
+
+    public void setAvgRating() {
+        this.rating=reviews.stream().map(Review::getStars).reduce(0.0,Double::sum)/reviews.size();
+    }
+
     private String status= ProductApprovedStatus.PENDING.getProductStatus();
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -56,22 +59,13 @@ public class Product {
     private double price=0;
 
     @OneToOne
-    private ProductCategory productCategory;
+    private ProductSubCategory productSubCategory;
 
     @DateTimeFormat
     private LocalDate addedOn;
 
-//    @OneToOne(mappedBy = "product")
-//    private Stock stock;
-
-
-//    @ManyToOne
-//    @JoinColumn(name="orderid")
-//    private Order order;
-
-    private int quantity=0;
-
-
+    @OneToOne(mappedBy = "product")
+    private Stock stock;
 
 
 

@@ -24,7 +24,7 @@ public class Buyer extends User{
     long points;
 
 
-    @ManyToMany
+    @OneToMany
     @JoinTable
     private List<Order> orders;
 

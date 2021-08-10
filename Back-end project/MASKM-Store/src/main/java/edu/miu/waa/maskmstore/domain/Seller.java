@@ -1,5 +1,4 @@
 package edu.miu.waa.maskmstore.domain;
-import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,9 +31,8 @@ public class Seller extends User{
     @OneToOne(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     Address billingAddress;
-    @Valid
-    @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    @JoinTable
-    List<Stock> stocks;
+
+
+    @OneToMany(mappedBy = "seller")
+    private List<Stock> stocks;
 }
