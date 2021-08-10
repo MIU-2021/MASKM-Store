@@ -24,7 +24,6 @@ public class Seller extends User{
 
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
     @JoinTable
     List<Product> products;
 }

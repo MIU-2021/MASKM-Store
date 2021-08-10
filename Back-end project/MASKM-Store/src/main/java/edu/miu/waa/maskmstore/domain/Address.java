@@ -27,7 +27,7 @@ public class Address {
     private Long id;
 
     @NotEmpty
-            @NotBlank
+    @NotBlank
     private String country;
 
     @NotEmpty
