@@ -17,5 +17,6 @@ public class ProductSubCategory {
 	private String name;
 
 	@ManyToOne
+	@JoinColumn(name = "CAT_ID")
 	private ProductCategory productCategory;
 }

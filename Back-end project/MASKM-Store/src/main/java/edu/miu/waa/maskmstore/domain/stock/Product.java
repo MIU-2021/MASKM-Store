@@ -43,6 +43,7 @@ public class Product {
     private double rating=0;
 
     public void setAvgRating() {
+        if (reviews!=null)
         this.rating=reviews.stream().map(Review::getStars).reduce(0.0,Double::sum)/reviews.size();
     }
 
@@ -50,7 +51,6 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
-    @JoinTable
     private List<Review> reviews;
 
 
@@ -58,11 +58,12 @@ public class Product {
     @Digits(fraction = 2,message = "Price Not Valid", integer = 5)
     private double price=0;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "SUB_CAT_ID")
     private ProductSubCategory productSubCategory;
 
     @DateTimeFormat
-    private LocalDate addedOn;
+    private LocalDate createdOn;
 
     @OneToOne(mappedBy = "product")
     private Stock stock;

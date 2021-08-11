@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.controller;
 
+import edu.miu.waa.maskmstore.domain.Review;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class ProductsController {
 
     @PostMapping
     public void addProduct(@RequestBody Product product){
+
         productsService.addProduct(product);
     }
     @GetMapping
@@ -39,6 +41,16 @@ public class ProductsController {
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable long id){
         return "";
+    }
+
+    @PostMapping("/{id}/reviews")
+    public Product addReview(@RequestBody Review review,@PathVariable long id){
+        return productsService.addReviewToProduct(id,review);
+    }
+
+    @GetMapping("/{id}/reviews")
+    public List<Review> getAllReviewsForProduct(@PathVariable long id){
+        return productsService.getAllReviewsForProduct(id);
     }
 
 }
