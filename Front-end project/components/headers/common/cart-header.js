@@ -12,7 +12,7 @@ const CartHeader = ({ item, symbol }) => {
         <div className="media">
           <Link href={"/product/" + item.id}>
             <a>
-              <Media alt="" className="mr-3" src={`${item.images[0].src}`} />
+              <Media alt="" className="mr-3" src={`${item.image}`} />
             </a>
           </Link>
           <div className="media-body">
@@ -25,7 +25,7 @@ const CartHeader = ({ item, symbol }) => {
             <h4>
               <span>
                 {item.qty} x {symbol}{" "}
-                {(item.price - (item.price * item.discount) / 100).toFixed(2)}
+                {item.price}
               </span>
             </h4>
           </div>

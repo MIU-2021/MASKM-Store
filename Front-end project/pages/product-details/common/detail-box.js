@@ -21,8 +21,7 @@ const DetailBox = ({ item, changeColorVar }) => {
   return (
     <div className="product-right product-form-box">
       <h4>
-        <del>{item.price}%</del>
-        <span>{item.discount}% off</span>
+        {item.price}
       </h4>
       <h3>
         {symbol}

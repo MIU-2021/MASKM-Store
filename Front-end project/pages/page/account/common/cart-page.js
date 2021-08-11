@@ -31,17 +31,14 @@ const CartPage = () => {
 
   const minusQty = () => {
     if (quantity > 1) {
-      setStock("InStock");
       setQty(quantity - 1);
     }
   };
 
   const plusQty = (product) => {
-    if (product.stock >= quantity) {
+
       setQty(quantity + 1);
-    } else {
-      setStock("Out of Stock !");
-    }
+
   };
 
   return (
@@ -70,11 +67,7 @@ const CartPage = () => {
                             <Link href={`/left-sidebar/product/` + item.id}>
                               <a>
                                 <Media
-                                  src={
-                                    item.images
-                                      ? item.images[0].src
-                                      : item.images[0].src
-                                  }
+                                  src={item.image}
                                   alt=""
                                 />
                               </a>
@@ -107,8 +100,7 @@ const CartPage = () => {
                               <div className="col-xs-3">
                                 <h2 className="td-color">
                                   {symbol}
-                                  {item.price -
-                                    (item.price * item.discount) / 100}
+                                  {item.price}
                                 </h2>
                               </div>
                               <div className="col-xs-3">
@@ -126,7 +118,7 @@ const CartPage = () => {
                           <td>
                             <h2>
                               {symbol}
-                              {item.price - (item.price * item.discount) / 100}
+                              {item.price}
                             </h2>
                           </td>
                           <td>

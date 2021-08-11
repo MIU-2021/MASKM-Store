@@ -66,6 +66,7 @@ const TopCollection = ({
   const [delayProduct, setDelayProduct] = useState(true);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+
   // var { loading, data } = useQuery(GET_PRODUCTS, {
   //   variables: {
   //     type: type,
@@ -85,7 +86,7 @@ const TopCollection = ({
     //   console.log(error);
     // });
     fecthAllProducts().then(response => {
-      console.log(response);
+
       setData(response);
       setLoading(false);
       return response.data;

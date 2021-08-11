@@ -44,16 +44,16 @@ const ProductItem = ({
 
   const clickProductDetail = () => {
     const titleProps = product.title.split(" ").join("");
-    router.push(`/product-details/${product.id}` + "-" + `${titleProps}`);
+    router.push(`/product-details/${product.id}`);
   };
 
-  const variantChangeByColor = (imgId, product_images) => {
-    product_images.map((data) => {
-      if (data.image_id == imgId) {
-        setImage(data.src);
-      }
-    });
-  };
+  // const variantChangeByColor = (imgId, product_images) => {
+  //   product_images.map((data) => {
+  //     if (data.image_id == imgId) {
+  //       setImage(data.src);
+  //     }
+  //   });
+  // };
   return (
     <div className="product-box product-wrap">
       <div className="img-wrapper">
@@ -174,7 +174,6 @@ const ProductItem = ({
         uniqueTags={uniqueTags}
         title={title}
         des={des}
-        variantChangeByColor={variantChangeByColor}
       />
       <Modal
         isOpen={modal}

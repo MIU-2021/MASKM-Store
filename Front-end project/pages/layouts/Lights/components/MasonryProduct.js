@@ -60,7 +60,6 @@ const MasonryProduct = ({type,cartClass}) => {
 
     const minusQty = () => {
         if (quantity > 1) {
-            setStock('InStock')
             setQuantity(quantity - 1);
         }
     }

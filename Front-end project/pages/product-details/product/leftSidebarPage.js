@@ -9,6 +9,7 @@ import ImageZoom from "../common/image-zoom";
 import DetailsWithPrice from "../common/detail-price";
 import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
+import { fecthProductByID} from "../../../services/Products.Services";
 
 const GET_SINGLE_PRODUCTS = gql`
   query product($id: Int!) {
@@ -40,13 +41,26 @@ const GET_SINGLE_PRODUCTS = gql`
 `;
 
 const LeftSidebarPage = ({ pathId }) => {
-  var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
-    variables: {
-      id: parseInt(pathId),
-    },
-  });
+  // var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
+  //   variables: {
+  //     id: parseInt(pathId),
+  //   },
+  // });
+  function fetchProductsHandler() {
+    console.log("ffddf",{ pathId })
+    fecthProductByID(pathId).then(response => {
+      setData(response);
+      setLoading(false);
+      return response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  useEffect(fetchProductsHandler, []);
 
   const [state, setState] = useState({ nav1: null, nav2: null });
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   const slider1 = useRef();
   const slider2 = useRef();
 
@@ -107,8 +121,7 @@ const LeftSidebarPage = ({ pathId }) => {
                   </Col>
                 </Row>
                 {!data ||
-                !data.product ||
-                data.product.length === 0 ||
+                data.length === 0 ||
                 loading ? (
                   "loading"
                 ) : (
@@ -120,17 +133,17 @@ const LeftSidebarPage = ({ pathId }) => {
                         ref={(slider) => (slider1.current = slider)}
                         className="product-slick"
                       >
-                        {data.product.images.map((vari, index) => (
-                          <div key={index}>
-                            <ImageZoom image={vari} />
+
+                          <div >
+                            <ImageZoom image={data.image} />
                           </div>
-                        ))}
+
                       </Slider>
 
                     </Col>
                     <Col lg="6" className="rtl-text">
                       <DetailsWithPrice
-                        item={data.product}
+                        item={data}
                       />
                     </Col>
                   </Row>

@@ -59,17 +59,15 @@ const ProductSection = ({ type }) => {
 
     const minusQty = () => {
         if (quantity > 1) {
-            setStock('InStock')
+
             setQuantity(quantity - 1);
         }
     }
 
     const plusQty = (product) => {
-        if (product.stock >= quantity) {
+
             setQuantity(quantity + 1);
-        } else {
-            setStock('Out of Stock !')
-        }
+
     }
 
     const changeQty = (e) => {

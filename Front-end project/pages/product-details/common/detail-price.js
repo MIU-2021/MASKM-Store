@@ -14,7 +14,7 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
   const toggle = () => setModal(!modal);
   const product = item;
   const context = useContext(CartContext);
-  const stock = context.stock;
+  //const stock = context.stock;
   const plusQty = context.plusQty;
   const minusQty = context.minusQty;
   const quantity = context.quantity;
@@ -30,10 +30,10 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
       <div className={`product-right ${stickyClass}`}>
         <h2> {product.title} </h2>
         <h4>
-          <del>
+
             {symbol}
             {product.price}
-          </del>
+
         </h4>
 
 
@@ -64,7 +64,7 @@ const DetailsWithPrice = ({ item, stickyClass, changeColorVar }) => {
                 <button
                   type="button"
                   className="btn quantity-right-plus"
-                  onClick={() => plusQty(product)}
+                  onClick={() => plusQty()}
                   data-type="plus"
                   data-field=""
                 >
