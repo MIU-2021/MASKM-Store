@@ -11,7 +11,6 @@ import {
 } from "reactstrap";
 
 const OrderDetail = (props) => {
-    console.log(props.Order);
     const productData = ProductsbyOrder(props.Order.id);
     const AllProduct = ({ img, productName, category, price, cant }) => {
         return (
