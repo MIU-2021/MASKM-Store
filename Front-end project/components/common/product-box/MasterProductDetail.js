@@ -31,12 +31,6 @@ const MasterProductDetail = ({
           {product.price}
         </h4>
 
-        {product.variants ?
-          product.variants.map((vari) => {
-            var findItem = uniqueTags.find((x) => x.color === vari.color);
-            if (!findItem) uniqueTags.push(vari);
-          }) : ''
-        }
 
 
       </div>
