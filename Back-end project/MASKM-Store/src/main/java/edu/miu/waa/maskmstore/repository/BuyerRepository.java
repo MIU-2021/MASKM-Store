@@ -10,14 +10,24 @@ import java.util.List;
 
 @Repository
 public interface BuyerRepository extends CrudRepository<Buyer,Long> {
+    @Query(
+            "select b " +
+                    "from Buyer b " +
+                    "where b.user.username = :userName "
+    )
     public Buyer findBuyerByUsername(String userName);
+    @Query(
+            "select b " +
+                    "from Buyer b " +
+                    "where b.user.email = :email "
+    )
     public Buyer findBuyerByEmail(String email);
 
 
     @Query(
             "select b.points " +
                     "from Buyer b " +
-                    "where b.id = :id "
+                    "where b.bId = :id "
     )
     public long getBuyerPoints(@Param("id") long id);
 

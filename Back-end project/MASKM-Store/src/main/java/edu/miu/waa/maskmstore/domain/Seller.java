@@ -17,10 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Seller extends User{
+public class Seller {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private long sId;
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
@@ -35,4 +35,7 @@ public class Seller extends User{
 
     @OneToMany(mappedBy = "seller")
     private List<Stock> stocks;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="User_ID")
+    User user;
 }

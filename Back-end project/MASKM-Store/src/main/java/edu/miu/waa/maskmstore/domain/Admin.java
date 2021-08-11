@@ -15,22 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 
-public class Buyer {
+public class Admin {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long bId;
-
-    @Digits(integer = 6, fraction = 0)
-    long points;
-
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    private List<Order> orders;
+    long aId;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
     User user;
-
-
 
 }

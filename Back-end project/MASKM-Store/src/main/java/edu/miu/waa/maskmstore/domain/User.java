@@ -22,9 +22,10 @@ import java.util.List;
 @Entity
 public class User {
 
+
     @Id
-    @GeneratedValue
-    long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    long uId;
     @NotEmpty
     @Size(min = 3, max = 15,message = "{name.size}")
     String username;

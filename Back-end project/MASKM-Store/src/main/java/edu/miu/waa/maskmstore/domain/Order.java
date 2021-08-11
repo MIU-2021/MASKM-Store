@@ -21,7 +21,7 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @DateTimeFormat
@@ -32,8 +32,6 @@ public class Order {
     @Transient
     private List<LineItem> lineItemList;
 
-    @ManyToMany
-    @JoinTable
-    private List<Buyer> buyers;
+
 
 }

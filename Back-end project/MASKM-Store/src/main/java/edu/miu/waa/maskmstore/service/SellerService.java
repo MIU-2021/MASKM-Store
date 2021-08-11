@@ -1,7 +1,9 @@
 package edu.miu.waa.maskmstore.service;
 
-import org.springframework.stereotype.Service;
+import edu.miu.waa.maskmstore.domain.Address;
 
-@Service
+
+
 public interface SellerService {
+    public Address getShippingAddressBysId(long id);
 }
