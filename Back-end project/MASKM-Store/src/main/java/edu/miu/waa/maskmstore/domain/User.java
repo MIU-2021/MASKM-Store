@@ -43,7 +43,7 @@ public class User {
     String email;
 
     @Valid
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     Phone phone;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
