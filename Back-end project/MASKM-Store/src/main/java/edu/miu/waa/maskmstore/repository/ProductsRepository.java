@@ -13,4 +13,7 @@ public interface ProductsRepository extends PagingAndSortingRepository<Product,L
 
     @Query(value = "select p.reviews from Product p where p.id=:productID")
     public List<Review> findAllReviewsForProduct(long productID);
+
+    @Query(value = "select c.products from ProductCategory c where c.id=:catId")
+    public List<Product> findAllWithCategory(long catId);
 }
