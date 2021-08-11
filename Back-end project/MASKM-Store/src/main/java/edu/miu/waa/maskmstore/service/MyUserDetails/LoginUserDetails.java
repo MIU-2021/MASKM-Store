@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class LoginUserDetails implements UserDetails {
     private String username;
     private String password;
-    private boolean isActive;
     private Set<Role> roles;
 
 

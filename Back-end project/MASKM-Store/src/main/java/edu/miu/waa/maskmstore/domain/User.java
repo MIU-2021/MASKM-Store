@@ -13,6 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -44,6 +45,13 @@ public class User {
     @Valid
     @OneToOne
     Phone phone;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name="USER_ROLES",joinColumns =
+            {@JoinColumn(name="USER_ID")},inverseJoinColumns = {
+            @JoinColumn(name="ROLE_ID")})
+    private Set<Role> roles;
+
 
 
 

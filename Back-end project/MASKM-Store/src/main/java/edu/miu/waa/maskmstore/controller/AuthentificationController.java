@@ -1,6 +1,7 @@
 package edu.miu.waa.maskmstore.controller;
 
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import edu.miu.waa.maskmstore.dto.AuthenticationRequest;
 import edu.miu.waa.maskmstore.dto.AuthenticationResponse;
 import edu.miu.waa.maskmstore.service.MyUserDetails.LoginUserDetailsService;
@@ -26,11 +27,16 @@ public class AuthentificationController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private UserService userService;
+    /*@Autowired
+    private UserService userService;*/
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authRequest) throws Exception{
+        /*System.out.println("USERNAME");
+        System.out.println(authRequest.getUsername());
+        System.out.println("PASSWORD");
+        System.out.println(authRequest.getPassword());*/
+
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(),authRequest.getPassword())
