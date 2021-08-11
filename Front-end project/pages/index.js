@@ -26,8 +26,8 @@ const Fashion = () => {
       </Helmet>
       <ModalComponent />
       <HeaderOne logoName={"logo.png"} topClass="top-header" />
-      <Banner />
-      <CollectionBanner />
+
+
       <Paragraph
         title="title1 section-t-space"
         inner="title-inner1"
@@ -37,39 +37,17 @@ const Fashion = () => {
         noTitle="null"
         backImage={true}
         type="fashion"
-        title="top collection"
-        subtitle="special offer"
+        title="top collections2"
+        subtitle="special offer2"
         productSlider={Product4}
         designClass="section-b-space p-t-0 ratio_asos"
         noSlider="false"
         cartClass="cart-info cart-wrap"
       />
-      <Parallax />
-      <SpecialProducts
-        type="fashion"
-        backImage={true}
-        productSlider={Product4}
-        line={true}
-        title="title1 section-t-space"
-        inner="title-inner1"
-        designClass="section-b-space p-t-0 ratio_asos"
-        noSlider="true"
-        cartClass="cart-info cart-wrap"
-      />
+
       <ServiceLayout sectionClass="border-section small-section" />
-      <Blog type="fashion" title="title1" inner="title-inner1" />
-      <Instagram type="fashion" />
-      <div className="section-b-space">
-        <LogoBlock />
-      </div>
-      <MasterFooter
-        footerClass={`footer-light`}
-        footerLayOut={"light-layout upper-footer"}
-        footerSection={"small-section border-section border-top-0"}
-        belowSection={"section-b-space light-layout"}
-        newLatter={true}
-        logoName={"logo.png"}
-      />
+
+      <MasterFooter/>
     </>
   );
 };

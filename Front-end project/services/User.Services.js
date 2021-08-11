@@ -42,7 +42,9 @@ export const CurrentUser = (userName) => {
         fName: "Milton",
         lName: "Gonzalez",
         phone:{
-
+            countryCode: "1",
+            areaCode: "465",
+            number: "895 23 56",
         },
         email: "miltonfre@gmail.com",
         shippingAddress: {
@@ -65,4 +67,29 @@ export const CurrentUser = (userName) => {
         },
 
     }
+}
+
+
+export const myFollows = () => {
+    console.log('myFollows');
+    return [{
+        id: "1",
+        fName: "Amazon",
+        lName: ""
+    } ,    {
+        id: "2",
+        fName: "Google",
+        lName: ""
+    } ,{
+        id: "3",
+        fName: "Nike",
+        lName: "Gonzalez"
+    } ,{
+        id: "4",
+        fName: "Adidas",
+        lName: ""
+    } 
+]       
+
+   
 }

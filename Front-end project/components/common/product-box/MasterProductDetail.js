@@ -45,36 +45,7 @@ const MasterProductDetail = ({
           if (!findItem) uniqueTags.push(vari);
         })}
 
-        {product.type === "jewellery" ||
-        product.type === "nursery" ||
-        product.type === "beauty" ||
-        product.type === "electronics" ||
-        product.type === "goggles" ||
-        product.type === "watch" ||
-        product.type === "pets" ? (
-          ""
-        ) : (
-          <>
-            {title !== "Product style 4" && uniqueTags[0].color ? (
-              <ul className="color-variant">
-                {uniqueTags.map((vari, i) => {
-                  return (
-                    <li
-                      className={vari.color}
-                      key={i}
-                      title={vari.color}
-                      onClick={() =>
-                        variantChangeByColor(vari.image_id, product.images)
-                      }
-                    ></li>
-                  );
-                })}
-              </ul>
-            ) : (
-              ""
-            )}
-          </>
-        )}
+
       </div>
     </div>
   );

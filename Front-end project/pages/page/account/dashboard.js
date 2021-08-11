@@ -43,7 +43,9 @@ import EditProduct from "../../../components/common/EditProduct";
 import { DeleteOrder, OrderData } from "../../../services/Order.Services";
 import { CurrentUser } from "../../../services/User.Services";
 import OrderDetail from "./orderDetail";
-
+import Following from "./Following";
+import { myFollows } from '../../../services/User.Services';
+import ProfilePage from "./common/profile-page";
 const SummaryData = [
     {
         img: order,
@@ -119,11 +121,13 @@ const Dashboard = () => {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [accountInfo, setAccountInfo] = useState(false)
-
+    const [following, setFollowing] = useState([]);
     useEffect(() => { 
         setOrderData(OrderData(1)); 
     }, [])
-
+ 
+    useEffect(() =>
+        setFollowing(myFollows()), []);
 
     const deleteOrderEventHandler = (orderId) => {
         var answer = window.confirm("Delete Order?");
@@ -309,7 +313,7 @@ const Dashboard = () => {
                                             <Col sm="12">
                                                 <Card className="dashboard-table mt-0">
                                                     <CardBody>
-                                                        <h1>Following</h1>
+                                                    <Following Following={following}></Following>
                                                     </CardBody>
                                                 </Card>
                                             </Col>
@@ -364,7 +368,8 @@ const Dashboard = () => {
                                                             </div>
                                                             <div className="dashboard-detail">
                                                                 <ul>
-                                                                    {ProfileData.map((data, i) => {
+                                                                    <ProfilePage user={currentUser}></ProfilePage>
+                                                                    {/* {ProfileData.map((data, i) => {
                                                                         return (
                                                                             <ProfileDetail
                                                                                 key={i}
@@ -372,7 +377,7 @@ const Dashboard = () => {
                                                                                 detail={data.detail}
                                                                             />
                                                                         );
-                                                                    })}
+                                                                    })} */}
                                                                 </ul>
                                                             </div>
                                                         </div>

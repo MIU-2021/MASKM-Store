@@ -126,30 +126,11 @@ const LeftSidebarPage = ({ pathId }) => {
                           </div>
                         ))}
                       </Slider>
-                      <Slider
-                        className="slider-nav"
-                        {...productsnav}
-                        asNavFor={nav1}
-                        ref={(slider) => (slider2.current = slider)}
-                      >
-                        {data.product.variants
-                          ? data.product.images.map((vari, index) => (
-                              <div key={index}>
-                                <Media
-                                  src={`${vari.src}`}
-                                  key={index}
-                                  alt={vari.alt}
-                                  className="img-fluid"
-                                />
-                              </div>
-                            ))
-                          : ""}
-                      </Slider>
+
                     </Col>
                     <Col lg="6" className="rtl-text">
                       <DetailsWithPrice
                         item={data.product}
-                        changeColorVar={changeColorVar}
                       />
                     </Col>
                   </Row>
