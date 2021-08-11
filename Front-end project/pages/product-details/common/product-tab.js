@@ -10,6 +10,7 @@ import {
   NavLink,
 } from "reactstrap";
 import ReviewForm from "./reviewform";
+import Reviewsbox from "./Reviewsbox";
 
 const ProductTab = () => {
   const [activeTab, setActiveTab] = useState("1");
@@ -43,7 +44,7 @@ const ProductTab = () => {
               <TabContent activeTab={activeTab} className="nav-material">
                 <TabPane tabId="1">
                   <p className="mb-0 pb-0">
-                    reviews here
+                    <Reviewsbox />
                   </p>
                 </TabPane>
 

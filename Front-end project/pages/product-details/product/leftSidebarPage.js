@@ -47,7 +47,6 @@ const LeftSidebarPage = ({ pathId }) => {
   //   },
   // });
   function fetchProductsHandler() {
-    console.log("ffddf",{ pathId })
     fecthProductByID(pathId).then(response => {
       setData(response);
       setLoading(false);
@@ -92,9 +91,6 @@ const LeftSidebarPage = ({ pathId }) => {
     document.getElementById("filter").style.left = "-15px";
   };
 
-  const changeColorVar = (img_id) => {
-    slider2.current.slickGoTo(img_id);
-  };
 
   return (
     <section className="">

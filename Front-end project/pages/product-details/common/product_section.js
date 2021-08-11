@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Container, Row, Col, Media, Modal, ModalBody } from "reactstrap";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
@@ -7,6 +7,7 @@ import CartContext from "../../../helpers/cart";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
 import { useRouter } from "next/router";
+import {fecthAllProducts} from "../../../services/Products.Services";
 
 const GET_PRODUCTS = gql`
   query products($type: _CategoryType!, $indexFrom: Int!, $limit: Int!) {
@@ -58,14 +59,17 @@ const ProductSection = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const uniqueTags = [];
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
 
   const changeQty = (e) => {
     setQuantity(parseInt(e.target.value));
   };
 
-  const clickProductDetail = (product) => {
-    const titleProps = product.title.split(" ").join("");
-    router.push(`/product-details/${product.id}` + "-" + `${titleProps}`);
+  const clickProductDetail = (id) => {
+    console.log(id);
+    //router.push(`/product-details/${product.id}`);
+    router.reload(`/product-details/${id}`);
   };
 
   const getSelectedProduct = (item) => {
@@ -73,13 +77,32 @@ const ProductSection = () => {
     toggle();
   };
 
-  var { loading, data } = useQuery(GET_PRODUCTS, {
-    variables: {
-      type: "fashion",
-      indexFrom: 0,
-      limit: 8,
-    },
-  });
+  // var { loading, data } = useQuery(GET_PRODUCTS, {
+  //   variables: {
+  //     type: "fashion",
+  //     indexFrom: 0,
+  //     limit: 8,
+  //   },
+  // });
+  function fetchProductsHandler() {
+    // axios('https://fakestoreapi.com/products/')
+    // .then(response => {
+    //   console.log(response.data);
+    //   setData(response.data);
+    //   setLoading(false);
+    //   return response.data;
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
+    fecthAllProducts().then(response => {
+      setData(response);
+      setLoading(false);
+      return response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  useEffect(fetchProductsHandler, []);
 
   return (
     <section className="section-b-space ratio_asos">
@@ -91,22 +114,21 @@ const ProductSection = () => {
         </Row>
         <Row className="search-product">
           {!data ||
-          !data.products ||
-          data.products.items.length === 0 ||
+          data.length === 0 ||
           loading ? (
             "loading"
           ) : (
             <>
               {data &&
-                data.products.items.slice(0, 6).map((product, index) => (
+                data.slice(0, 6).map((product, index) => (
                   <Col xl="2" md="4" sm="6" key={index}>
                     <div className="product-box">
                       <div className="img-wrapper">
                         <div className="front">
                           <a href={null}>
                             <Media
-                              onClick={() => clickProductDetail(product)}
-                              src={product.images[0].src}
+                              onClick={() => clickProductDetail(product.id)}
+                              src={product.image}
                               className="img-fluid blur-up lazyload bg-img"
                               alt=""
                             />
@@ -115,7 +137,8 @@ const ProductSection = () => {
                         <div className="back">
                           <a href={null}>
                             <Media
-                              src={product.images[1].src}
+                                onClick={() => clickProductDetail(product.id)}
+                              src={product.image}
                               className="img-fluid blur-up lazyload bg-img"
                               alt=""
                             />
