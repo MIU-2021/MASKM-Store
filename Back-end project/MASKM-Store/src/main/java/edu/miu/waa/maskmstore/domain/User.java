@@ -41,7 +41,7 @@ public class User {
     @Email
     String email;
 
-    @Valid
+
     @OneToOne(cascade = CascadeType.ALL)
     Phone phone;
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/buyer")
 public class BuyerController {
@@ -31,8 +32,12 @@ public class BuyerController {
     }
 
     @GetMapping("/{id}")
-    public Buyer getBuyerById(@PathVariable long id){
+    public Buyer getBuyerById(@PathVariable("id") long id){
         return buyerService.getBuyerBybId(id);
+    }
+    @GetMapping("/profile/{userName}")
+    public Buyer getBuyerById(@PathVariable String userName){
+        return buyerService.getBuyerByUsername(userName);
     }
 
 
