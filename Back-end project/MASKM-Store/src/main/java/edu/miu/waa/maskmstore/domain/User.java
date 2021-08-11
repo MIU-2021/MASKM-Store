@@ -23,7 +23,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Long id;
     @NotEmpty
     @Size(min = 3, max = 15,message = "{name.size}")
