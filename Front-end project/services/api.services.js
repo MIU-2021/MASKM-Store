@@ -1,5 +1,6 @@
 import axios from "axios";
-const url = process.env.SERVER_API_URL;
+//const url = process.env.SERVER_API_URL;
+const url = 'https://fakestoreapi.com';
 
 
 
@@ -15,9 +16,10 @@ export const logout=()=>{
 
 export const _get=(path) =>{
     return axios
-        .get(`${url}/${path}`, {
-            headers: headers
-        })
+        // .get(`${url}/${path}`, {
+        //     headers: headers
+        // })
+        .get(`${url}/${path}`)
         .then(response => {
             return response.data;
         }).catch((error) => {
