@@ -1,16 +1,15 @@
 package edu.miu.waa.maskmstore.service.products;
 
-import edu.miu.waa.maskmstore.domain.Product;
-import edu.miu.waa.maskmstore.domain.Response;
-import edu.miu.waa.maskmstore.domain.ResponseOneProduct;
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.repository.ProductsRepository;
-import edu.miu.waa.maskmstore.util.ResponseCode;
-import edu.miu.waa.maskmstore.util.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +21,8 @@ public class ProductsServiceImpl implements ProductsService{
     ProductsRepository productsRepository;
     @Override
     public void addProduct(Product product) {
+
+        product.setAddedOn(LocalDate.now());
         productsRepository.save(product);
     }
 
@@ -41,8 +42,10 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public void deleteById(long id) {
+    public String deleteById(long id) {
+//        if (productsRepository.get)
         productsRepository.deleteById(id);
+        return "";
     }
 
     @Override

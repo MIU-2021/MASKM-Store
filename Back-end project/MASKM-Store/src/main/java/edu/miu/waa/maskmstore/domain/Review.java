@@ -1,6 +1,7 @@
 package edu.miu.waa.maskmstore.domain;
 
 
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class Review {
 
     @NotEmpty
     @NotBlank
-    private String review;
+    private String comment;
 
     @ManyToOne
     private Product product;

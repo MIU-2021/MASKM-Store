@@ -1,17 +1,17 @@
-package edu.miu.waa.maskmstore.domain;
+package edu.miu.waa.maskmstore.domain.stock;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import edu.miu.waa.maskmstore.domain.*;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -35,14 +35,18 @@ public class Product {
     @NotEmpty
     private String description;
 
-//    @NotBlank
-//    @NotEmpty
     @OneToMany
     @JoinColumn(name = "image_id")
     private List<Image> images;
 
 
-    private int rating=0;
+    private double rating=0;
+
+    public void setAvgRating() {
+        this.rating=reviews.stream().map(Review::getStars).reduce(0.0,Double::sum)/reviews.size();
+    }
+
+    private String status= ProductApprovedStatus.PENDING.getProductStatus();
 
     @OneToMany(cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
@@ -55,7 +59,15 @@ public class Product {
     private double price=0;
 
     @OneToOne
-    private ProductCategory productCategory;
+    private ProductSubCategory productSubCategory;
+
+    @DateTimeFormat
+    private LocalDate addedOn;
+
+    @OneToOne(mappedBy = "product")
+    private Stock stock;
+
+
 
 
 }

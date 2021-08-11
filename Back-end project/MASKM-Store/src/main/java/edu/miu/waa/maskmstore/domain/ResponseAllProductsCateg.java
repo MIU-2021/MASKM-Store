@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain;
 
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import lombok.Getter;
 import lombok.Setter;
 

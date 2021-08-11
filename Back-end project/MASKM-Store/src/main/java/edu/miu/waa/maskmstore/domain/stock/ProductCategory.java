@@ -1,9 +1,7 @@
-package edu.miu.waa.maskmstore.domain;
+package edu.miu.waa.maskmstore.domain.stock;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="items_category")
 public class ProductCategory {
 	
 	@Id
