@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
+    @Override
     public User findUserByUserName(String userName){
         return userRepository.findUserByUsername(userName);
 

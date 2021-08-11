@@ -17,5 +17,12 @@ public class SellerServiceImpl implements  SellerService{
     public Address getShippingAddressBysId(long id){
         return sellerRepository.findShippingAddress(id);
 
-    };
+    }
+
+    @Override
+    public Seller getSellerBySId(long id) {
+        return sellerRepository.findSellerBySId(id);
+    }
+
+    ;
 }

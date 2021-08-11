@@ -33,8 +33,6 @@ public class Seller {
     Address billingAddress;
 
 
-    @OneToMany(mappedBy = "seller")
-    private List<Stock> stocks;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
     User user;
