@@ -1,16 +1,13 @@
 package edu.miu.waa.maskmstore.domain;
 
-
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -18,15 +15,13 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Order {
 
+@Entity (name="ord")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @DateTimeFormat
-    private LocalDateTime createdOn;
+    long id;
+    private Date createdOn;
 
     private double price;
 

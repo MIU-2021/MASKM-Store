@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BuyerServiceImpl implements BuyerService{
@@ -80,9 +79,9 @@ public class BuyerServiceImpl implements BuyerService{
     @Override
     public void addOrder(long bId, Order order) {
         Buyer buyer=buyerRepository.findBuyerByBId(bId);
-        List<Order> buyerOrders= orderRepository.findAllOrdersByBuyerId(bId);
-        buyerOrders.add(order);
-        buyer.setOrders(buyerOrders);
+        List<Order> orders = orderRepository.findAllOrdersByBuyerId(bId);
+        orders.add(order);
+        buyer.setOrders(orders);
 
     }
 
