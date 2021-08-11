@@ -17,7 +17,7 @@ const TopBarDark = ({ topClass, fluid }) => {
           <Col lg="6">
             <div className="header-contact">
               <ul>
-                <li>Welcome to Our store Multikart</li>
+                <li>Welcome to Our store MASKM</li>
                 <li>
                   <i className="fa fa-phone" aria-hidden="true"></i>Call Us: 123
                   - 456 - 7890
@@ -27,14 +27,7 @@ const TopBarDark = ({ topClass, fluid }) => {
           </Col>
           <Col lg="6" className="text-right">
             <ul className="header-dropdown">
-              <li className="mobile-wishlist">
-                <Link href="/page/account/wishlist">
-                  <a>
-                    <i className="fa fa-heart" aria-hidden="true"></i> wishlist
-                  </a>
-                </Link>
-              </li>
-              <li className="onhover-dropdown mobile-account">
+               <li className="onhover-dropdown mobile-account">
                 <i className="fa fa-user" aria-hidden="true"></i> My Account
                 <ul className="onhover-show-div">
                   <li>

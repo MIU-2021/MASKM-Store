@@ -87,7 +87,7 @@ const TabContent = ({ data, loading, startIndex, endIndex }) => {
                       <h4>
                         {currency.symbol}
                         {(
-                          (item.price - (item.price * item.discount) / 100) *
+                          item.price *
                           currency.value
                         ).toFixed(2)}
                         <del>

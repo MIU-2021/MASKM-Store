@@ -1,4 +1,5 @@
 package edu.miu.waa.maskmstore.domain;
+import edu.miu.waa.maskmstore.domain.stock.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Digits;
 import java.util.List;
 
 
@@ -17,13 +17,25 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Seller extends User{
+public class Seller {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private long sId;
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable
-    List<Product> products;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+
+    Address shippingAddress;
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    Address billingAddress;
+
+
+    @OneToMany(mappedBy = "seller")
+    private List<Stock> stocks;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="User_ID")
+    User user;
 }

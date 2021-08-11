@@ -29,108 +29,13 @@ const Category = () => {
                   </a>
                 </li>
                 <li>
-                  <a href={null} onClick={() => updateCategory("fashion")}>
+                  <a href={null} onClick={() => updateCategory("books")}>
                     fashion
                   </a>
                 </li>
                 <li>
                   <a href={null} onClick={() => updateCategory("electronics")}>
                     electronics
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("vegetables")}>
-                    vegetables
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("furniture")}>
-                    furniture
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("jewellery")}>
-                    jewellery
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("beauty")}>
-                    beauty
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("flower")}>
-                    flower
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("tools")}>
-                    tools
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("watch")}>
-                    watch
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("metro")}>
-                    metro
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("shoes")}>
-                    shoes
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("bags")}>
-                    bags
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("kids")}>
-                    kids
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("pets")}>
-                    PETS
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("goggles")}>
-                    goggles
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("game")}>
-                    game
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("gym")}>
-                    gym
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("nursery")}>
-                    nursery
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("videoslider")}>
-                    videoslider
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("marketplace")}>
-                    marketplace
-                  </a>
-                </li>
-                <li>
-                  <a href={null} onClick={() => updateCategory("marijuana")}>
-                    marijuana
                   </a>
                 </li>
               </ul>

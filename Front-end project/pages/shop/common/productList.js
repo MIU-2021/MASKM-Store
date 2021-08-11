@@ -11,6 +11,7 @@ import PostLoader from "../../../components/common/PostLoader";
 import CartContext from "../../../helpers/cart";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
+import axios from "axios";
 
 const GET_PRODUCTS = gql`
   query products(
@@ -64,6 +65,17 @@ const GET_PRODUCTS = gql`
     }
   }
 `;
+function ddd() {
+  axios.post('/login', {
+    firstName: 'Finn',
+    lastName: 'Williams'
+  })
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
+}
 
 const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
   const cartContext = useContext(CartContext);
@@ -107,6 +119,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
     },
   });
 
+  
   const handlePagination = () => {
     setIsLoading(true);
     setTimeout(
@@ -152,36 +165,15 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
   };
 
   return (
+    
     <Col className="collection-content">
       <div className="page-main-content">
         <Row>
           <Col sm="12">
             <div className="top-banner-wrapper">
-              <a href={null}>
-                <Media
-                  src={Menu2}
-                  className="img-fluid blur-up lazyload"
-                  alt=""
-                />
-              </a>
+
               <div className="top-banner-content small-section">
-                <h4>fashion</h4>
-                <h5>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </h5>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged. It was popularised in the 1960s with
-                  the release of Letraset sheets containing Lorem Ipsum
-                  passages, and more recently with desktop publishing software
-                  like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
+                <h4>Category name</h4>
               </div>
             </div>
             <Row>
@@ -351,14 +343,14 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                 <Row>
                   {/* Product Box */}
                   {!data ||
-                  !data.products ||
-                  !data.products.items ||
-                  data.products.items.length === 0 ||
-                  loading ? (
+                    !data.products ||
+                    !data.products.items ||
+                    data.products.items.length === 0 ||
+                    loading ? (
                     data &&
-                    data.products &&
-                    data.products.items &&
-                    data.products.items.length === 0 ? (
+                      data.products &&
+                      data.products.items &&
+                      data.products.items.length === 0 ? (
                       <Col xs="12">
                         <div>
                           <div className="col-sm-12 empty-cart-cls text-center">

@@ -21,9 +21,6 @@ const FilterPage = ({sm,sidebarView,closeSidebar}) => {
                         </span>
                     </div>
                     <Category />
-                    <Brand/>
-                    <Color/>
-                    <Size/>
                     <Price />
                 </div>
                 {/* <!-- silde-bar colleps block end here -->*/}

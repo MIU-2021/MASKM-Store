@@ -9,10 +9,10 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
@@ -22,9 +22,10 @@ import java.util.Set;
 @Entity
 public class User {
 
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    long uId;
     @NotEmpty
     @Size(min = 3, max = 15,message = "{name.size}")
     String username;
@@ -37,21 +38,16 @@ public class User {
     @NotEmpty
     @Size(min = 3, max = 15,message = "{name.size}")
     String lName;
+    @Email
+    String email;
+
     @Valid
     @OneToOne
     Phone phone;
 
-    @Valid
-    @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    @JoinTable
-    List<Address> addresses;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="USER_ROLES",joinColumns =
-            {@JoinColumn(name="USER_ID")},inverseJoinColumns = {
-            @JoinColumn(name="ROLE_ID")})
-    private Set<Role> roles;
+
+
 
 
 }

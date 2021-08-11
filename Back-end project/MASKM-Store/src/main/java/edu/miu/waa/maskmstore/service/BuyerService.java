@@ -1,8 +1,12 @@
 package edu.miu.waa.maskmstore.service;
 
-import org.springframework.stereotype.Service;
+import edu.miu.waa.maskmstore.domain.Buyer;
 
-@Service
+
+
 public interface BuyerService {
+
+    public Buyer getBuyerByUsername(String userName);
+    public Buyer getBuyerByEmail(String email);
 
 }
