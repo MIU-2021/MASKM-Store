@@ -1,5 +1,6 @@
 import axios from "axios";
 //const url = process.env.SERVER_API_URL;
+//const url = http://172.19.140.95:2021/products
 const url = 'https://fakestoreapi.com';
 
 
@@ -15,6 +16,7 @@ export const logout=()=>{
 }
 
 export const _get=(path) =>{
+    console.log(`${url}/${path}`);
     return axios
         // .get(`${url}/${path}`, {
         //     headers: headers

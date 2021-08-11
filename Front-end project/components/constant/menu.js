@@ -1,14 +1,17 @@
-export const MENUITEMS = [
-   {
-      path: '/',title: 'Home'
-   },
-   {
-      title: 'Categories', type: 'sub', children: [
-         { path: '/shop/right_sidebar', title: 'Clothing', type: 'link' },
-         { path: '/shop/right_sidebar', title: 'Books', type: 'link' },
-         { path: '/shop/right_sidebar', title: 'Electronics', type: 'link' },
-      ],
-   },
+import { fecthAllCategories } from "../../services/Categories.Services"
+
+
+const STATICMENUITEMS= [
+   // {
+   //    path: '/',title: 'Home', type: 'link'
+   // },
+   // {
+   //    title: 'Categories', type: 'sub', children: [
+   //       { path: '/shop/right_sidebar', title: 'Clothing', type: 'link' },
+   //       { path: '/shop/right_sidebar', title: 'Books', type: 'link' },
+   //       { path: '/shop/right_sidebar', title: 'Electronics', type: 'link' },
+   //    ],
+   // },
    {
       title: 'Products', type: 'sub', children: [
          {
@@ -151,4 +154,10 @@ export const MENUITEMS = [
       ]
    },
 ]
+export const MENUITEMS =STATICMENUITEMS;
+
+const fecthCategories=()=>{
+   return STATICMENUITEMS;
+   //fecthAllCategories().then(res=>console.log(res))
+}
 
