@@ -63,18 +63,21 @@ const ProductItem = ({
         </div>
         <div className="front" onClick={clickProductDetail}>
           <Media
-            src={`${image ? image : product.images[0].src}`}
+            // src={`${image ? image : product.images[0].src}`}
+            src={`${image ? image : product.image}`}
             className="img-fluid"
             alt=""
           />
         </div>
         {backImage ? (
-          product.images[1] === "undefined" ? (
+          // product.images[1] === "undefined" ? (
+            product.image === "undefined" ? (
             "false"
           ) : (
             <div className="back" onClick={clickProductDetail}>
               <Media
-                src={`${image ? image : product.images[1].src}`}
+                // src={`${image ? image : product.images[1].src}`}
+                src={`${image ? image : product.image}`}
                 className="img-fluid m-auto"
                 alt=""
               />
@@ -111,7 +114,8 @@ const ProductItem = ({
                       src={`${
                         product.variants && image
                           ? image
-                          : product.images[0].src
+                          // : product.images[0].src
+                          :product.image
                       }`}
                       alt=""
                       className="img-fluid"
@@ -184,7 +188,8 @@ const ProductItem = ({
               <div className="quick-view-img">
                 <Media
                   src={`${
-                    product.variants && image ? image : product.images[0].src
+                    // product.variants && image ? image : product.images[0].src
+                    product.variants && image ? image : product.image
                   }`}
                   alt=""
                   className="img-fluid"

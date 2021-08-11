@@ -65,16 +65,16 @@ const GET_PRODUCTS = gql`
     }
   }
 `;
-function  ddd() {
+function ddd() {
   axios.post('/login', {
     firstName: 'Finn',
     lastName: 'Williams'
   })
-      .then((response) => {
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      });
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
 }
 
 const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
@@ -119,6 +119,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
     },
   });
 
+  
   const handlePagination = () => {
     setIsLoading(true);
     setTimeout(
@@ -164,6 +165,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
   };
 
   return (
+    
     <Col className="collection-content">
       <div className="page-main-content">
         <Row>
@@ -341,14 +343,14 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                 <Row>
                   {/* Product Box */}
                   {!data ||
-                  !data.products ||
-                  !data.products.items ||
-                  data.products.items.length === 0 ||
-                  loading ? (
+                    !data.products ||
+                    !data.products.items ||
+                    data.products.items.length === 0 ||
+                    loading ? (
                     data &&
-                    data.products &&
-                    data.products.items &&
-                    data.products.items.length === 0 ? (
+                      data.products &&
+                      data.products.items &&
+                      data.products.items.length === 0 ? (
                       <Col xs="12">
                         <div>
                           <div className="col-sm-12 empty-cart-cls text-center">
