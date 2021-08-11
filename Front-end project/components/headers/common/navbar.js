@@ -59,10 +59,10 @@ const NavBar = () => {
   const fillMenu = (cats) => {
     const currentUrl = location.pathname;
     let childrenCategories = [];
-
     cats.forEach(c => {
       childrenCategories.push({
-        path: '/shop/right_sidebar',
+        path: '/shop/right_sidebar/',
+        query: { catId: c },
         title: c,
         type: 'link'
       })
@@ -73,14 +73,15 @@ const NavBar = () => {
       children: childrenCategories
     };
 
-    const menuTemp = MENUITEMS.filter(function (item) {
-      console.log(item.title);
-      console.log(item.title.toUpperCase() != 'CATEGORIES');
+    let menuTemp = MENUITEMS.filter(function (item) {
       return item.title.toUpperCase() != 'CATEGORIES'
     })
-  //  MENUITEMS = menuTemp;
+    console.log(menuTemp);
+    //   menuTemp.unshift(menuCategories);
+    //   console.log(menuTemp);
+    // //  MENUITEMS = menuTemp;
     MENUITEMS.unshift(menuCategories);
-
+    setMainMenu({ mainmenu: MENUITEMS });
     MENUITEMS.filter((items) => {
       if (items.path === currentUrl) setNavActive(items);
       if (!items.children) return false;
@@ -206,16 +207,34 @@ const NavBar = () => {
                               ""
                             )}
                             {childrenItem.type === "link" ? (
-                              <Link href={`${childrenItem.path}`}>
-                                <a>
-                                  {childrenItem.title}
-                                  {childrenItem.tag === "new" ? (
-                                    <span className="new-tag">new</span>
-                                  ) : (
-                                    ""
-                                  )}
-                                </a>
-                              </Link>
+                                <span>
+                                {childrenItem.query ?
+                                  <Link 
+                                        href={{pathname:`${childrenItem.path}`, query:childrenItem.query}}
+                                       >
+                                    <a>
+                                      {childrenItem.title}
+                                      {childrenItem.tag === "new" ? (
+                                        <span className="new-tag">new</span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </a>
+                                  </Link>
+                                  :
+                                  <Link href={`${childrenItem.path}`}>
+                                    <a>
+                                      {childrenItem.title}
+                                      {childrenItem.tag === "new" ? (
+                                        <span className="new-tag">new</span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </a>
+                                  </Link>
+                                }
+                              </span>
+                                                            
                             ) : (
                               ""
                             )}

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CommonLayout from '../../../components/shop/common-layout';
-import { Input, Container, Row, Form, Label ,Col} from 'reactstrap';
+import { Input, Container, Row, Form, Label ,Col,Button, ButtonGroup} from 'reactstrap';
+
 
 const Register = () => {
+    const [rSelected, setRSelected] = useState(null);
     return (
         <CommonLayout parent="home" title="register">
             <section className="register-page section-b-space">
@@ -34,6 +36,15 @@ const Register = () => {
                                             <Input type="password" className="form-control" id="review"
                                                 placeholder="Enter your password" required="" />
                                         </Col>
+                                        <h5>Choose Role</h5>
+                                        <Col md="6">
+                                            <ButtonGroup>
+                                                <Button color="danger" onClick={() => setRSelected("Buyer")} active={rSelected === 1}>Buyer</Button>
+                                                <Button color="danger" onClick={() => setRSelected("Seller")} active={rSelected === 2}>Seller</Button>
+                                            </ButtonGroup>
+                                            <p>Role : {rSelected}</p>
+                                        </Col>
+
                                         <a href="#" className="btn btn-solid">create Account</a>
                                     </Row>
                                 </Form>
