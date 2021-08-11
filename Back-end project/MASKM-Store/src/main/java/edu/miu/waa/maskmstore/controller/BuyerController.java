@@ -25,7 +25,7 @@ public class BuyerController {
     }
     @GetMapping
     public List<Buyer> getAllBuyer(){
-        return buyerService.getAllBuyers(PageRequest.of(1,5,Sort.by("bId").descending()));
+        return buyerService.getAllBuyers();
     }
     @GetMapping("/pagination")
     public List<Buyer> getAllBuyersPaging(@RequestParam("page")int pageNumber){

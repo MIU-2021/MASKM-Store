@@ -19,7 +19,7 @@ public interface BuyerRepository extends CrudRepository<Buyer,Long> {
     public Buyer findBuyerByBId(@Param("bId")long id);
 
     @Query("select b from Buyer b")
-    public List<Buyer> findAllBuyers(Pageable pageable);
+    public List<Buyer> findAllBuyers();
 
     @Query( "select b from Buyer b where b.user.email = :email ")
     public Buyer findBuyerByEmail(@Param("email")String email);

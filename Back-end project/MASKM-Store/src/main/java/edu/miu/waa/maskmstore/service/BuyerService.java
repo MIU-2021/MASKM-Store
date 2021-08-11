@@ -14,7 +14,7 @@ public interface BuyerService {
     public void followSeller(long bId, long sId);
     public Buyer getBuyerBybId(long id);
     public Buyer getBuyerByEmail(String email);
-    public List<Buyer> getAllBuyers(Pageable pageable);
+    public List<Buyer> getAllBuyers();
     public List<Buyer> getAllBuyerWithPagingAndSorting(Pageable pageable);
     public List<Order> getAllOrderByBuyerId(long id);
     public void addBuyer(Buyer buyer);

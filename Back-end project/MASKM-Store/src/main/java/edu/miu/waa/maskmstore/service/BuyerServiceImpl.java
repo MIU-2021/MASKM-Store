@@ -46,8 +46,8 @@ public class BuyerServiceImpl implements BuyerService{
     }
 
     @Override
-    public List<Buyer> getAllBuyers(Pageable pageable){
-        return buyerRepository.findAllBuyers(pageable);
+    public List<Buyer> getAllBuyers(){
+        return buyerRepository.findAllBuyers();
     }
     @Override
     public Buyer getBuyerBybId(long id) {
@@ -64,7 +64,7 @@ public class BuyerServiceImpl implements BuyerService{
     @Override
     public List<Buyer> getAllBuyerWithPagingAndSorting(Pageable pageable) {
 
-        return buyerRepository.findAllBuyers(pageable).stream().collect(Collectors.toList());
+        return buyerRepository.findAllBuyers();
 
     }
 
