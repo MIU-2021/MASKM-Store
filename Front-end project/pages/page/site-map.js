@@ -171,7 +171,7 @@ const Data = [
         subtitle: [
           {
             title: "Left Sidebar",
-            link: "/product-details",
+            link: "/product-details/1",
           },
           {
             title: "Right Sidebar",
@@ -252,6 +252,10 @@ const Data = [
       {
         title: "Left Sidebar",
         link: "/shop/left_sidebar",
+      },
+      {
+        title: "Right Sidebar",
+        link: "/shop/right_sidebar/:catId",
       },
       {
         title: "Right Sidebar",

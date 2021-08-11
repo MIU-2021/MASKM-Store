@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import java.util.List;
 
@@ -27,10 +28,20 @@ public class Buyer {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
     private List<Order> orders;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
     User user;
 
+    @Valid
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    private List<PaymentMethod> paymentMethods;
+
+    @Valid
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    private List<Seller> sellersFollowed;
 
 
 }

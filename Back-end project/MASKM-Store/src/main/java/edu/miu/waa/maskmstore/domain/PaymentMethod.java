@@ -5,20 +5,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Phone {
+public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
- //   @Pattern(regexp = )
-    String countryCode;
 
-    String areaCode;
+    @Pattern(regexp = "[0-9]{16}")
+    String cardNumber;
 
-    String number;
+    @Pattern(regexp = "(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})",message = "{card.expiration}")
+    String cardExpiryDate;
+
+    CardTypes cardType;
+
+
 }

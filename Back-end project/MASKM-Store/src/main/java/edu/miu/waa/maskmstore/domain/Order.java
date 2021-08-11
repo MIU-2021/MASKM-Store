@@ -5,11 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -17,21 +15,19 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Order {
 
+@Entity (name="ord")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @DateTimeFormat
-    private LocalDateTime createdOn;
+    long id;
+    private Date createdOn;
 
     private double price;
 
-    @Transient
-    private List<LineItem> lineItemList;
-
-
+    @Valid
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    List<LineItem> lineItems;
 
 }

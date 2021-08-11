@@ -13,8 +13,11 @@ public interface SellerRepository extends CrudRepository<Seller, Long> {
     @Query("select s from Seller s where s.user.username=:userName")
     public Seller findSellerByUsername(String userName);
 
-    @Query("select s from Seller  s where s.user.email=:email")
-    public Seller findSellerByEmail(/*@Param("email")*/ String email);
+    @Query("select s from Seller s where s.user.email=:email")
+    public Seller findSellerByEmail(@Param("email") String email);
+
+    @Query("select s from Seller  s where s.sId=:sId")
+    public Seller findSellerBySId(@Param("sId") long sId);
 
     @Query("select s.shippingAddress from Seller s where s.sId=:id")
     public Address findShippingAddress(@Param("id") long id);
