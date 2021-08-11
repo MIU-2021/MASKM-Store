@@ -12,6 +12,7 @@ import CartContext from "../../../helpers/cart";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
 import axios from "axios";
+import { fecthProductByCategory } from "../../../services/Products.Services";
 
 const GET_PRODUCTS = gql`
   query products(
@@ -77,7 +78,7 @@ function ddd() {
     });
 }
 
-const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
+const ProductList = ({ colClass, layoutList, openSidebar, noSidebar,catId }, props) => {
   const cartContext = useContext(CartContext);
   const quantity = cartContext.quantity;
   const wishlistContext = useContext(WishlistContext);
@@ -97,29 +98,46 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [layout, setLayout] = useState(layoutList);
   const [url, setUrl] = useState();
+  const [loading, setLoading] = useState(false);
+   const [data, setData] = useState([]);
 
+
+  console.log(catId);
   useEffect(() => {
+    fetchProductsHandler(catId);
     const pathname = window.location.pathname;
     setUrl(pathname);
-    router.push(
-      `${pathname}?${filterContext.state}&brand=${selectedBrands}&color=${selectedColor}&size=${selectedSize}&minPrice=${selectedPrice.min}&maxPrice=${selectedPrice.max}`
-    );
-  }, [selectedBrands, selectedColor, selectedSize, selectedPrice]);
+    // router.push(
+    //   `${pathname}?${filterContext.state}&brand=${selectedBrands}&color=${selectedColor}&size=${selectedSize}&minPrice=${selectedPrice.min}&maxPrice=${selectedPrice.max}`
+    // );
+  }, [catId,selectedBrands, selectedColor, selectedSize, selectedPrice]);
+  //useEffect(fetchProductsHandler, [selectedBrands, selectedColor, selectedSize, selectedPrice]);
 
-  var { loading, data, fetchMore } = useQuery(GET_PRODUCTS, {
-    variables: {
-      type: selectedCategory,
-      priceMax: selectedPrice.max,
-      priceMin: selectedPrice.min,
-      color: selectedColor,
-      brand: selectedBrands,
-      sortBy: sortBy,
-      indexFrom: 0,
-      limit: limit,
-    },
-  });
+  function fetchProductsHandler(catId) {
+    setIsLoading(true);
+    fecthProductByCategory(catId)
+      .then(resp => {
+        setData(resp);
 
-  
+console.log(resp);
+        return resp.data;
+      })
+      .catch(error => console.log(error));
+  }
+
+  // var {  data, fetchMore } = useQuery(GET_PRODUCTS, {
+  //   variables: {
+  //     type: selectedCategory,
+  //     priceMax: selectedPrice.max,
+  //     priceMin: selectedPrice.min,
+  //     color: selectedColor,
+  //     brand: selectedBrands,
+  //     sortBy: sortBy,
+  //     indexFrom: 0,
+  //     limit: limit,
+  //   },
+  // });
+
   const handlePagination = () => {
     setIsLoading(true);
     setTimeout(
@@ -165,7 +183,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
   };
 
   return (
-    
+
     <Col className="collection-content">
       <div className="page-main-content">
         <Row>
@@ -222,6 +240,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
               </Col>
             </Row>
             <div className="collection-product-wrapper">
+              
               <div className="product-top-filter">
                 {!noSidebar ? (
                   <Row>
@@ -240,16 +259,16 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                 ) : (
                   ""
                 )}
-                <Row>
+                {<Row>
                   <Col>
                     <div className="product-filter-content">
                       <div className="search-count">
-                        <h5>
+                        {/* <h5>
                           {data
                             ? `Showing Products 1-${data.products.items.length} of ${data.products.total}`
                             : "loading"}{" "}
                           Result
-                        </h5>
+                        </h5> */}
                       </div>
                       <div className="collection-view">
                         <ul>
@@ -337,20 +356,17 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                       </div>
                     </div>
                   </Col>
-                </Row>
+                </Row> }
               </div>
+              
+              
               <div className={`product-wrapper-grid ${layout}`}>
                 <Row>
                   {/* Product Box */}
                   {!data ||
-                    !data.products ||
-                    !data.products.items ||
-                    data.products.items.length === 0 ||
                     loading ? (
                     data &&
-                      data.products &&
-                      data.products.items &&
-                      data.products.items.length === 0 ? (
+                      data.length === 0 ? (
                       <Col xs="12">
                         <div>
                           <div className="col-sm-12 empty-cart-cls text-center">
@@ -384,7 +400,7 @@ const ProductList = ({ colClass, layoutList, openSidebar, noSidebar }) => {
                     )
                   ) : (
                     data &&
-                    data.products.items.map((product, i) => (
+                    data.map((product, i) => (
                       <div className={grid} key={i}>
                         <div className="product">
                           <div>
