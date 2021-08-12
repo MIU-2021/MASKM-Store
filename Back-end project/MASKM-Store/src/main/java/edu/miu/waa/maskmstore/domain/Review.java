@@ -33,8 +33,8 @@ public class Review {
     @NotBlank
     private String comment;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private Product product;
+    @ManyToOne
+    private Product product;
 
 
 

@@ -3,7 +3,9 @@ package edu.miu.waa.maskmstore.domain;
 public enum OrderStatus {
     Shipped("Shipped"),
     Returned("Returned"),
-    OnTheWay("On the way");
+    OnTheWay("On the way"),
+    Pending("Pending");
+
 
     private String orderStatus;
 

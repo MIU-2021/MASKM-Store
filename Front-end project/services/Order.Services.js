@@ -1,68 +1,6 @@
 export const OrderData = (userId) => {
   return [
-    {
-      id: "#125021",
-      productDetails: "Neck Velvet Dress",
-      date: "02-15-2021",
-      status: "Shipped",
-      price: "$205",
-    },
-    {
-      id: "#521214",
-      productDetails: "Belted Trench Coat",
-      date: "03-06-2021",
-      status: "Shipped",
-      price: "$350",
-    },
-    {
-      id: "#521021",
-      productDetails: "Men Print Tee",
-      date: "04-12-2021",
-      status: "pending",
-      price: "$150",
-    },
-    {
-      id: "#245021",
-      productDetails: "Woman Print Tee",
-      date: "05-21-2021",
-      status: "Shipped",
-      price: "$150",
-    },
-    {
-      id: "#122141",
-      productDetails: "Men Print Tee",
-      date: "05-28-2021",
-      status: "canceled",
-      price: "$150",
-    },
-    {
-      id: "#125015",
-      productDetails: "Men Print Tee",
-      date: "02-14-2021",
-      status: "pending",
-      price: "$150",
-    },
-    {
-      id: "#245021",
-      productDetails: "women print tee",
-      date: "02-02-2021",
-      status: "Shipped",
-      price: "$150",
-    },
-    {
-      id: "#122141",
-      productDetails: "men print tee",
-      date: "08-15-2021",
-      status: "canceled",
-      price: "$150",
-    },
-    {
-      id: "#125015",
-      productDetails: "men print tee",
-      date: "03-15-2021",
-      status: "pending",
-      price: "$150",
-    },
+    
   ];
 }
 
