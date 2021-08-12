@@ -2,11 +2,14 @@ package edu.miu.waa.maskmstore.controller;
 
 import edu.miu.waa.maskmstore.domain.Review;
 import edu.miu.waa.maskmstore.domain.stock.Product;
+import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -40,6 +43,11 @@ public class AdminController {
             return productsService.approveReview(product_id,review_id,"Approved");
         else
             return productsService.approveReview(product_id,review_id,"Rejected");
+
+    }
+    @GetMapping("/reviews")
+    public List<Review> getAllReviewWithoutApproval(){
+            return productsService.getAllReviewsWithoutApproval();
 
     }
 

@@ -33,6 +33,10 @@ public class Review {
     @NotBlank
     private String comment;
 
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    private Product product;
+
+
 
     private String status= ProductApprovedStatus.PENDING.getProductStatus();
 

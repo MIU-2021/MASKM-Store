@@ -29,11 +29,10 @@ public class ProductsServiceImpl implements ProductsService{
         try {
             product.setCreatedOn(LocalDate.now());
             product.setAvgRating();
-            ProductCategory productCategory=categoryRepository.findById(cat_id).get();
-
-            List<Product>products= productCategory.getProducts();
-            products.add(product);
-            categoryRepository.save(productCategory);
+            ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
+            if (productCategory!=null){
+            product.setProductCategory(productCategory);
+            }
 
             return product;
 
@@ -135,6 +134,7 @@ public class ProductsServiceImpl implements ProductsService{
             if (productsRepository.existsById(id)){
                 Product product=productsRepository.findById(id).get();
 //                review.setProduct(product);
+//                review.setProduct(product);
                 List<Review> reviews=product.getReviews();
                 reviews.add(review);
                 return productsRepository.save(product);
@@ -214,6 +214,11 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Product> getAllProductsWithCat(Pageable pageable,long cat_ID) {
 
         return (List<Product>)productsRepository.findAllWithCategory(cat_ID);
+    }
+
+    @Override
+    public List<Review> getAllReviewsWithoutApproval() {
+        return (List<Review>) productsRepository.getAllReviewsWithoutApproval(ProductApprovedStatus.PENDING.getProductStatus());
     }
 
 }

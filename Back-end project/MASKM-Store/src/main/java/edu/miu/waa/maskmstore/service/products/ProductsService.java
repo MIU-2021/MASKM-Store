@@ -28,4 +28,5 @@ public interface ProductsService {
 
     public List<Product> getAllProductsWithCat(Pageable pageable,long cat_ID);
 
+    public List<Review> getAllReviewsWithoutApproval();
 }
