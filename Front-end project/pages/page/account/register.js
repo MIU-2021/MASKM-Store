@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CommonLayout from '../../../components/shop/common-layout';
-import { Input, Container, Row, Form, Label ,Col} from 'reactstrap';
+import { Input, Container, Row, Form, Label ,Col,Button, ButtonGroup} from 'reactstrap';
+import {postReviewForproduct} from "../../../services/Reviews.Services";
+import {RegisterHandler} from "../../../services/Register.Services";
+
 
 const Register = () => {
+    const [rSelected, setRSelected] = useState(null);
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [firstname, setFirstname] = useState(null);
+    const [lastname, setLastname] = useState(null);
+    function handleClick() {
+        let datas1 = {username: username, firstName: firstname , lastName: lastname , email: email  , password: password , role : rSelected.toUpperCase()  };
+        RegisterHandler(datas1).then(response => {
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
     return (
         <CommonLayout parent="home" title="register">
             <section className="register-page section-b-space">
@@ -14,27 +30,43 @@ const Register = () => {
                                 <Form className="theme-form">
                                     <Row>
                                         <Col md="6">
-                                            <Label for="email">First Name</Label>
-                                            <Input type="text" className="form-control" id="fname" placeholder="First Name"
+                                            <Label for="fname">First Name</Label>
+                                            <Input onChange={(e) => setFirstname(e.target.value)} type="text" className="form-control" id="fname" placeholder="First Name"
                                                 required="" />
                                         </Col>
                                         <Col md="6">
                                             <Label for="review">Last Name</Label>
-                                            <Input type="password" className="form-control" id="lname" placeholder="Last Name"
+                                            <Input onChange={(e) => setLastname(e.target.value)} type="password" className="form-control" id="lname" placeholder="Last Name"
                                                 required="" />
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col md="6">
                                             <Label for="email">email</Label>
-                                            <Input type="text" className="form-control" id="email" placeholder="Email" required="" />
+                                            <Input onChange={(e) => setEmail(e.target.value)} type="text" className="form-control" id="email" placeholder="Email" required="" />
                                         </Col>
                                         <Col md="6">
                                             <Label for="review">Password</Label>
-                                            <Input type="password" className="form-control" id="review"
+                                            <Input onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="review"
                                                 placeholder="Enter your password" required="" />
                                         </Col>
-                                        <a href="#" className="btn btn-solid">create Account</a>
+
+
+                                        <Col md="6">
+                                            <h5>Choose Role</h5>
+                                            <ButtonGroup>
+                                                <Button color="danger" onClick={() => setRSelected("Buyer")} active={rSelected === 1}>Buyer</Button>
+                                                <Button color="danger" onClick={() => setRSelected("Seller")} active={rSelected === 2}>Seller</Button>
+                                            </ButtonGroup>
+                                            <p>Role : {rSelected}</p>
+                                        </Col>
+                                        <Col md="6">
+                                            <Label for="username">Username</Label>
+                                            <Input onChange={(e) => setUsername(e.target.value)} type="text" className="form-control" id="username" placeholder="username" required="" />
+
+                                        </Col>
+
+                                        <a href="#" className="btn btn-solid" onClick={handleClick}>create Account</a>
                                     </Row>
                                 </Form>
                             </div>

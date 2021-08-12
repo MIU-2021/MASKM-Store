@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Collapse } from 'reactstrap';
+import {fecthAllCategories} from "../../../services/Categories.Services";
 
 const Filter = () => {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fecthAllCategories().then(response => {
+      console.log("filer",response);
+      setData(response);
+      //setLoading(false);
+        return response.data;
+    }).catch((error) => {
+        console.log(error);
+    });
+    }, []);
+
     const backClick = () => {
         document.getElementById("filter").style.left = "-365px";
     }
@@ -23,9 +36,12 @@ const Filter = () => {
                     <div className="collection-collapse-block-content">
                         <div className="collection-brand-filter">
                             <ul className="category-list">
-                                <li><a href={null}>clothing</a></li>
-                                <li><a href={null}>books</a></li>
-                                <li><a href={null}>electronics</a></li>
+                                {data.map((d ) => {
+                                    return (
+                                        <li><a href={null}>{d}</a></li>
+                                    );
+                                })}
+
                             </ul>
                         </div>
                     </div>

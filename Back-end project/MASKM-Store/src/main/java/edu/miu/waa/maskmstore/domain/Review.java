@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotNull
@@ -32,6 +32,10 @@ public class Review {
     @NotEmpty
     @NotBlank
     private String comment;
+
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    private Product product;
+
 
 
     private String status= ProductApprovedStatus.PENDING.getProductStatus();

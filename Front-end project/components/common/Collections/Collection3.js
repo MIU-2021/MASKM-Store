@@ -86,7 +86,7 @@ const TopCollection = ({
     //   console.log(error);
     // });
     fecthAllProducts().then(response => {
-
+      console.log(response);
       setData(response);
       setLoading(false);
       return response.data;

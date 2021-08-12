@@ -5,36 +5,39 @@ import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = {"*"})
+@CrossOrigin("*")
 public class ProductsController {
 
     @Autowired
     ProductsService productsService;
 
-    @PostMapping
-    public void addProduct(@RequestBody Product product){
+//
+//    @PostMapping
+//    public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
+//        return productsService.addProduct(product,cat_id,,userName);
+//    }
 
-        productsService.addProduct(product);
+    @GetMapping()
+    public List<Product> getAllProductsPaging(@RequestParam(required = false, name = "page") String page, @RequestParam(required = false, name = "limit") String limit, @RequestParam(required = false, name = "cat") String cat_id){
+        if (page!=null&&limit!=null){
+            if (cat_id!=null)
+                return productsService.getAllProductsWithCat(PageRequest.of(Integer.parseInt(page)-1,Integer.parseInt(limit)),Integer.parseInt(cat_id));
+            else
+            return productsService.getAllProductWithPagingAndSorting(PageRequest.of(Integer.parseInt(page)-1,Integer.parseInt(limit)));
+
+        }
+        else
+            return productsService.getAllProducts(Pageable.unpaged());
     }
-    @GetMapping
-    public List<Product> getAllProducts(){
-        return productsService.getAllProducts(PageRequest.of(1,3,Sort.by("title").descending()));
-    }
-    @GetMapping("/pagination")
-    public List<Product> getAllProductsPaging(@RequestParam("page")int pageNumber){
-        return productsService.getAllProductWithPagingAndSorting(PageRequest.of(pageNumber,1));
-    }
-    @GetMapping("/ratting")
-    public List<Product> getAllProductsPaging(){
-        return productsService.getAllProductWithPagingAndSorting(PageRequest.of(1,3, Sort.by("ratting")));
-    }
+
+
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable long id){
         return productsService.getProductById(id).orElseThrow();

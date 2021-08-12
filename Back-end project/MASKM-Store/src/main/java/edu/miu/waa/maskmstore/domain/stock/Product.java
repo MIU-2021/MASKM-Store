@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain.stock;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.waa.maskmstore.domain.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -22,7 +23,7 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private boolean featured=false;
@@ -35,8 +36,8 @@ public class Product {
     @NotEmpty
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "image_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
     private List<Image> images;
 
 
@@ -50,7 +51,7 @@ public class Product {
     private String status= ProductApprovedStatus.PENDING.getProductStatus();
 
     @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
+    @JoinTable
     private List<Review> reviews;
 
 
@@ -58,15 +59,18 @@ public class Product {
     @Digits(fraction = 2,message = "Price Not Valid", integer = 5)
     private double price=0;
 
-    @ManyToOne
-    @JoinColumn(name = "SUB_CAT_ID")
-    private ProductSubCategory productSubCategory;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private ProductCategory productCategory;
 
     @DateTimeFormat
     private LocalDate createdOn;
 
     @OneToOne(mappedBy = "product")
     private Stock stock;
+
+    @ManyToOne
+
+    private Seller seller;
 
 
 

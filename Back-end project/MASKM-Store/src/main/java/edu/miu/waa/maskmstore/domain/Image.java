@@ -17,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
 public class Image {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "image_id")
     private long id;
 

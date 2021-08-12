@@ -1,17 +1,19 @@
 package edu.miu.waa.maskmstore.service.products;
 
 import edu.miu.waa.maskmstore.domain.Review;
+import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
+import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
+import edu.miu.waa.maskmstore.repository.CategoryRepository;
 import edu.miu.waa.maskmstore.repository.ProductsRepository;
+import edu.miu.waa.maskmstore.repository.SellerRepository;
+import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,13 +23,32 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Autowired
     ProductsRepository productsRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
+    @Autowired
+    SellerRepository sellerRepository;
+
     @Override
-    public Product addProduct(Product product) {
+    public Product addProduct(Product product,long cat_id,String userName) {
         try {
             product.setCreatedOn(LocalDate.now());
             product.setAvgRating();
-            Product product1=productsRepository.save(product);
-            return product1;
+            Seller seller=sellerRepository.findSellerByUsername(userName);
+            if (seller!=null){
+                ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
+                if (productCategory!=null){
+                    product.setProductCategory(productCategory);
+                }
+                List<Product> products=seller.getProducts();
+                products.add(product);
+                sellerRepository.save(seller);
+            }
+
+
+
+            return product;
+
+
         }catch (IllegalArgumentException e){
             System.out.println("ADDING ERROR: "+e.getMessage());
             return null;
@@ -125,6 +146,7 @@ public class ProductsServiceImpl implements ProductsService{
             if (productsRepository.existsById(id)){
                 Product product=productsRepository.findById(id).get();
 //                review.setProduct(product);
+//                review.setProduct(product);
                 List<Review> reviews=product.getReviews();
                 reviews.add(review);
                 return productsRepository.save(product);
@@ -140,7 +162,9 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Review> getAllReviewsForProduct(long id) {
         try {
             if (productsRepository.existsById(id)){
-             return productsRepository.findAllReviewsForProduct(id);
+             return productsRepository.findAllReviewsForProduct(id).stream()
+                     .filter(review -> review.getStatus().equals(ProductApprovedStatus.APPROVED.getProductStatus()))
+                     .collect(Collectors.toList());
             }
             return null;
         }catch (IllegalArgumentException e){
@@ -198,6 +222,16 @@ public class ProductsServiceImpl implements ProductsService{
             System.out.println("STATUS ERROR: "+e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Product> getAllProductsWithCat(Pageable pageable,long cat_ID) {
+        return (List<Product>)productsRepository.findAllWithCategory(cat_ID);
+    }
+
+    @Override
+    public List<Review> getAllReviewsWithoutApproval() {
+        return (List<Review>) productsRepository.getAllReviewsWithoutApproval(ProductApprovedStatus.PENDING.getProductStatus());
     }
 
 }

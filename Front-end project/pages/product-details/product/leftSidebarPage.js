@@ -47,7 +47,6 @@ const LeftSidebarPage = ({ pathId }) => {
   //   },
   // });
   function fetchProductsHandler() {
-    console.log("ffddf",{ pathId })
     fecthProductByID(pathId).then(response => {
       setData(response);
       setLoading(false);
@@ -92,9 +91,6 @@ const LeftSidebarPage = ({ pathId }) => {
     document.getElementById("filter").style.left = "-15px";
   };
 
-  const changeColorVar = (img_id) => {
-    slider2.current.slickGoTo(img_id);
-  };
 
   return (
     <section className="">
@@ -104,9 +100,6 @@ const LeftSidebarPage = ({ pathId }) => {
             <Col sm="3" className="collection-filter">
               <Filter />
               <Service />
-              {/* <!-- side-bar single product slider start --> */}
-              <NewProduct />
-              {/* <!-- side-bar single product slider end --> */}
             </Col>
             <Col lg="9" sm="12" xs="12">
               <Container fluid={true}>

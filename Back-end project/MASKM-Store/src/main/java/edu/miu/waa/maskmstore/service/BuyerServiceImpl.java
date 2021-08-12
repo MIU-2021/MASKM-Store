@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.service;
 
+import edu.miu.waa.maskmstore.domain.Address;
 import edu.miu.waa.maskmstore.domain.Buyer;
 import edu.miu.waa.maskmstore.domain.Order;
 import edu.miu.waa.maskmstore.domain.Seller;
@@ -43,6 +44,17 @@ public class BuyerServiceImpl implements BuyerService{
         buyerRepository.save(buyer);
 
     }
+    @Override
+    public void unFollowSeller(long bId, long sId) {
+        Buyer buyer=buyerRepository.findBuyerByBId(bId);
+        Seller seller= sellerRepository.findSellerBySId(sId);
+        List<Seller> sellersFollowed= buyerRepository.getSellerFollowedByBuyerId(bId);
+        sellersFollowed.remove(seller);
+
+        buyer.setSellersFollowed(sellersFollowed);
+        buyerRepository.save(buyer);
+
+    }
 
     @Override
     public List<Buyer> getAllBuyers(){
@@ -69,6 +81,7 @@ public class BuyerServiceImpl implements BuyerService{
 
     @Override
     public List<Order> getAllOrderByBuyerId(long id){
+
         return buyerRepository.getAllOrdersByBuyerId(id);
     }
 
@@ -77,12 +90,23 @@ public class BuyerServiceImpl implements BuyerService{
         buyerRepository.save(buyer);
     }
     @Override
-    public void addOrder(long bId, Order order) {
-        Buyer buyer=buyerRepository.findBuyerByBId(bId);
-        List<Order> orders = orderRepository.findAllOrdersByBuyerId(bId);
+    public void addOrder(String userName, Order order) {
+        Buyer buyer=buyerRepository.findBuyerByUsername(userName);
+
+        List<Order> orders = orderRepository.findAllOrdersByBuyerId(buyer.getBId());
         orders.add(order);
         buyer.setOrders(orders);
+}
 
+    @Override
+    public Order getOrderByBuyerUserNameOrderId(long id, String userName) {
+        Buyer buyer=buyerRepository.findBuyerByUsername(userName);
+        return orderRepository.findById(buyerRepository.getOrderByBuyerUserNameOrderId( id,  buyer.getBId())).get();
     }
 
+    @Override
+    public Address getShippingAddressBysId(long id){
+        return buyerRepository.findShippingAddress(id);
+
+    }
 }

@@ -1,4 +1,7 @@
 package edu.miu.waa.maskmstore.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.miu.waa.maskmstore.domain.stock.Product;
+import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,18 +25,16 @@ public class Seller {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long sId;
 
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-
-    Address shippingAddress;
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    Address billingAddress;
-
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
     User user;
+    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable
+    @JsonIgnore
+    List<Product> products;
+
+    private String status= ProductApprovedStatus.PENDING.getProductStatus();
+
 }
