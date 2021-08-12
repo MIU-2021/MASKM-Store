@@ -30,4 +30,7 @@ public class Order {
     @JoinTable
     List<LineItem> lineItems;
 
+    @ManyToOne
+    private Buyer buyer;
+
 }

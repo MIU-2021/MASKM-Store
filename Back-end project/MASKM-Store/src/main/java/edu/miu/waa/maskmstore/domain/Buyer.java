@@ -30,6 +30,8 @@ public class Buyer {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
+    @Fetch(FetchMode.JOIN)
+
     private List<Order> orders;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -52,7 +54,7 @@ public class Buyer {
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
-    @Fetch(FetchMode.JOIN)
+
     private List<Seller> sellersFollowed;
 
 
