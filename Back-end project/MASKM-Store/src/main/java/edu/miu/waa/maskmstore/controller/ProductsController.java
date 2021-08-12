@@ -18,21 +18,27 @@ public class ProductsController {
     @Autowired
     ProductsService productsService;
 
-//
-//    @PostMapping
-//    public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
-//        return productsService.addProduct(product,cat_id,,userName);
-//    }
+
+    @PostMapping
+    public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
+        return productsService.addProductWithoutSeller(product,cat_id);
+    }
 
     @GetMapping()
-    public List<Product> getAllProductsPaging(@RequestParam(required = false, name = "page") String page, @RequestParam(required = false, name = "limit") String limit, @RequestParam(required = false, name = "cat") String cat_id){
+    public List<Product> getAllProductsPaging(@RequestParam(required = false, name = "page") String page, @RequestParam(required = false, name = "limit") String limit, @RequestParam(required = false, name = "cat") String cat_id,@RequestParam(required = false, name = "userName") String sellerUserName){
         if (page!=null&&limit!=null){
             if (cat_id!=null)
                 return productsService.getAllProductsWithCat(PageRequest.of(Integer.parseInt(page)-1,Integer.parseInt(limit)),Integer.parseInt(cat_id));
+            else if (sellerUserName != null)
+                return productsService.getAllProductsForOneSeller(PageRequest.of(Integer.parseInt(page)-1
+                        ,Integer.parseInt(limit))
+                        ,sellerUserName);
             else
             return productsService.getAllProductWithPagingAndSorting(PageRequest.of(Integer.parseInt(page)-1,Integer.parseInt(limit)));
 
         }
+        else if (sellerUserName!=null)
+            return productsService.getAllProductsForOneSeller(Pageable.unpaged(),sellerUserName);
         else
             return productsService.getAllProducts(Pageable.unpaged());
     }
@@ -40,7 +46,7 @@ public class ProductsController {
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable long id){
-        return productsService.getProductById(id).orElseThrow();
+        return productsService.getProductById(id).orElse(null);
     }
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable long id){

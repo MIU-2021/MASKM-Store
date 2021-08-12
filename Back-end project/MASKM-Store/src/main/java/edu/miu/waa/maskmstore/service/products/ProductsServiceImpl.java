@@ -36,6 +36,7 @@ public class ProductsServiceImpl implements ProductsService{
             Seller seller=sellerRepository.findSellerByUsername(userName);
             if (seller!=null){
                 ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
+                product.setSeller(seller);
                 if (productCategory!=null){
                     product.setProductCategory(productCategory);
                 }
@@ -56,13 +57,34 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
+    public Product addProductWithoutSeller(Product product, long cat_id) {
+        product.setCreatedOn(LocalDate.now());
+        product.setAvgRating();
+        ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
+        if (productCategory!=null){
+            product.setProductCategory(productCategory);
+            List<Product> products=productCategory.getProducts();
+            products.add(product);
+            categoryRepository.save(productCategory);
+            return product;
+        }
+        return null;
+    }
+
+    @Override
     public Optional<Product> getProductById(long id) {
-            return productsRepository.findById(id);
+        Optional<Product> product=productsRepository.getProductById(id);
+            return product;
     }
 
     @Override
     public List<Product> getAllProducts(Pageable pageable) {
         return (List<Product>)productsRepository.findAll();
+    }
+
+    @Override
+    public List<Product> getAllProductsForOneSeller(Pageable pageable,String sellerUserName) {
+        return (List<Product>)sellerRepository.findAllProductBySellerUserName(sellerUserName,pageable);
     }
 
     @Override
@@ -88,8 +110,8 @@ public class ProductsServiceImpl implements ProductsService{
                     currentOne.setPrice(product.getPrice());
                 if (product.getDescription()!=null)
                     currentOne.setDescription(product.getDescription());
-                if (product.getImages()!=null)
-                    currentOne.setImages(product.getImages());
+                if (product.getImage()!=null)
+                    currentOne.setImage(product.getImage());
             }
             product.setCreatedOn(LocalDate.now());
             Product product1=productsRepository.save(product);
@@ -144,9 +166,9 @@ public class ProductsServiceImpl implements ProductsService{
     public Product addReviewToProduct(long id, Review review) {
         try {
             if (productsRepository.existsById(id)){
-                Product product=productsRepository.findById(id).get();
-//                review.setProduct(product);
-//                review.setProduct(product);
+                Product product=productsRepository.getProductById(id).orElse(null);
+
+                review.setProduct(product);
                 List<Review> reviews=product.getReviews();
                 reviews.add(review);
                 return productsRepository.save(product);
@@ -162,9 +184,9 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Review> getAllReviewsForProduct(long id) {
         try {
             if (productsRepository.existsById(id)){
-             return productsRepository.findAllReviewsForProduct(id).stream()
-                     .filter(review -> review.getStatus().equals(ProductApprovedStatus.APPROVED.getProductStatus()))
-                     .collect(Collectors.toList());
+                return productsRepository.findAllReviewsForProduct(id).stream()
+                        .filter(review -> review.getStatus().equals(ProductApprovedStatus.APPROVED.getProductStatus()))
+                        .collect(Collectors.toList());
             }
             return null;
         }catch (IllegalArgumentException e){

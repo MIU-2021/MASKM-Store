@@ -36,9 +36,7 @@ public class Product {
     @NotEmpty
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
-    private List<Image> images;
+    private String image;
 
 
     private double rating=0;
@@ -52,6 +50,7 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
+    @JsonIgnore
     private List<Review> reviews;
 
 
@@ -59,7 +58,7 @@ public class Product {
     @Digits(fraction = 2,message = "Price Not Valid", integer = 5)
     private double price=0;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = ProductCategory.class)
     private ProductCategory productCategory;
 
     @DateTimeFormat
@@ -69,7 +68,6 @@ public class Product {
     private Stock stock;
 
     @ManyToOne
-
     private Seller seller;
 
 

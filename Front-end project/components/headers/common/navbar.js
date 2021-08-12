@@ -62,8 +62,8 @@ const NavBar = () => {
     cats.forEach(c => {
       childrenCategories.push({
         path: '/shop/right_sidebar/',
-        query: { catId: c },
-        title: c,
+        query: { catId: c.id },
+        title: c.name,
         type: 'link'
       })
     });
@@ -207,11 +207,11 @@ const NavBar = () => {
                               ""
                             )}
                             {childrenItem.type === "link" ? (
-                                <span>
+                              <span>
                                 {childrenItem.query ?
-                                  <Link 
-                                        href={{pathname:`${childrenItem.path}`, query:childrenItem.query}}
-                                       >
+                                  <Link
+                                    href={{ pathname: `${childrenItem.path}`, query: childrenItem.query }}
+                                  >
                                     <a>
                                       {childrenItem.title}
                                       {childrenItem.tag === "new" ? (
@@ -234,7 +234,6 @@ const NavBar = () => {
                                   </Link>
                                 }
                               </span>
-                                                            
                             ) : (
                               ""
                             )}

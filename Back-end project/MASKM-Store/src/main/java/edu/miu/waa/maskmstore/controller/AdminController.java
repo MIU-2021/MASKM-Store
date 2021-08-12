@@ -90,4 +90,16 @@ public class AdminController {
 //    public String deleteSubCat(@PathVariable long cat_id,@PathVariable long subCat_id){
 //        return categoryService.deleteSubCategory(cat_id,subCat_id);
 //    }
+/*List sellers -- GET sellers/*/
+    @GetMapping("/sellers")
+    public List<Seller> getAllSellers(){
+        return sellerService.getAllSellers();
+    }
+
+
+    @GetMapping("/sellers/{id}")
+    public Seller getOneSeller(@PathVariable int id){
+
+        return sellerService.getSellerBySId(id);
+    }
 }

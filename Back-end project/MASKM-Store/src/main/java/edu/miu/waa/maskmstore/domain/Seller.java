@@ -30,7 +30,6 @@ public class Seller {
     @JoinColumn(name="User_ID")
     User user;
     @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
     @JoinTable
     @JsonIgnore
     List<Product> products;

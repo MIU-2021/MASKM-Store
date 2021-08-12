@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin("*")
+
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/buyer")
 public class BuyerController {
@@ -44,10 +45,10 @@ public class BuyerController {
     public Buyer getBuyerById(@PathVariable("id") long id){
         return buyerService.getBuyerBybId(id);
     }
-    @GetMapping("/profile/{userName}")
-    public Buyer getBuyerById(@PathVariable String userName){
+    /*@GetMapping("/profile/{userName}")
+    *//*public Buyer getBuyerById(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName);
-    }
+    }*/
     @GetMapping("/{userName}/follow")
     public List<Seller> getAllSellerFollowedByBuyer(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName).getSellersFollowed();
@@ -120,6 +121,17 @@ public class BuyerController {
     public List<Order> getAllOrdersForBuyer(@PathVariable String userName){
 
         return buyerService.getAllOrdersForBuyer(buyerService.getBuyerByUsername(userName).getBId());
+    }
+
+    @GetMapping("/profile/{userName}")
+    public Buyer getBuyerById(@PathVariable String userName){
+        return buyerService.getBuyerByUsername(userName);
+    }
+
+
+    @GetMapping("/{id}/orders")
+    public List<Order> getAllOrdersForBuyer(@PathVariable long id){
+        return buyerService.getAllOrdersForBuyer(id);
     }
 
 }

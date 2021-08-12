@@ -3,7 +3,7 @@ import { Container, Row, Form, Input, Label, Col } from 'reactstrap';
 import { CurrentUser } from '../../../../services/User.Services';
 
 const ProfilePage = (props) => {
-    const user = props.user;
+    const user = props.user.user;
     return (
         <>
             <section className="contact-page register-page">
