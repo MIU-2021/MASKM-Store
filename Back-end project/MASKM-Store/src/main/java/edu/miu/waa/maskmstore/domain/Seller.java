@@ -1,4 +1,5 @@
 package edu.miu.waa.maskmstore.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.Stock;
@@ -28,8 +29,11 @@ public class Seller {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
     User user;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
+    @JsonIgnore
+
     List<Product> products;
 
     private String status= ProductApprovedStatus.PENDING.getProductStatus();

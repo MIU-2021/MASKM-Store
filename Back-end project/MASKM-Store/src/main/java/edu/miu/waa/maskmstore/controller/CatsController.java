@@ -27,14 +27,7 @@ public class CatsController {
     }
     @GetMapping("{cat_id}")
     public ProductCategory getOneCat(@PathVariable long cat_id){
-        return categoryService.getOneCat(cat_id).get();
+        return categoryService.getOneCat(cat_id).orElse(null);
     }
-//    @PostMapping("/{cat_id}")
-//    public Product addProduct(@RequestBody Product product, @PathVariable long cat_id){
-//        return poProductsService.addProduct(product,cat_id,userName);
-//    }
-//    @GetMapping("/cats/{id}")
-//    public List<ProductSubCategory> getAllSubCats(@PathVariable long id){
-//        return categoryService.getAllSubCats(id);
-//    }
+
 }

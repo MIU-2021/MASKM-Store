@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain.stock;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.waa.maskmstore.domain.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -37,6 +38,7 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
+    @JsonIgnore
     private List<Image> images;
 
 
@@ -51,6 +53,7 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
+    @JsonIgnore
     private List<Review> reviews;
 
 
@@ -58,7 +61,7 @@ public class Product {
     @Digits(fraction = 2,message = "Price Not Valid", integer = 5)
     private double price=0;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = ProductCategory.class)
     private ProductCategory productCategory;
 
     @DateTimeFormat
@@ -67,7 +70,7 @@ public class Product {
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Seller seller;
 
 
