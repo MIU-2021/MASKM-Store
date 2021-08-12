@@ -25,7 +25,7 @@ public class Buyer {
     private long bId;
 
     @Digits(integer = 6, fraction = 0)
-    long points;
+    long points=0;
 
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -36,26 +36,24 @@ public class Buyer {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
-    User user;
+    private User user;
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
-    Address shippingAddress;
+    private Address shippingAddress;
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
-    Address billingAddress;
+    private Address billingAddress;
 
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
-    private List<PaymentMethod> paymentMethods;
-
-    @Valid
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable
-
     private List<Seller> sellersFollowed;
+
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    private CreditCard creditCard;
 
 
 }

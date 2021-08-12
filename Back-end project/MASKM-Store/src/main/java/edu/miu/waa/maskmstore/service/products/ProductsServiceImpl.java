@@ -104,8 +104,8 @@ public class ProductsServiceImpl implements ProductsService{
                     currentOne.setPrice(product.getPrice());
                 if (product.getDescription()!=null)
                     currentOne.setDescription(product.getDescription());
-                if (product.getImages()!=null)
-                    currentOne.setImages(product.getImages());
+                if (product.getImage()!=null)
+                    currentOne.setImage(product.getImage());
             }
             product.setCreatedOn(LocalDate.now());
             Product product1=productsRepository.save(product);

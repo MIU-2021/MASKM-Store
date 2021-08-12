@@ -1,6 +1,6 @@
 package edu.miu.waa.maskmstore.dto;
 
-import edu.miu.waa.maskmstore.domain.Image;
+//import edu.miu.waa.maskmstore.domain.Image;
 import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class ProductDTO {
 
     private String description;
 
-    private List<Image> images;
+//    private List<Image> images;
 
     private double rating;
     private String status;

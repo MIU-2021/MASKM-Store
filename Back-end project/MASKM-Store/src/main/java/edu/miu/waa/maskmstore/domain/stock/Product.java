@@ -36,9 +36,7 @@ public class Product {
     @NotEmpty
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
-    private List<Image> images;
+    private String image;
 
 
     private double rating=0;
