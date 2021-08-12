@@ -67,8 +67,8 @@ public class Product {
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private Seller seller;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Seller seller;
 
 
 

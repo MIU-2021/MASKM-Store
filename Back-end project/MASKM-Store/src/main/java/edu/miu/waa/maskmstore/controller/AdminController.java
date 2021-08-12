@@ -1,9 +1,11 @@
 package edu.miu.waa.maskmstore.controller;
 
 import edu.miu.waa.maskmstore.domain.Review;
+import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
+import edu.miu.waa.maskmstore.service.SellerService;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,22 @@ public class AdminController {
     @Autowired
     ProductsService productsService;
 
+    @Autowired
+    SellerService sellerService;
+
     @GetMapping("/products/{id}")
     public Product approveProduct(@RequestParam("approved") boolean approved, @PathVariable long id){
         if (approved)
             return productsService.makeItApprovedOrRejected(id,"Approved");
         else
             return productsService.makeItApprovedOrRejected(id,"Rejected");
+    }
+    @GetMapping("/seller/{id}")
+    public Seller approveSeller(@RequestParam("approved") boolean approved, @PathVariable long id){
+        if (approved)
+            return sellerService.makeItApprovedOrRejected(id,"Approved");
+        else
+            return sellerService.makeItApprovedOrRejected(id,"Rejected");
     }
     @GetMapping("/products/{id}/featured")
     public Product makeProductFeatured(@RequestParam("get") boolean featured, @PathVariable long id){

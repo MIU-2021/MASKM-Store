@@ -1,11 +1,13 @@
 package edu.miu.waa.maskmstore.service.products;
 
 import edu.miu.waa.maskmstore.domain.Review;
+import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
 import edu.miu.waa.maskmstore.repository.CategoryRepository;
 import edu.miu.waa.maskmstore.repository.ProductsRepository;
+import edu.miu.waa.maskmstore.repository.SellerRepository;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,16 +25,26 @@ public class ProductsServiceImpl implements ProductsService{
     ProductsRepository productsRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    SellerRepository sellerRepository;
 
     @Override
-    public Product addProduct(Product product,long cat_id) {
+    public Product addProduct(Product product,long cat_id,String userName) {
         try {
             product.setCreatedOn(LocalDate.now());
             product.setAvgRating();
-            ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
-            if (productCategory!=null){
-            product.setProductCategory(productCategory);
+            Seller seller=sellerRepository.findSellerByUsername(userName);
+            if (seller!=null){
+                ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
+                if (productCategory!=null){
+                    product.setProductCategory(productCategory);
+                }
+                List<Product> products=seller.getProducts();
+                products.add(product);
+                sellerRepository.save(seller);
             }
+
+
 
             return product;
 
@@ -150,7 +162,9 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Review> getAllReviewsForProduct(long id) {
         try {
             if (productsRepository.existsById(id)){
-             return productsRepository.findAllReviewsForProduct(id);
+             return productsRepository.findAllReviewsForProduct(id).stream()
+                     .filter(review -> review.getStatus().equals(ProductApprovedStatus.APPROVED.getProductStatus()))
+                     .collect(Collectors.toList());
             }
             return null;
         }catch (IllegalArgumentException e){
@@ -212,7 +226,6 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Override
     public List<Product> getAllProductsWithCat(Pageable pageable,long cat_ID) {
-
         return (List<Product>)productsRepository.findAllWithCategory(cat_ID);
     }
 

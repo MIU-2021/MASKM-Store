@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain;
 import edu.miu.waa.maskmstore.domain.stock.Product;
+import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +31,7 @@ public class Seller {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
     List<Product> products;
+
+    private String status= ProductApprovedStatus.PENDING.getProductStatus();
+
 }
