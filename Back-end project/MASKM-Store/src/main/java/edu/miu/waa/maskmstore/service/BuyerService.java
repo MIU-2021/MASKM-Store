@@ -23,6 +23,9 @@ public interface BuyerService {
     public List<Order> getAllOrderByBuyerId(long id);
     public void addBuyer(Buyer buyer);
     public void addOrder(String userName,  Order order);
+    public Order getOrderByBuyerUserNameOrderId(long id, String userName);
+
+
 
 
 }
