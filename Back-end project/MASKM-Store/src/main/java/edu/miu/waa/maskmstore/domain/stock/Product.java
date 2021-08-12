@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain.stock;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.waa.maskmstore.domain.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -67,7 +68,8 @@ public class Product {
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+
     private Seller seller;
 
 

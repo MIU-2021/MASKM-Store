@@ -67,6 +67,7 @@ public class BuyerController {
 
     @PostMapping("/{userName}/Order")
     public void addOrder(@RequestBody Order order, @PathVariable String userName){
+
            buyerService.addOrder(userName, order);
     }
 
