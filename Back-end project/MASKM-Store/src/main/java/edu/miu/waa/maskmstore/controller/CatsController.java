@@ -11,8 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cats")
-@CrossOrigin("*")
-
+@CrossOrigin(origins = {"*"})
 public class CatsController {
 
     @Autowired
@@ -30,4 +29,9 @@ public class CatsController {
         return categoryService.getOneCat(cat_id).orElse(null);
     }
 
+
+//    @GetMapping("/cats/{id}")
+//    public List<ProductSubCategory> getAllSubCats(@PathVariable long id){
+//        return categoryService.getAllSubCats(id);
+//    }
 }
