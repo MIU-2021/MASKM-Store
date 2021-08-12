@@ -28,16 +28,16 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     long uId;
     @NotEmpty
-    @Size(min = 3, max = 15,message = "{name.size}")
+    @Size(min = 3, max = 50,message = "username size")
     String username;
     @NotEmpty
-    @Size(min = 3, max = 15,message = "{name.size}")
+    @Size(min = 3, max = 15,message = "password size")
     String password;
     @NotEmpty
-    @Size(min = 3, max = 15,message = "{name.size}")
+    @Size(min = 3, max = 50,message = "fName size")
     String fName;
     @NotEmpty
-    @Size(min = 3, max = 15,message = "{name.size}")
+    @Size(min = 3, max = 50,message = "lName size")
     String lName;
     @Email
     String email;

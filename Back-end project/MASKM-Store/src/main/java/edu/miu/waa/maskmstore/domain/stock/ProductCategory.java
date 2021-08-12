@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain.stock;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
@@ -20,8 +21,9 @@ public class ProductCategory {
 	private String name;
 
 
-	//@OneToMany(cascade = CascadeType.ALL)
-	//@JoinTable
-	//private List<Product> products;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable
+	@JsonIgnore
+	private List<Product> products;
 
 }

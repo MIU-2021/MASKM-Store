@@ -1,19 +1,24 @@
 package edu.miu.waa.maskmstore.service;
 
 import edu.miu.waa.maskmstore.domain.Address;
+import edu.miu.waa.maskmstore.domain.Order;
 import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
+import edu.miu.waa.maskmstore.repository.OrderRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SellerServiceImpl implements  SellerService{
     @Autowired
     SellerRepository sellerRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     public Seller getSellerByEmail(String email){
         return sellerRepository.findSellerByEmail(email);
@@ -58,8 +63,25 @@ public class SellerServiceImpl implements  SellerService{
     }
 
     @Override
+    public List<Order> getOrdersBySellerBySId(long sId) {
+
+        List<Order> orders = sellerRepository.getOrdersBySellerBySId(sId).
+                                stream().
+                                map(o->orderRepository.findById(o).get())
+                                .collect(Collectors.toList());
+        return orders;
+
+
+    }
+
+    @Override
     public List<Seller> getAllSellers() {
         return sellerRepository.findAll();
+    }
+
+    @Override
+    public void addSeller(Seller seller) {
+        sellerRepository.save(seller);
     }
 
 }
