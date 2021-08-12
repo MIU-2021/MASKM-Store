@@ -1,9 +1,8 @@
 package edu.miu.waa.maskmstore.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -12,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +42,7 @@ public class User {
     @Email
     String email;
 
-    @Valid
+
     @OneToOne(cascade = CascadeType.ALL)
     Phone phone;
 
@@ -50,7 +50,13 @@ public class User {
     @JoinTable(name="USER_ROLES",joinColumns =
             {@JoinColumn(name="USER_ID")},inverseJoinColumns = {
             @JoinColumn(name="ROLE_ID")})
-    private Set<Role> roles;
+    /*@ToStringExclude
+    @JsonIgnore*/
+    private Set<Role> roles = new HashSet<>();
+
+    public void addRole(Role role){
+        roles.add(role);
+    }
 
 
 
