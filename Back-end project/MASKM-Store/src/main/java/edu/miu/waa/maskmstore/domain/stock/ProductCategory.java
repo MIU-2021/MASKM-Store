@@ -2,6 +2,8 @@ package edu.miu.waa.maskmstore.domain.stock;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,8 +20,8 @@ public class ProductCategory {
 	private String name;
 
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable
-	private List<Product> products;
+	//@OneToMany(cascade = CascadeType.ALL)
+	//@JoinTable
+	//private List<Product> products;
 
 }

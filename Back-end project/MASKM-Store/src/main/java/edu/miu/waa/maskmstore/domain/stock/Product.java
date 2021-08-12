@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain.stock;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.waa.maskmstore.domain.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -35,8 +36,8 @@ public class Product {
     @NotEmpty
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "image_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
     private List<Image> images;
 
 
@@ -50,7 +51,7 @@ public class Product {
     private String status= ProductApprovedStatus.PENDING.getProductStatus();
 
     @OneToMany(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
+    @JoinTable
     private List<Review> reviews;
 
 
@@ -66,6 +67,10 @@ public class Product {
 
     @OneToOne(mappedBy = "product")
     private Stock stock;
+
+    @ManyToOne
+
+    private Seller seller;
 
 
 

@@ -1,12 +1,17 @@
 package edu.miu.waa.maskmstore.controller;
 
 import edu.miu.waa.maskmstore.domain.Review;
+import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
+import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
+import edu.miu.waa.maskmstore.service.SellerService;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -22,12 +27,22 @@ public class AdminController {
     @Autowired
     ProductsService productsService;
 
+    @Autowired
+    SellerService sellerService;
+
     @GetMapping("/products/{id}")
     public Product approveProduct(@RequestParam("approved") boolean approved, @PathVariable long id){
         if (approved)
             return productsService.makeItApprovedOrRejected(id,"Approved");
         else
             return productsService.makeItApprovedOrRejected(id,"Rejected");
+    }
+    @GetMapping("/seller/{userName}")
+    public Seller approveSeller(@RequestParam("approved") boolean approved, @PathVariable String userName){
+        if (approved)
+            return sellerService.makeItApprovedOrRejected(userName,"Approved");
+        else
+            return sellerService.makeItApprovedOrRejected(userName,"Rejected");
     }
     @GetMapping("/products/{id}/featured")
     public Product makeProductFeatured(@RequestParam("get") boolean featured, @PathVariable long id){
@@ -40,6 +55,11 @@ public class AdminController {
             return productsService.approveReview(product_id,review_id,"Approved");
         else
             return productsService.approveReview(product_id,review_id,"Rejected");
+
+    }
+    @GetMapping("/reviews")
+    public List<Review> getAllReviewWithoutApproval(){
+            return productsService.getAllReviewsWithoutApproval();
 
     }
 
@@ -70,4 +90,10 @@ public class AdminController {
 //    public String deleteSubCat(@PathVariable long cat_id,@PathVariable long subCat_id){
 //        return categoryService.deleteSubCategory(cat_id,subCat_id);
 //    }
+
+    /*List sellers -- GET sellers/*/
+    @GetMapping("/sellers")
+    public List<Seller> getAllSellers(){
+        return sellerService.getAllSellers();
+    }
 }

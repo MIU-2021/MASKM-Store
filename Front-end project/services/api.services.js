@@ -1,6 +1,6 @@
 import axios from "axios";
 //const url = process.env.SERVER_API_URL;
-//const url = http://172.19.140.95:2021/products
+const urlkarim = 'http://172.19.140.95:2021'
 const url = 'https://fakestoreapi.com';
 
 
@@ -29,6 +29,20 @@ export const _get=(path) =>{
         });
 }
 
+export const _getApiKarim=(path) =>{
+    console.log(`${urlkarim}/${path}`);
+    return axios
+        // .get(`${url}/${path}`, {
+        //     headers: headers
+        // })
+        .get(`${urlkarim}/${path}`)
+        .then(response => {
+            return response.data;
+        }).catch((error) => {
+            console.log(error);
+        });
+}
+
 export const _post=(path, body) =>{
     console.log(path, body);
     // return axios
@@ -40,6 +54,18 @@ export const _post=(path, body) =>{
     //     }).catch((error) => {
     //         console.log(error);
     //     });
+}
+
+export const _postKarimApi=(path, body) =>{
+    console.log("body",body);
+    return axios
+        .post(`${urlkarim}/${path}`,body)
+        .then(response => {
+            console.log("response",response);
+            return response.data;
+        }).catch((error) => {
+            console.log("error: ",error);
+        });
 }
 
 export const _put=(path, body)=> {

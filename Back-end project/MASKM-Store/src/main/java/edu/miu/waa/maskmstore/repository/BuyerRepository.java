@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.repository;
 
+import edu.miu.waa.maskmstore.domain.Address;
 import edu.miu.waa.maskmstore.domain.Buyer;
 import edu.miu.waa.maskmstore.domain.Order;
 import edu.miu.waa.maskmstore.domain.Seller;
@@ -33,8 +34,9 @@ public interface BuyerRepository extends CrudRepository<Buyer,Long> {
     @Query("select b.points from Buyer b where b.bId = :id ")
     public long getBuyerPoints(@Param("id") long id);
 
+    @Query("select b.shippingAddress from Buyer b where b.bId=:id")
+    public Address findShippingAddress(@Param("id") long id);
 
-
-
-
+    @Query(value = "select o.id from ord o inner join buyer_orders bo  on o.id=bo.orders_id where bo.buyer_b_id=:bId and o.id=:id",nativeQuery = true)
+    public long getOrderByBuyerUserNameOrderId(long id, long bId);
 }
