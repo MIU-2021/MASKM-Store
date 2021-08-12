@@ -20,4 +20,8 @@ INSERT INTO address(address_line, address_type, city, country, state, zip_code) 
 INSERT INTO address(address_line, address_type, city, country, state, zip_code) VALUE ('4th st','billing','fairfield','USA','IA',52557);
 
 INSERT INTO seller(s_id, billing_address_id, shipping_address_id, user_id) VALUE (1,2,1,3);
+INSERT INTO seller(s_id, billing_address_id, shipping_address_id, user_id) VALUE (2,2,1,18);
+
+/*Product data*/
+
 
