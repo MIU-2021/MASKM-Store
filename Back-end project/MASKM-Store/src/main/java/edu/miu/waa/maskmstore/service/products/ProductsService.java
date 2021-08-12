@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface ProductsService {
 
     public Product addProduct(Product product,long cat_id,String userName);
+    public Product addProductWithoutSeller(Product product, long cat_id);
     public Optional<Product> getProductById(long id);
     public List<Product> getAllProducts(Pageable pageable);
     public boolean isExistById(long id);
