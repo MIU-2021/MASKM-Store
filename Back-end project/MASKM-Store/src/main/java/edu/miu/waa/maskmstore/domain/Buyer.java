@@ -25,7 +25,7 @@ public class Buyer {
     private long bId;
 
     @Digits(integer = 6, fraction = 0)
-    long points;
+    long points=0;
 
 
     @OneToMany(cascade = CascadeType.ALL)
