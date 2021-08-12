@@ -148,6 +148,10 @@ const Dashboard = () => {
     useEffect(() => {
         setFollowing(myFollows());
     }, []);
+    useEffect(() => {
+        if(!RoleAuthenticated() || RoleAuthenticated().toUpperCase() != 'BUYER')
+             router.push("/page/account/login");
+    }, []);
 
     const deleteOrderEventHandler = (orderId) => {
         var answer = window.confirm("Delete Order?");
@@ -185,8 +189,6 @@ const Dashboard = () => {
 
     return (
         <React.Fragment>
-            {/* {!role || role.toUpperCase() != 'BUYER'?  router.push("/page/account/login"):''} */}
-            {role}
             <CommonLayout parent="home" title="dashboard">
                 <section className="section-b-space">
                     <Container>
