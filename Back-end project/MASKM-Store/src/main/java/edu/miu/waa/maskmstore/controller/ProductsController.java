@@ -12,17 +12,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = {"*"})
+@CrossOrigin("*")
 public class ProductsController {
 
     @Autowired
     ProductsService productsService;
 
-
-    @PostMapping
-    public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
-        return productsService.addProduct(product,cat_id);
-    }
+//
+//    @PostMapping
+//    public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
+//        return productsService.addProduct(product,cat_id,,userName);
+//    }
 
     @GetMapping()
     public List<Product> getAllProductsPaging(@RequestParam(required = false, name = "page") String page, @RequestParam(required = false, name = "limit") String limit, @RequestParam(required = false, name = "cat") String cat_id){

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
@@ -34,6 +37,14 @@ public class Buyer {
     User user;
 
     @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    Address shippingAddress;
+
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    Address billingAddress;
+
+    @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
     private List<PaymentMethod> paymentMethods;
@@ -41,6 +52,7 @@ public class Buyer {
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
+    @Fetch(FetchMode.JOIN)
     private List<Seller> sellersFollowed;
 
 
