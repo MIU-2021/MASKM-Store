@@ -100,9 +100,6 @@ const LeftSidebarPage = ({ pathId }) => {
             <Col sm="3" className="collection-filter">
               <Filter />
               <Service />
-              {/* <!-- side-bar single product slider start --> */}
-              <NewProduct />
-              {/* <!-- side-bar single product slider end --> */}
             </Col>
             <Col lg="9" sm="12" xs="12">
               <Container fluid={true}>
