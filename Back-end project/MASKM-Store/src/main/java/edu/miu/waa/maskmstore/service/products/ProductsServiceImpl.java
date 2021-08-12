@@ -36,6 +36,7 @@ public class ProductsServiceImpl implements ProductsService{
             Seller seller=sellerRepository.findSellerByUsername(userName);
             if (seller!=null){
                 ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
+                product.setSeller(seller);
                 if (productCategory!=null){
                     product.setProductCategory(productCategory);
                 }
@@ -79,6 +80,11 @@ public class ProductsServiceImpl implements ProductsService{
     @Override
     public List<Product> getAllProducts(Pageable pageable) {
         return (List<Product>)productsRepository.findAll();
+    }
+
+    @Override
+    public List<Product> getAllProductsForOneSeller(Pageable pageable,String sellerUserName) {
+        return (List<Product>)sellerRepository.findAllProductBySellerUserName(sellerUserName,pageable);
     }
 
     @Override
