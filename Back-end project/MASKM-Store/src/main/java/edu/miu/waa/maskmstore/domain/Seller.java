@@ -1,4 +1,5 @@
 package edu.miu.waa.maskmstore.domain;
+import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,18 +23,11 @@ public class Seller {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long sId;
 
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-
-    Address shippingAddress;
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    Address billingAddress;
-
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
     User user;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    List<Product> products;
 }

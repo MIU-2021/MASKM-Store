@@ -14,15 +14,18 @@ public class SellerServiceImpl implements  SellerService{
     public Seller getSellerByEmail(String email){
         return sellerRepository.findSellerByEmail(email);
     };
-    public Address getShippingAddressBysId(long id){
-        return sellerRepository.findShippingAddress(id);
 
-    }
 
     @Override
     public Seller getSellerBySId(long id) {
+
         return sellerRepository.findSellerBySId(id);
     }
+    @Override
+    public Seller getSellerByUserName(String userName) {
 
-    ;
+        return sellerRepository.findSellerBySUserName(userName);
+    }
+
+
 }

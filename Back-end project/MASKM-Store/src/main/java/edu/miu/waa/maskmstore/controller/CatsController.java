@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cats")
-@CrossOrigin(origins = {"*"})
+@CrossOrigin("*")
 
 public class CatsController {
 
