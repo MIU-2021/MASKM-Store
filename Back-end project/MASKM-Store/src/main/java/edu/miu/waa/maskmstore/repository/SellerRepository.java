@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SellerRepository extends CrudRepository<Seller, Long> {
 
@@ -23,4 +25,6 @@ public interface SellerRepository extends CrudRepository<Seller, Long> {
 
     @Query("select s from Seller s where s.user.username=:userName")
     public Seller findSellerBySUserName(String userName);
+
+    public List<Seller> findAll();
 }

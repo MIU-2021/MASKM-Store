@@ -59,7 +59,7 @@ public class SellerServiceImpl implements  SellerService{
 
     @Override
     public List<Seller> getAllSellers() {
-        return (List<Seller>) sellerRepository.findAll();
+        return sellerRepository.findAll();
     }
 
 }
