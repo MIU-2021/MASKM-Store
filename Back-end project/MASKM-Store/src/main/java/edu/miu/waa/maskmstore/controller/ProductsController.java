@@ -19,10 +19,10 @@ public class ProductsController {
     ProductsService productsService;
 
 
-//    @PostMapping
-//    public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
-//        return productsService.addProductWithoutSeller(product,cat_id);
-//    }
+    @PostMapping
+    public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
+        return productsService.addProductWithoutSeller(product,cat_id);
+    }
 
     @GetMapping()
     public List<Product> getAllProductsPaging(@RequestParam(required = false, name = "page") String page, @RequestParam(required = false, name = "limit") String limit, @RequestParam(required = false, name = "cat") String cat_id,@RequestParam(required = false, name = "userName") String sellerUserName){
