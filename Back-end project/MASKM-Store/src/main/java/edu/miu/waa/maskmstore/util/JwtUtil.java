@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class JwtUtil {
     private static final long serialVersionUID = -2550185165626007488L;
 
-    public static final long JWT_TOKEN_VALIDITY = 5*60*60;  // this * by 1000 is 5 hours
+    public static final long JWT_TOKEN_VALIDITY = 5*5*60*60;  // this * by 1000 is 5 hours
 
 
     private String secret = "secretsdfgdsfsdfgdfgsdfgdsfmiuisagoodpalcetolearnffasidjfsdkfjasdf";
@@ -70,7 +70,7 @@ public class JwtUtil {
         // calling from the jwt library  Subject is the person being authenticated
         claims.put("role",role);
         return Jwts.builder()
-        .setClaims(claims)
+        .setClaims(claims).setSubject(role)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY*1000)).signWith(SignatureAlgorithm.HS256, secret).compact();
     }

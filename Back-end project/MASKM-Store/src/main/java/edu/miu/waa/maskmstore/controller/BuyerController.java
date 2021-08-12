@@ -40,10 +40,10 @@ public class BuyerController {
     public Buyer getBuyerById(@PathVariable("id") long id){
         return buyerService.getBuyerBybId(id);
     }
-    @GetMapping("/profile/{userName}")
-    public Buyer getBuyerById(@PathVariable String userName){
+    /*@GetMapping("/profile/{userName}")
+    *//*public Buyer getBuyerById(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName);
-    }
+    }*/
     @GetMapping("/{userName}/follow")
     public List<Seller> getAllSellerFollowedByBuyer(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName).getSellersFollowed();
@@ -83,17 +83,12 @@ public class BuyerController {
 
         return buyerService.getAllOrdersForBuyer(buyerService.getBuyerByUsername(userName).getBId());
     }
-    }
+
     @GetMapping("/profile/{userName}")
     public Buyer getBuyerById(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName);
     }
 
-
-    @PostMapping("/{id}/Order")
-    public void addOrder(@RequestBody Order order, @PathVariable long id){
-           buyerService.addOrder(id, order);
-    }
 
     @GetMapping("/{id}/orders")
     public List<Order> getAllOrdersForBuyer(@PathVariable long id){
