@@ -35,4 +35,7 @@ public class Seller {
 
     private String status= ProductApprovedStatus.PENDING.getProductStatus();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="User_ID")
+    User user;
 }

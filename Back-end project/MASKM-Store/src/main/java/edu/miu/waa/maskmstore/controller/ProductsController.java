@@ -22,6 +22,7 @@ public class ProductsController {
     @PostMapping
     public Product addProduct(@RequestBody Product product,@RequestParam("cat")long cat_id){
         return productsService.addProductWithoutSeller(product,cat_id);
+        //return productsService.addProduct(product,cat_id);
     }
 
     @GetMapping()

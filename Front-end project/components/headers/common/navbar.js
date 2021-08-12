@@ -234,7 +234,6 @@ const NavBar = () => {
                                   </Link>
                                 }
                               </span>
-
                             ) : (
                               ""
                             )}

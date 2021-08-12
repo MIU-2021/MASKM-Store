@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/buyer")
 public class BuyerController {
@@ -81,6 +82,22 @@ public class BuyerController {
     public List<Order> getAllOrdersForBuyer(@PathVariable String userName){
 
         return buyerService.getAllOrdersForBuyer(buyerService.getBuyerByUsername(userName).getBId());
+    }
+    }
+    @GetMapping("/profile/{userName}")
+    public Buyer getBuyerById(@PathVariable String userName){
+        return buyerService.getBuyerByUsername(userName);
+    }
+
+
+    @PostMapping("/{id}/Order")
+    public void addOrder(@RequestBody Order order, @PathVariable long id){
+           buyerService.addOrder(id, order);
+    }
+
+    @GetMapping("/{id}/orders")
+    public List<Order> getAllOrdersForBuyer(@PathVariable long id){
+        return buyerService.getAllOrdersForBuyer(id);
     }
 
 }
