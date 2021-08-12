@@ -22,7 +22,7 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private boolean featured=false;
@@ -58,9 +58,8 @@ public class Product {
     @Digits(fraction = 2,message = "Price Not Valid", integer = 5)
     private double price=0;
 
-    @ManyToOne
-    @JoinColumn(name = "SUB_CAT_ID")
-    private ProductSubCategory productSubCategory;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private ProductCategory productCategory;
 
     @DateTimeFormat
     private LocalDate createdOn;

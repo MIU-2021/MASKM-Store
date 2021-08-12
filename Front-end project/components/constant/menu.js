@@ -1,7 +1,7 @@
 import { fecthAllCategories } from "../../services/Categories.Services"
 
 
-const STATICMENUITEMS= [
+export const MENUITEMS= [
    // {
    //    path: '/',title: 'Home', type: 'link'
    // },
@@ -154,10 +154,4 @@ const STATICMENUITEMS= [
       ]
    },
 ]
-export const MENUITEMS =STATICMENUITEMS;
-
-const fecthCategories=()=>{
-   return STATICMENUITEMS;
-   //fecthAllCategories().then(res=>console.log(res))
-}
-
+ 

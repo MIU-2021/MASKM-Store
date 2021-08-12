@@ -24,7 +24,7 @@ public class Stock {
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SELLER_ID")
     private Seller seller;
 

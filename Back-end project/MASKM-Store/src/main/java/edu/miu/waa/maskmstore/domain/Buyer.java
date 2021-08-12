@@ -28,6 +28,7 @@ public class Buyer {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
     private List<Order> orders;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_ID")
     User user;
@@ -41,8 +42,6 @@ public class Buyer {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
     private List<Seller> sellersFollowed;
-
-
 
 
 }

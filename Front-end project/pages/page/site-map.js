@@ -255,6 +255,10 @@ const Data = [
       },
       {
         title: "Right Sidebar",
+        link: "/shop/right_sidebar/:catId",
+      },
+      {
+        title: "Right Sidebar",
         link: "/shop/right_sidebar",
       },
       {

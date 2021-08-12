@@ -3,15 +3,15 @@ package edu.miu.waa.maskmstore.service.products;
 import edu.miu.waa.maskmstore.domain.Review;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
+import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
+import edu.miu.waa.maskmstore.repository.CategoryRepository;
 import edu.miu.waa.maskmstore.repository.ProductsRepository;
+import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,13 +21,23 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Autowired
     ProductsRepository productsRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @Override
-    public Product addProduct(Product product) {
+    public Product addProduct(Product product,long cat_id) {
         try {
             product.setCreatedOn(LocalDate.now());
             product.setAvgRating();
-            Product product1=productsRepository.save(product);
-            return product1;
+            ProductCategory productCategory=categoryRepository.findById(cat_id).get();
+
+            List<Product>products= productCategory.getProducts();
+            products.add(product);
+            categoryRepository.save(productCategory);
+
+            return product;
+
+
         }catch (IllegalArgumentException e){
             System.out.println("ADDING ERROR: "+e.getMessage());
             return null;
@@ -198,6 +208,12 @@ public class ProductsServiceImpl implements ProductsService{
             System.out.println("STATUS ERROR: "+e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Product> getAllProductsWithCat(Pageable pageable,long cat_ID) {
+
+        return (List<Product>)productsRepository.findAllWithCategory(cat_ID);
     }
 
 }

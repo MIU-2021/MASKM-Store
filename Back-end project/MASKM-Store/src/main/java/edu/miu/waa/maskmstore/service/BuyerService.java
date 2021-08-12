@@ -1,8 +1,9 @@
 package edu.miu.waa.maskmstore.service;
 
 import edu.miu.waa.maskmstore.domain.Buyer;
+
+
 import edu.miu.waa.maskmstore.domain.Order;
-import edu.miu.waa.maskmstore.domain.stock.Product;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

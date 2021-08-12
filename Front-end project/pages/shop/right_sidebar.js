@@ -5,8 +5,19 @@ import { Container, Row } from "reactstrap";
 import ProductList from "./common/productList";
 import FilterPage from "./common/filter";
 
-const RightSidebar = () => {
+
+
+
+
+const RightSidebar = ({ pathId }, props) => {
+  //const [catId, setCatId] = useState('');
   const [sidebarView, setSidebarView] = useState(false);
+
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const catId = params.get('catId');
+  console.log(catId);
+
   const openCloseSidebar = () => {
     if (sidebarView) {
       setSidebarView(!sidebarView);
@@ -14,7 +25,9 @@ const RightSidebar = () => {
       setSidebarView(!sidebarView);
     }
   };
+
   return (
+
     <CommonLayout title="collection" parent="home">
       <section className="section-b-space ratio_asos">
         <div className="collection-wrapper">
@@ -23,6 +36,7 @@ const RightSidebar = () => {
               <ProductList
                 colClass="col-xl-3 col-6 col-grid-box"
                 openSidebar={() => openCloseSidebar(sidebarView)}
+                catId={catId}
               />
               <FilterPage
                 sm="3"

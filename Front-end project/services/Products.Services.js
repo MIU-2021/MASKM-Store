@@ -19,3 +19,11 @@ export const fecthProductByID = (id) => {
         })
     // .catch(err => { return new (err) });
 };
+
+export const fecthProductByCategory = (categoryId) => {
+    return _get('products/category/'+categoryId)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};

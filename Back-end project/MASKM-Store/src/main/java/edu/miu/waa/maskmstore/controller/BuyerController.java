@@ -1,16 +1,15 @@
 package edu.miu.waa.maskmstore.controller;
 
-import edu.miu.waa.maskmstore.domain.Order;
-import edu.miu.waa.maskmstore.domain.Review;
 import edu.miu.waa.maskmstore.domain.Buyer;
+import edu.miu.waa.maskmstore.domain.Order;
 import edu.miu.waa.maskmstore.service.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/buyer")
 public class BuyerController {
@@ -33,14 +32,18 @@ public class BuyerController {
     }
 
     @GetMapping("/{id}")
-    public Buyer getBuyerById(@PathVariable long id){
+    public Buyer getBuyerById(@PathVariable("id") long id){
         return buyerService.getBuyerBybId(id);
+    }
+    @GetMapping("/profile/{userName}")
+    public Buyer getBuyerById(@PathVariable String userName){
+        return buyerService.getBuyerByUsername(userName);
     }
 
 
     @PostMapping("/{id}/Order")
-    public void addOrder(@RequestBody Order order,@PathVariable long id){
-           buyerService.addOrder(id,order);
+    public void addOrder(@RequestBody Order order, @PathVariable long id){
+           buyerService.addOrder(id, order);
     }
 
     @GetMapping("/{id}/orders")
