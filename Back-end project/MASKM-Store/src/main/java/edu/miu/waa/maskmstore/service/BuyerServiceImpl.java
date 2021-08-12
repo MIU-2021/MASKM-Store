@@ -81,6 +81,7 @@ public class BuyerServiceImpl implements BuyerService{
 
     @Override
     public List<Order> getAllOrderByBuyerId(long id){
+
         return buyerRepository.getAllOrdersByBuyerId(id);
     }
 
