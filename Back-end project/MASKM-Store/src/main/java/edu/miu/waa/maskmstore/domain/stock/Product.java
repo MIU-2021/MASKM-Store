@@ -38,7 +38,6 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
-    @JsonIgnore
     private List<Image> images;
 
 
