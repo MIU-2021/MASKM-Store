@@ -27,3 +27,12 @@ export const fecthProductByCategory = (categoryId) => {
         })
     // .catch(err => { return new (err) });
 };
+
+
+export const AddProductForSeller = (username ,categoryId , data) => {
+    return _postKarimApi('seller/'+username+'?cat='+categoryId,data)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};
