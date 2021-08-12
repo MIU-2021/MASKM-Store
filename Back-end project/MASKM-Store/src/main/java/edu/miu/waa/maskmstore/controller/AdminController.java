@@ -37,12 +37,12 @@ public class AdminController {
         else
             return productsService.makeItApprovedOrRejected(id,"Rejected");
     }
-    @GetMapping("/seller/{id}")
-    public Seller approveSeller(@RequestParam("approved") boolean approved, @PathVariable long id){
+    @GetMapping("/seller/{userName}")
+    public Seller approveSeller(@RequestParam("approved") boolean approved, @PathVariable String userName){
         if (approved)
-            return sellerService.makeItApprovedOrRejected(id,"Approved");
+            return sellerService.makeItApprovedOrRejected(userName,"Approved");
         else
-            return sellerService.makeItApprovedOrRejected(id,"Rejected");
+            return sellerService.makeItApprovedOrRejected(userName,"Rejected");
     }
     @GetMapping("/products/{id}/featured")
     public Product makeProductFeatured(@RequestParam("get") boolean featured, @PathVariable long id){

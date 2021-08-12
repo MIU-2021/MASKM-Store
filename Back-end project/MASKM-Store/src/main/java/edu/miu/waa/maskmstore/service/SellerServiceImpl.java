@@ -8,6 +8,8 @@ import edu.miu.waa.maskmstore.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SellerServiceImpl implements  SellerService{
     @Autowired
@@ -31,10 +33,10 @@ public class SellerServiceImpl implements  SellerService{
 
 
     @Override
-    public Seller makeItApprovedOrRejected(long id, String status) {
+    public Seller makeItApprovedOrRejected(String userName, String status) {
         try {
-            if (sellerRepository.existsById(id)){
-                Seller seller=sellerRepository.findById(id).get();
+            if (sellerRepository.findSellerByUsername(userName)!=null){
+                Seller seller=sellerRepository.findSellerByUsername(userName);
                 if (status.equals("Approved")){
                     seller.setStatus(ProductApprovedStatus.APPROVED.getProductStatus());
                     return sellerRepository.save(seller);
@@ -53,6 +55,11 @@ public class SellerServiceImpl implements  SellerService{
             System.out.println("STATUS ERROR: "+e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Seller> getAllSellers() {
+        return (List<Seller>) sellerRepository.findAll();
     }
 
 }
