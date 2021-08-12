@@ -12,10 +12,10 @@ const AddProduct = () => {
     const [category, setCategory] = useState(null);
     const [picture, setPicture] = useState(null);
     function handleClick()  {
-        alert(Category);
 
-        let datas1 = {"title":"", "description":"nader Product description1", "price":36, "image":"https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg"};
-        AddProductForSeller("nader" , 7 , datas1).then(response => {
+        let datas1 = {"title":productName, "description":productDescription, "price":productPrice, "image":"https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg"};
+        console.log(datas1);
+        AddProductForSeller("nader" , category , datas1).then(response => {
             //console.log("product return",response);
             //setData(response);
             //setLoading(false);
@@ -42,16 +42,12 @@ const AddProduct = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="category">Category</Label>
-                    <Input type="select" name="category" id="category" onChange={e => setCategory(e.target.selectedOptions[0].text)}>
-                        <option name="7">Footbal</option>
+                    <Input type="select" name="category" id="category" onChange={e => setCategory(e.target.value)}>
+                        <option value="7">Footbal</option>
+                        <option value="5">Sport</option>
                     </Input>
                 </FormGroup>
-                <FormGroup>
-                    <Label for="subcategory">Sub Category</Label>
-                    <Input type="select" name="subcategory" id="subcategory">
-                        <option>subcat</option>
-                    </Input>
-                </FormGroup>
+
 
                 <FormGroup>
                     <Label for="productpicture">Picture</Label>
