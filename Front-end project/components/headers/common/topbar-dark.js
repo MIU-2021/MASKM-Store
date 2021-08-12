@@ -37,14 +37,13 @@ const TopBarDark = ({ topClass, fluid }) => {
         break;
       }
     }
-    //router.push("/page/account/login-auth");
   };
 
   const logoutHandle = () => {
     console.log('logout');
     Logout();
     setUserName(null);
-    setUserRole(null);
+    setRole(null);
   };
   return (
     <div className={topClass}>

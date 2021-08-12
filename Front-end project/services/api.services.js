@@ -1,6 +1,6 @@
 import axios from "axios";
 //const url = process.env.SERVER_API_URL;
-//const url = 'http://172.19.140.140:2021';//ahmed
+const urlAhmed = 'http://172.19.140.140:2021';//ahmed
 const url = 'http://172.19.140.171:2021';//souphiane
 //const url = 'https://fakestoreapi.com';
 const urlkarim = 'http://172.19.140.95:2021'
@@ -55,12 +55,12 @@ export const _post = (path, body) => {
 }
 
 export const _getApiKarim = (path) => {
-    console.log(`${urlkarim}/${path}`);
+    console.log(`${urlAhmed}/${path}`);
     return axios
         // .get(`${url}/${path}`, {
         //     headers: headers
         // })
-        .get(`${urlkarim}/${path}`)
+        .get(`${urlAhmed}/${path}`)
         .then(response => {
             return response.data;
         }).catch((error) => {
