@@ -1,10 +1,10 @@
 import axios from "axios";
 //const url = process.env.SERVER_API_URL;
 //const url = 'http://172.19.140.140:2021';//ahmed
-//const url = 'http://172.19.140.171:2021';//souphiane
+const url = 'http://172.19.140.171:2021';//souphiane
 //const url = 'https://fakestoreapi.com';
 const urlkarim = 'http://172.19.140.95:2021'
-const url = 'https://fakestoreapi.com';
+//const url = 'https://fakestoreapi.com';
 
 
 const headers = {
@@ -53,7 +53,7 @@ export const _post = (path, body) => {
         )
 }
 
-export const _getApiKarim=(path) =>{
+export const _getApiKarim = (path) => {
     console.log(`${urlkarim}/${path}`);
     return axios
         // .get(`${url}/${path}`, {
@@ -65,27 +65,6 @@ export const _getApiKarim=(path) =>{
         }).catch((error) => {
             console.log(error);
         });
-}
-
-
-export const _put = (path, body) => {
-    const token = localStorage.getItem("token");
-    if (token && token != undefined) {
-        headers.Authorization = `Bearer ${token}`;
-    }
-}
-
-export const _post = (path, body) => {
-    console.log(path, body);
-    // return axios
-    //     .post(`${url}/${path}`, body, {
-    //         headers: headers
-    //     })
-    //     .then(response => {
-    //         return response.data;
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     });
 }
 
 export const _postKarimApi = (path, body) => {
@@ -101,6 +80,11 @@ export const _postKarimApi = (path, body) => {
 }
 
 export const _put = (path, body) => {
+
+    const token = localStorage.getItem("token");
+    if (token && token != undefined) {
+        headers.Authorization = `Bearer ${token}`;
+    }
     return axios
         .put(`${url}/${path}`, body, {
             headers: headers
