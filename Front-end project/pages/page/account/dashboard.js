@@ -25,6 +25,7 @@ import {
 import seventeen from "../../../public/assets/images/logos/17.png";
 import order from "../../../public/assets/images/icon/dashboard/order.png";
 import sale from "../../../public/assets/images/icon/dashboard/sale.png";
+import follow from "../../../public/assets/images/icon/dashboard/follow.png";
 import homework from "../../../public/assets/images/icon/dashboard/homework.png";
 import one from "../../../public/assets/images/dashboard/product/1.jpg";
 import nine from "../../../public/assets/images/dashboard/product/9.jpg";
@@ -46,23 +47,7 @@ import OrderDetail from "./orderDetail";
 import Following from "./Following";
 import { myFollows } from '../../../services/User.Services';
 import ProfilePage from "./common/profile-page";
-const SummaryData = [
-    {
-        img: order,
-        title: "25",
-        desc: "Total Products",
-    },
-    {
-        img: sale,
-        title: "12500",
-        desc: "Total Sales",
-    },
-    {
-        img: homework,
-        title: "50",
-        desc: "Order Pending",
-    },
-];
+
 
 const Summary = ({ img, title, desc }) => {
     return (
@@ -108,26 +93,56 @@ const ProfileDetail = ({ title, detail }) => {
 
 
 
-const currentUser = CurrentUser("milronfre");
+//const currentUser = CurrentUser("milronfre");
 const Dashboard = () => {
 
 
     const router = useRouter();
     const [activeTab, setActiveTab] = useState("1");
     const [EditProductId, setEditProductId] = useState();
-    const [order, setOrder] = useState({});
+    const [orderSelected, setOrderSelected] = useState({});
     const [orderData, setOrderData] = useState([]);
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [accountInfo, setAccountInfo] = useState(false)
     const [following, setFollowing] = useState([]);
-    useEffect(() => { 
-        setOrderData(OrderData(1)); 
+    const [currentUser, setCurrentUser] = useState({});
+
+    const SummaryData = [
+        {
+            img: order,
+            title: orderData?orderData.length:0,
+            desc: "Total Orders",
+        },
+        {
+            img: sale,
+            title: following?following.length:0,
+            desc: "Following",
+        },
+        {
+            img: homework,
+            title: "50",
+            desc: "Order Pending",
+        },
+    ];
+    
+    useEffect(() => {
+        CurrentUser()
+            .then(resp => {
+                console.log(resp.orders);
+                setCurrentUser(resp);
+                setOrderData(resp.orders);
+                //setFollowing(resp.)
+            })
+            .catch();
+
     }, [])
- 
-    useEffect(() =>
-        setFollowing(myFollows()), []);
+
+    useEffect(() => {
+        setFollowing(myFollows());
+    }
+        , []);
 
     const deleteOrderEventHandler = (orderId) => {
         var answer = window.confirm("Delete Order?");
@@ -142,7 +157,7 @@ const Dashboard = () => {
                 <td>{ord.date}</td>
                 <td>{ord.status}</td>
                 <td>
-                    <i onClick={() => { setActiveTab("9"); setOrder(ord); }} className="fa fa-search-plus mr-1" aria-hidden="true"></i>
+                    <i onClick={() => { setActiveTab("9"); setOrderSelected(ord); }} className="fa fa-search-plus mr-1" aria-hidden="true"></i>
                     {ord.status != 'Shipped' ? <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => deleteOrderEventHandler(ord.id)}></i> : <i></i>}
                 </td>
             </tr>
@@ -156,7 +171,7 @@ const Dashboard = () => {
                 <td>{ord.date}</td>
                 <td>{ord.status}</td>
                 <td>
-                    <i onClick={() => { setActiveTab("9"); setOrder(ord); }} className="fa fa-search-plus mr-1" aria-hidden="true"></i>
+                    <i onClick={() => { setActiveTab("9"); setOrderSelected(ord); }} className="fa fa-search-plus mr-1" aria-hidden="true"></i>
                     {ord.status != 'Shipped' ? <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => deleteOrderEventHandler(ord.id)} ></i> : <i></i>}
                 </td>
             </tr>
@@ -172,8 +187,9 @@ const Dashboard = () => {
                             <div className="dashboard-sidebar">
                                 <div className="profile-top">
                                     <div className="profile-detail">
-                                        <h3>{currentUser.fName} {currentUser.lName}</h3>
-                                        <h6>{currentUser.email}</h6>
+                                        <h3>{currentUser && currentUser.user ? currentUser.user.fname : ''}
+                                            {currentUser && currentUser.user ? currentUser.user.lname : ''}</h3>
+                                        <h6>{currentUser && currentUser.user ? currentUser.user.email : ''}</h6>
                                     </div>
                                 </div>
                                 <div className="faq-tab">
@@ -293,14 +309,14 @@ const Dashboard = () => {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                {orderData.slice(0, 5).map((data, i) => {
+                                                                {/* {orderData.slice(0, 5).map((data, i) => {
                                                                     return (
                                                                         <RecentOrder
                                                                             key={i}
                                                                             ord={data}
                                                                         />
                                                                     );
-                                                                })}
+                                                                })} */}
                                                             </tbody>
                                                         </table>
                                                     </CardBody>
@@ -313,7 +329,7 @@ const Dashboard = () => {
                                             <Col sm="12">
                                                 <Card className="dashboard-table mt-0">
                                                     <CardBody>
-                                                    <Following Following={following}></Following>
+                                                        <Following Following={following}></Following>
                                                     </CardBody>
                                                 </Card>
                                             </Col>
@@ -337,14 +353,14 @@ const Dashboard = () => {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                {orderData.map((data, i) => {
+                                                                {/* {orderData.map((data, i) => {
                                                                     return (
                                                                         <AllOrder
                                                                             key={i}
                                                                             ord={data}
                                                                         />
                                                                     );
-                                                                })}
+                                                                })} */}
                                                             </tbody>
                                                         </table>
                                                     </CardBody>
@@ -368,7 +384,12 @@ const Dashboard = () => {
                                                             </div>
                                                             <div className="dashboard-detail">
                                                                 <ul>
-                                                                    <ProfilePage user={currentUser}></ProfilePage>
+                                                                    {/* {
+                                                                        currentUser && currentUser.user ?
+                                                                            <ProfilePage user={currentUser.user}></ProfilePage>
+                                                                            : ''
+                                                                    } */}
+
                                                                     {/* {ProfileData.map((data, i) => {
                                                                         return (
                                                                             <ProfileDetail
@@ -456,7 +477,7 @@ const Dashboard = () => {
                                             <Col sm="12">
                                                 <Card className="mt-0">
                                                     <CardBody>
-                                                        <OrderDetail Order={order} />
+                                                        <OrderDetail Order={orderSelected} />
                                                     </CardBody>
                                                 </Card>
                                             </Col>
