@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
@@ -95,5 +96,12 @@ public class AdminController {
     @GetMapping("/sellers")
     public List<Seller> getAllSellers(){
         return sellerService.getAllSellers();
+    }
+
+
+    @GetMapping("/sellers/{id}")
+    public Seller getOneSeller(@PathVariable int id){
+
+        return sellerService.getSellerBySId(id);
     }
 }

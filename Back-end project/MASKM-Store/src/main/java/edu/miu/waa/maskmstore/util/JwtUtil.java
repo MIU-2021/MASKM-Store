@@ -70,7 +70,7 @@ public class JwtUtil {
         // calling from the jwt library  Subject is the person being authenticated
         claims.put("role",role);
         return Jwts.builder()
-        .setClaims(claims)
+        .setClaims(claims).setSubject(role)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY*1000)).signWith(SignatureAlgorithm.HS256, secret).compact();
     }
