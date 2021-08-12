@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Order {
     List<LineItem> lineItems;
 
     @ManyToOne
+    @JsonIgnore
     private Buyer buyer;
 
 }

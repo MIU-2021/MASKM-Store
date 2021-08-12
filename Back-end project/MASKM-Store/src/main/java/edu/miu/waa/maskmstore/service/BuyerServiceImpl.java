@@ -97,6 +97,13 @@ public class BuyerServiceImpl implements BuyerService{
         orders.add(order);
         buyer.setOrders(orders);
 }
+
+    @Override
+    public Order getOrderByBuyerUserNameOrderId(long id, String userName) {
+        Buyer buyer=buyerRepository.findBuyerByUsername(userName);
+        return orderRepository.findById(buyerRepository.getOrderByBuyerUserNameOrderId( id,  buyer.getBId())).get();
+    }
+
     @Override
     public Address getShippingAddressBysId(long id){
         return buyerRepository.findShippingAddress(id);
