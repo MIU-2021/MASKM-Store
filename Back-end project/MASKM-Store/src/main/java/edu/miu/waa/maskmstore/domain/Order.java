@@ -31,6 +31,8 @@ public class Order {
     @JoinTable
     List<LineItem> lineItems;
 
+    Boolean orderPaid=false;
+    OrderStatus orderStatus=OrderStatus.Pending;
     @ManyToOne
     @JsonIgnore
     private Buyer buyer;

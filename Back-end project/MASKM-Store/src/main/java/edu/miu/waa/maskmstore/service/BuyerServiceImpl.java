@@ -108,6 +108,11 @@ public class BuyerServiceImpl implements BuyerService{
     }
 
     @Override
+    public void save(Buyer buyer) {
+        buyerRepository.save(buyer);
+    }
+
+    @Override
     public Address getShippingAddressBysId(long id){
         return buyerRepository.findShippingAddress(id);
 
