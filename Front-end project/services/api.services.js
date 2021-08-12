@@ -22,7 +22,7 @@ export const _get = (path) => {
     if (token && token != undefined) {
         headers.Authorization = `Bearer ${token}`;
     }
-
+    console.log(`${url}/${path}`, headers);
     return axios
         .get(`${url}/${path}`, {
             headers: headers
@@ -49,6 +49,7 @@ export const _post = (path, body) => {
         })
         .then(response => {
             console.log(response);
+            return response.data;
         }
         )
 }

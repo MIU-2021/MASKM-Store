@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import CommonLayout from '../../../components/shop/common-layout';
 import { Container, Row, Form, Label, Input, Col } from 'reactstrap';
 import { LoginService } from '../../../services/User.Services';
@@ -6,17 +6,23 @@ import { useRouter } from "next/router";
 
 const Login = (props) => {
     const router = useRouter();
-    const [usernName,setUserName]=useState('');
-    const [password,setPassword]=useState('');
-    const [error,setError]=useState('');
+    const [usernName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const loginEventHandler = () => {
-        console.log(usernName,password);
-        LoginService(usernName,password)
-        .then((resp)=>{
-            console.log(resp);
-            router.push('/');
-        })
-        .catch(err=>setError(err));
+        console.log(usernName, password);
+        LoginService(usernName, password)
+            .then((resp) => {
+                console.log(resp);
+                router.push('/');
+            })
+            .catch(err => {
+                console.log(err);
+                // if (err.status === 403) {
+                setError('Incorrect username or password');
+                //}
+                //setError(err);
+            });
     }
     return (
         <CommonLayout parent="home" title="login">
@@ -26,24 +32,26 @@ const Login = (props) => {
                         <Col lg="6">
                             <h3>Login</h3>
                             <div className="theme-card">
-                                <Form className="theme-form">
+
                                     <div className="form-group">
                                         <Label for="username">Username</Label>
-                                        <Input type="text" className="form-control" id="username" 
-                                         placeholder="User Name" required
-                                         onChange={(e)=> setUserName(e.target.value)}
-                                         />
+                                        <Input type="text" className="form-control" id="username"
+                                            placeholder="User Name" required
+                                            onChange={(e) => setUserName(e.target.value)}
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <Label for="password">Password</Label>
                                         <Input type="password" className="form-control" id="password" name='password'
-                                            placeholder="Enter your password" required 
-                                            onChange={(e)=> setPassword(e.target.value)}   
-                                            />
+                                            placeholder="Enter your password" required
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
                                     </div>
-                                    {error}
-                                    <a href="#"  className="btn btn-solid" onClick={loginEventHandler}>Login</a>
-                                </Form>
+                                    <div  >{error} </div>
+                                    <div >
+                                        <a className="btn btn-solid" onClick={loginEventHandler}>Login</a>
+                                    </div>
+                               
                             </div>
                         </Col>
                         <Col lg="6" className="right-login">
