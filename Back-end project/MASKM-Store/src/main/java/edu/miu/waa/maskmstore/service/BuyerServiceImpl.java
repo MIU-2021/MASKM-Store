@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BuyerServiceImpl implements BuyerService{
@@ -108,6 +109,22 @@ public class BuyerServiceImpl implements BuyerService{
     @Override
     public void save(Buyer buyer) {
         buyerRepository.save(buyer);
+    }
+
+    @Override
+    public Order returnedOrder(String userName, long oId) {
+        Buyer buyer =buyerRepository.findBuyerByUsername(userName);
+        List<Long> lOID=buyer.getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
+        Order order=orderRepository.findOrderById(oId);
+        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned) {
+
+            order.setOrderStatus(OrderStatus.Returned);
+            buyer.setPoints((int) (buyer.getPoints() - order.getPrice()));
+            orderRepository.save(order);
+            buyerRepository.save(buyer);
+            return order;
+        }
+        return null;
     }
 
     @Override
