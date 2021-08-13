@@ -1,9 +1,13 @@
 package edu.miu.waa.maskmstore.service;
 
 import edu.miu.waa.maskmstore.domain.*;
+import edu.miu.waa.maskmstore.domain.stock.Product;
+import edu.miu.waa.maskmstore.dto.LineItemDTO;
+import edu.miu.waa.maskmstore.dto.OrderDTO;
 import edu.miu.waa.maskmstore.repository.BuyerRepository;
 import edu.miu.waa.maskmstore.repository.OrderRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
+import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
@@ -25,6 +29,8 @@ public class BuyerServiceImpl implements BuyerService{
     OrderRepository orderRepository;
     @Autowired
     OrderService orderService;
+    @Autowired
+    ProductsService productService;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -98,12 +104,28 @@ public class BuyerServiceImpl implements BuyerService{
     }
     //Correct One
     @Override
-    public void addOrder(Order order, String userName) {
+    public void addOrder(OrderDTO orderDTO, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
+        Order order=new Order();
         order.setBuyer(buyer);
+       // List<LineItem> lineI=new ArrayList<LineItem>();
+        order.setLineItems(new ArrayList<LineItem>());
 
+        for (int i=0;i<orderDTO.getLineItemsDTO().size();i++)
+        {
+            LineItem li=new LineItem();
+            LineItemDTO lDTO =new LineItemDTO();
+            lDTO=orderDTO.getLineItemsDTO().get(i);
+            Product product =  productService.getProductById(lDTO.getProductId()).get();
+            li.setPrice(product.getPrice());
+            li.setQuantity(lDTO.getQuantity());
+            li.setProduct(product);
+           // lineI.add(lineI);
+            order.getLineItems().add(li);
+        }
+       // order.setLineItems(lineI);
 
-        order.setPrice(order.getLineItems().stream().map(l->l.getPrice()).reduce((double)0,(a,b)->a+b));
+        order.setPrice(order.getLineItems().stream().map(l->l.getPrice()*l.getQuantity()).reduce((double)0,(a,b)->a+b));
         orderRepository.save(order);
 
         List<Order> orders = orderRepository.findAllOrdersByBuyerId(buyer.getBId());

@@ -1,6 +1,7 @@
 package edu.miu.waa.maskmstore.controller;
 
 import edu.miu.waa.maskmstore.domain.*;
+import edu.miu.waa.maskmstore.dto.OrderDTO;
 import edu.miu.waa.maskmstore.service.BuyerService;
 import edu.miu.waa.maskmstore.service.OrderService;
 import edu.miu.waa.maskmstore.service.SellerService;
@@ -81,9 +82,9 @@ public class BuyerController {
     }
 
     @PostMapping("/{userName}/order")
-    public void addOrder(@RequestBody Order order, @PathVariable String userName){
+    public void addOrder(@RequestBody OrderDTO orderDTO, @PathVariable String userName){
 
-        buyerService.addOrder(order,userName);
+        buyerService.addOrder(orderDTO,userName);
 
     }
 

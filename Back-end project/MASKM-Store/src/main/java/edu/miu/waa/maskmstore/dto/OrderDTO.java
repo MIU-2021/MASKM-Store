@@ -11,6 +11,6 @@ import java.util.List;
 public class OrderDTO {
     private Date createdOn;
     private double price;
-    List<LineItem> lineItems;
+    List<LineItemDTO> lineItemsDTO;
 
 }
