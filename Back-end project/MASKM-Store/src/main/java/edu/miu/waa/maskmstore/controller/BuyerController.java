@@ -101,6 +101,11 @@ public class BuyerController {
                 return buyerService.getAllOrdersForBuyer(buyerService.getBuyerByUsername(userName).getBId());
     }
 
+    @DeleteMapping("/{userName}/order/{id}")
+    public boolean deleteOrder(@PathVariable("userName") String userName, @PathVariable("id") long id){
+        return buyerService.deleteOrder(userName,id);
+    }
+
     @GetMapping("/profile/{userName}")
     public Buyer getBuyerByUserName(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName);

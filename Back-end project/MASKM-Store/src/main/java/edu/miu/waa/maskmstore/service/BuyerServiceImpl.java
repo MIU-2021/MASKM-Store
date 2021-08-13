@@ -22,6 +22,8 @@ public class BuyerServiceImpl implements BuyerService{
     SellerRepository sellerRepository;
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    OrderService orderService;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -105,8 +107,22 @@ public class BuyerServiceImpl implements BuyerService{
         buyer.setOrders(orders);
         buyerRepository.save(buyer);
 
-        sendEmail(buyer.getUser().getEmail(),"test","tessssst");
+        sendEmail(buyer.getUser().getEmail(),"test","test");
 }
+
+    @Override
+    public boolean deleteOrder(String userName, long id) {
+        Order order=orderService.getOrderById(id);
+        if(order.getOrderStatus()!=OrderStatus.Shipped||order.getOrderStatus()!=OrderStatus.Delivered)
+        {
+            Buyer buyer = buyerRepository.findBuyerByUsername(userName);
+            buyer.getOrders().remove(order);
+            buyerRepository.save(buyer);
+            orderRepository.delete(order);
+            return true;
+        }
+            return false;
+    }
 
     @Override
     public Order getOrderByBuyerUserNameOrderId(long id, String userName) {
