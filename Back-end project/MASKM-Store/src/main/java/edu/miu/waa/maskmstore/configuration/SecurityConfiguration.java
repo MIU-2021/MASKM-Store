@@ -36,16 +36,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/auth").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/configuration/ui").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/configuration/security").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui/*").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
+               .antMatchers("/auth").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/products/**").permitAll()
+               .antMatchers("/products/**").permitAll()
                 .antMatchers("/cats/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/buyer/**").hasAuthority("BUYER")
+               .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/buyer/**").permitAll()
                 .antMatchers("/seller/**").hasAuthority("SELLER")
-                .anyRequest().authenticated()
+               .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+http.cors();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.headers().frameOptions().sameOrigin(); // to show my database

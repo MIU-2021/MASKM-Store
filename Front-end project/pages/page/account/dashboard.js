@@ -38,7 +38,7 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 import { apexPieChart, lineChart1 } from "../../../data/vendorData";
 import AddProduct from "../../../components/common/AddProduct";
-import { Form, FormGroup, FormText } from "react-bootstrap";
+import { Form, FormGroup, FormText, ResponsiveEmbed } from "react-bootstrap";
 import EditProfile from "../../../components/common/EditProfile";
 import EditProduct from "../../../components/common/EditProduct";
 import { DeleteOrder, OrderData } from "../../../services/Order.Services";
@@ -136,9 +136,9 @@ const Dashboard = () => {
     useEffect(() => {
         CurrentUser()
             .then(resp => {
-                console.log(resp.orders);
+                console.log(resp);
                 setCurrentUser(resp);
-                setOrderData(resp.orders);
+               // setOrderData(resp.orders);
                 //setFollowing(resp.)
             })
             .catch();
@@ -394,11 +394,11 @@ const Dashboard = () => {
                                                                 </div>
                                                                 <div className="dashboard-detail">
                                                                     <ul>
-                                                                        {/* {
+                                                                         {
                                                                         currentUser && currentUser.user ?
                                                                             <ProfilePage user={currentUser.user}></ProfilePage>
                                                                             : ''
-                                                                    } */}
+                                                                    } 
 
                                                                         {/* {ProfileData.map((data, i) => {
                                                                         return (

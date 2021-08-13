@@ -4,6 +4,8 @@ public enum OrderStatus {
     Shipped("Shipped"),
     Returned("Returned"),
     OnTheWay("On the way"),
+    Cancelled("Cancelled"),
+    Delivered("Delivered"),
     Pending("Pending");
 
 

@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,15 +24,17 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
-    private Date createdOn;
+    private LocalDate createdOn=LocalDate.now();
 
     private double price;
 
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
-    List<LineItem> lineItems;
+    List<LineItem> lineItems=new ArrayList<>();
 
+    Boolean orderPaid=false;
+    OrderStatus orderStatus=OrderStatus.Pending;
     @ManyToOne
     @JsonIgnore
     private Buyer buyer;

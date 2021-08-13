@@ -2,6 +2,8 @@ package edu.miu.waa.maskmstore.repository;
 
 import edu.miu.waa.maskmstore.domain.Address;
 import edu.miu.waa.maskmstore.domain.Seller;
+import edu.miu.waa.maskmstore.domain.stock.Product;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -28,4 +30,7 @@ public interface SellerRepository extends CrudRepository<Seller, Long> {
 
     @Query("select s from Seller s where s.user.username=:userName")
     public Seller findSellerBySUserName(String userName);
+
+    @Query(value = "select seller.products from Seller seller where seller.user.username=:sellerUserName")
+    public List<Product> findAllProductBySellerUserName(String sellerUserName, Pageable pageable);
 }

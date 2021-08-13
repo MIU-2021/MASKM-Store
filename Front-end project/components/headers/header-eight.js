@@ -64,18 +64,8 @@ const HeaderEight = ({ logoName }) => {
                   <div>
                     <div className="icon-nav">
                       <ul>
-                        <li className="onhover-div mobile-search">
-                          <div>
-                            <Media
-                              alt=""
-                              src={search}
-                              onClick={openSearch}
-                              className="img-fluid blur-up lazyload"
-                            />
-                          </div>
-                          <SearchOverlay />
-                        </li>
-                        <Currency icon={settings} />
+                       
+                        {/* <Currency icon={settings} /> */}
                         <CartContainer icon={cart} />
                       </ul>
                     </div>
