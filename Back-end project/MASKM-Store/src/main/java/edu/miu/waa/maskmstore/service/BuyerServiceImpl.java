@@ -131,8 +131,10 @@ public class BuyerServiceImpl implements BuyerService{
          return (List<LineItem>) buyer.
                 getOrders()
                 .stream()
-                .map(o->
-                    o.getLineItems()
+                .map(o->{
+                        if (o.getId()==id)
+                    return o.getLineItems();
+                        else return null;}
                 );
     }
 
