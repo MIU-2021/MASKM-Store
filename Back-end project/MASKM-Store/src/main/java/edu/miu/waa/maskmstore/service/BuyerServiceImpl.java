@@ -94,7 +94,7 @@ public class BuyerServiceImpl implements BuyerService{
         buyerRepository.save(buyer);
     }
     @Override
-    public void addOrder(String userName, Order order) {
+    public void addOrder(Order order, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
         order.setBuyer(buyer);
         orderRepository.save(order);
@@ -134,18 +134,6 @@ public class BuyerServiceImpl implements BuyerService{
         return null;
     }
 
-    @Override
-    public void addOrder(Order order, String userName) {
-        Buyer buyer =buyerRepository.findBuyerByUsername(userName);
-
-        if (buyer.getCreditCard().getCardNumber()!=null)
-        {
-            buyer.setPoints((int) order.getPrice());
-            order.setOrderPaid(true);
-            orderRepository.save(order);
-            buyerRepository.save(buyer);
-        }
-    }
 
     @Override
     public Address getShippingAddressBysId(long id){

@@ -22,7 +22,7 @@ public interface BuyerService {
     public List<Buyer> getAllBuyerWithPagingAndSorting(Pageable pageable);
     public List<Order> getAllOrderByBuyerId(long id);
     public void addBuyer(Buyer buyer);
-    public void addOrder(String userName,  Order order);
+
     public Order getOrderByBuyerUserNameOrderId(long id, String userName);
 
 
@@ -30,5 +30,5 @@ public interface BuyerService {
 
     public Order returnedOrder(String userName, long oId);
 
-    public void addOrder(Order order, String userName);
+    public void addOrder(Order order ,String userName);
 }
