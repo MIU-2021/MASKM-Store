@@ -42,25 +42,13 @@ import EditProfile from "../../../../components/common/EditProfile";
 import EditProduct from "../../../../components/common/EditProduct";
 import {RoleAuthenticated, UserAuthenticated} from "../../../../services/User.Services";
 import {fecthProductByID} from "../../../../services/Products.Services";
-import {deleteProductBySeller, fetchProductsBySellerUsername} from "../../../../services/Seller.Services";
+import {
+  deleteProductBySeller,
+  fetchProductsBySellerUsername,
+  getSellerOrders, makeOrderShipped
+} from "../../../../services/Seller.Services";
 
-const SummaryData = [
-  {
-    img: order,
-    title: "25",
-    desc: "Total Products",
-  },
-  {
-    img: sale,
-    title: "12500",
-    desc: "Total Sales",
-  },
-  {
-    img: homework,
-    title: "50",
-    desc: "Order Pending",
-  },
-];
+
 
 const Summary = ({ img, title, desc }) => {
   return (
@@ -206,17 +194,24 @@ const RecentOrder = ({ id, productDetails, status }) => {
       </tr>
   );
 };
+function makeOrderShippedhandler(username , productid) {
+  makeOrderShipped(username,productid).then(response => {
+    //return response.data;
+  }).catch((error) => {
+    console.log(error);
+  });
+}
 
-const AllOrder = ({ id, productDetails, status, price }) => {
-  return (
-      <tr>
-        <th scope="row">{id}</th>
-        <td>{productDetails}</td>
-        <td>{status}</td>
-        <td>{price}</td>
-      </tr>
-  );
-};
+function makeOrderCanceledhandler(username , productid) {
+  makeOrderShipped(username,productid).then(response => {
+    console.log("pending orders" ,response);
+    //return response.data;
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+
 
 const ProfileData = [
   { title: "Company Name", detail: "Fashion Store" },
@@ -246,6 +241,25 @@ const ProfileDetail = ({ title, detail }) => {
 };
 
 const Dashboard = () => {
+  const AllOrder = ({ id, creationdate, status, price , payment }) => {
+    return (
+        <tr>
+          <th scope="row">{id}</th>
+          <td>{creationdate}</td>
+          <td>{price}</td>
+          <td>{payment==true?"Yes":"No"}</td>
+          <td>{status}</td>
+
+          <td>{status=="Shipped"?
+              ""
+            :<span>
+              <i className="fa fa-check-circle-o mr-1" aria-hidden="true" onClick={() =>makeOrderShippedhandler(UserAuthenticated() , id)}></i>
+              <i className="fa fa-window-close-o ml-1" aria-hidden="true" onClick={() =>makeOrderShippedhandler(UserAuthenticated() , id)}></i>
+                </span>}
+          </td>
+        </tr>
+    );
+  };
 
   // const AllProduct = ({ product }) => {
   //   return (
@@ -262,6 +276,10 @@ const Dashboard = () => {
   const [role, setRole] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(null);
+  const [totalProdustcs , setTotalProducts] = useState(0);
+  const [pendingOrders , setPendingOrders] = useState([]);
+  const [countPendingOrders , setCountPendingOrders] = useState(0);
+
 
   useEffect(() => {
     setUserName(UserAuthenticated());
@@ -277,10 +295,28 @@ const Dashboard = () => {
       router.push("/page/account/login");
   }, []);
 
+  const SummaryData = [
+    {
+      img: order,
+      title: totalProdustcs,
+      desc: "Total Products",
+    },
+    {
+      img: sale,
+      title: "12500",
+      desc: "Total Sales",
+    },
+    {
+      img: homework,
+      title: countPendingOrders,
+      desc: "Order Pending",
+    },
+  ];
+
   function deleteproduct(id ) {
     deleteProductBySeller(id , UserAuthenticated()).then(response => {
       console.log("res" ,response);
-      //setData(response);
+      setData(data.filter(p => p.id != id));
       setLoading(false);
       //return response.data;
     }).catch((error) => {
@@ -292,13 +328,29 @@ const Dashboard = () => {
     fetchProductsBySellerUsername(UserAuthenticated()).then(response => {
       console.log("res" ,response);
       setData(response);
+      setTotalProducts(response.length)
       setLoading(false);
       //return response.data;
     }).catch((error) => {
       console.log(error);
     });
   }
+
+  function getSellerOrdershandler() {
+    getSellerOrders(UserAuthenticated()).then(response => {
+      console.log("pending orders" ,response);
+      setPendingOrders(response);
+      setCountPendingOrders(response.length)
+      setLoading(false);
+      //return response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+
   useEffect(fetchProductsForSellerHandler, []);
+  useEffect(getSellerOrdershandler, []);
 
 
   return (
@@ -532,28 +584,29 @@ const Dashboard = () => {
                           <CardBody>
                             <div className="top-sec">
                               <h3>orders</h3>
-                              <a href="#" className="btn btn-sm btn-solid">
-                                add product
-                              </a>
                             </div>
                             <table className="table table-responsive-sm mb-0">
                               <thead>
                               <tr>
                                 <th scope="col">order id</th>
-                                <th scope="col">product details</th>
-                                <th scope="col">status</th>
-                                <th scope="col">price</th>
+                                <th scope="col">Creation date</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Payment</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
                               </tr>
                               </thead>
                               <tbody>
-                              {OrderData.map((data, i) => {
+                              {pendingOrders.map((data, i) => {
+                                //id, creationdate, status, price , payment
                                 return (
                                     <AllOrder
                                         key={i}
                                         id={data.id}
-                                        productDetails={data.productDetails}
-                                        status={data.status}
+                                        creationdate={data.createdOn}
+                                        status={data.orderStatus}
                                         price={data.price}
+                                        payment={data.orderPaid}
                                     />
                                 );
                               })}

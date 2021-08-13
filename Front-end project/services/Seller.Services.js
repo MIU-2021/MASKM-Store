@@ -16,3 +16,27 @@ export const deleteProductBySeller = (idproduct , sellerusername) => {
         })
     // .catch(err => { return new (err) });
 };
+
+export const getSellerOrders = (sellerusername) => {
+    return _get(`seller/${sellerusername}/orders`)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};
+
+export const makeOrderShipped = (sellerusername , productid) => {
+    return _post(`seller/${sellerusername}/order/shipped/${productid}`)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};
+export const makeOrderCanceled = (sellerusername , productid) => {
+    return _post(`seller/${sellerusername}/order/cancel/${productid}`)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};
+
