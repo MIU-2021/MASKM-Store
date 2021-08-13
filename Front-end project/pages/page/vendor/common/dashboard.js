@@ -45,7 +45,7 @@ import {fecthProductByID} from "../../../../services/Products.Services";
 import {
   deleteProductBySeller,
   fetchProductsBySellerUsername,
-  getSellerOrders, makeOrderCanceled, makeOrderShipped
+  getSellerOrders, getSellerProfileData, makeOrderCanceled, makeOrderShipped
 } from "../../../../services/Seller.Services";
 
 
@@ -263,6 +263,7 @@ const Dashboard = () => {
   const [totalProdustcs , setTotalProducts] = useState(0);
   const [Orders , setOrders] = useState([]);
   const [countOrders , setCountOrders] = useState(0);
+  const [userProfileData , setUserProfileData] = useState(0);
 
 
   useEffect(() => {
@@ -346,10 +347,21 @@ const Dashboard = () => {
     });
   }
 
+  function GetProfilePic() {
+
+    getSellerProfileData(UserAuthenticated()).then(response => {
+      setUserProfileData(response);
+      console.log("ffff",userProfileData);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
 
 
   useEffect(fetchProductsForSellerHandler, []);
   useEffect(getSellerOrdershandler, []);
+
 
 
   return (
@@ -394,22 +406,7 @@ const Dashboard = () => {
                         Order
                       </NavLink>
                     </NavItem>
-                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                      <NavLink
-                          className={activeTab === "4" ? "active" : ""}
-                          onClick={() => setActiveTab("4")}
-                      >
-                        Profile
-                      </NavLink>
-                    </NavItem>
-                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                      <NavLink
-                          className={activeTab === "5" ? "active" : ""}
-                          onClick={() => setActiveTab("5")}
-                      >
-                        Settings
-                      </NavLink>
-                    </NavItem>
+
                     <NavItem className="nav nav-tabs" id="myTab" role="tablist">
                       <NavLink
                           className={activeTab === "6" ? "active" : ""}
@@ -616,72 +613,7 @@ const Dashboard = () => {
                       </Col>
                     </Row>
                   </TabPane>
-                  <TabPane tabId="4">
-                    <Row>
-                      <Col sm="12">
-                        <Card className="mt-0">
-                          <CardBody>
-                            <div className="dashboard-box">
-                              <div className="dashboard-title">
-                                <h4>profile</h4>
-                                <span
-                                    onClick={() => setActiveTab("7")}
-                                >
-                                edit
-                              </span>
-                              </div>
-                              <div className="dashboard-detail">
-                                <ul>
-                                  {ProfileData.map((data, i) => {
-                                    return (
-                                        <ProfileDetail
-                                            key={i}
-                                            title={data.title}
-                                            detail={data.detail}
-                                        />
-                                    );
-                                  })}
-                                </ul>
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </TabPane>
-                  <TabPane tabId="5">
-                    <Row>
-                      <Col sm="12">
-                        <Card className="mt-0">
-                          <CardBody>
-                            <div className="dashboard-box">
-                              <div className="dashboard-title">
-                                <h4>settings</h4>
-                              </div>
-                              <div className="dashboard-detail">
-                                <div className="account-setting">
-                                  <Form>
-                                    <FormGroup>
-                                      <Label for="storename">Store Name</Label>
-                                      <Input type="text" name="storename" id="storename" placeholder="write the store name" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                      <Label for="storeurl">store url</Label>
-                                      <Input type="text" name="s" id="storeurl" placeholder="store url here" />
-                                    </FormGroup>
-
-                                    <Button>create store</Button>
-                                  </Form>
-                                </div>
-
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </TabPane>
-                  <TabPane tabId="6">
+                   <TabPane tabId="6">
                     <Row>
                       <Col sm="12">
                         <Card className="mt-0">

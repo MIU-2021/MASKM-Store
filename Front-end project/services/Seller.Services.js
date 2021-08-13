@@ -40,3 +40,11 @@ export const makeOrderCanceled = (sellerusername , productid) => {
     // .catch(err => { return new (err) });
 };
 
+export const getSellerProfileData = (sellerusername) => {
+    return _get(`seller/${sellerusername}`)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};
+
