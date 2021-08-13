@@ -10,6 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,6 +123,17 @@ public class BuyerServiceImpl implements BuyerService{
             return true;
         }
             return false;
+    }
+
+    @Override
+    public List<LineItem> listOrderItems(String userName, long id) {
+        Buyer buyer=buyerRepository.findBuyerByUsername(userName);
+         return (List<LineItem>) buyer.
+                getOrders()
+                .stream()
+                .map(o->
+                    o.getLineItems()
+                );
     }
 
     @Override
