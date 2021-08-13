@@ -39,4 +39,13 @@ public class Order {
     @JsonIgnore
     private Buyer buyer;
 
+    @Override
+    public String toString() {
+        return "Your Order : " +
+                "\n\tid : " + id +
+                "\n\tcreatedOn : " + createdOn +
+                "\n\tprice : " + price +
+                "\n\t"+ lineItems +
+                "\n\torderStatus : '" + orderStatus;
+    }
 }
