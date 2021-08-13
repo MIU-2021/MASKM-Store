@@ -32,6 +32,13 @@ public class BuyerController {
 
         buyerService.addBuyer(buyer);
     }
+
+    @PostMapping("/profile/{userName}")
+    public void ediBuyer(@RequestBody Buyer buyer,String userName){
+        //Buyer buyer =new Buyer();
+        buyerService.getBuyerByUsername(userName);
+        buyerService.addBuyer(buyer);
+    }
     @GetMapping
     public List<Buyer> getAllBuyer(){
         return buyerService.getAllBuyers();
@@ -45,10 +52,10 @@ public class BuyerController {
     public Buyer getBuyerById(@PathVariable("id") long id){
         return buyerService.getBuyerBybId(id);
     }
-    /*@GetMapping("/profile/{userName}")
-    *//*public Buyer getBuyerById(@PathVariable String userName){
+    @GetMapping("/profile/{userName}")
+    public Buyer getBuyerByUserName(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName);
-    }*/
+    }
     @GetMapping("/{userName}/follow")
     public List<Seller> getAllSellerFollowedByBuyer(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName).getSellersFollowed();
@@ -102,13 +109,13 @@ public class BuyerController {
     @PostMapping("/{userName}/order")
     public void addOrder(@RequestBody Order order, @PathVariable String userName){
            Buyer buyer =buyerService.getBuyerByUsername(userName);
-//           if (buyer.getPaymentMethods()!=null)
-//           {
-//           buyer.setPoints((int) order.getPrice());
-//           buyerService.addOrder(userName, order);
-//           order.setOrderPaid(true);
-//           buyerService.save(buyer);
-//           }
+           if (buyer.getCreditCard()!=null)
+           {
+           buyer.setPoints((int) order.getPrice());
+           buyerService.addOrder(userName, order);
+           order.setOrderPaid(true);
+           buyerService.save(buyer);
+           }
     }
 
     @GetMapping("/{userName}/order/{id}")
