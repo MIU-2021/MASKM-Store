@@ -25,6 +25,7 @@ public interface ProductsRepository extends PagingAndSortingRepository<Product,L
 
     @Query(value = "select review from Review review where review.status=:status")
     public List<Review> getAllReviewsWithoutApproval(String status);
+
     @Query(value = "select li.id from maskm_db.line_item li where li.product_id=:pId",nativeQuery = true)
     public List<Long> deletableProduct(@Param("pId") long pId);
 }

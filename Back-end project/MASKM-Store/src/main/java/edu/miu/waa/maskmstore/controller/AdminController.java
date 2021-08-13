@@ -48,7 +48,6 @@ public class AdminController {
     public Product makeProductFeatured(@RequestParam("get") boolean featured, @PathVariable long id){
         return productsService.makeItFeatured(id,featured);
     }
-
     @GetMapping("/products/{product_id}/reviews/{review_id}")
     public Review approveReview(@PathVariable long product_id, @PathVariable long review_id,@RequestParam("approved") boolean approved){
         if (approved)
@@ -57,6 +56,8 @@ public class AdminController {
             return productsService.approveReview(product_id,review_id,"Rejected");
 
     }
+
+
     @GetMapping("/reviews")
     public List<Review> getAllReviewWithoutApproval(){
             return productsService.getAllReviewsWithoutApproval();
@@ -65,7 +66,6 @@ public class AdminController {
 
     @Autowired
     CategoryService categoryService;
-
     @PostMapping("/cats")
     public ProductCategory addCats(@RequestBody ProductCategory productCategory){
         return categoryService.addCategory(productCategory);
@@ -78,7 +78,6 @@ public class AdminController {
     public String deleteCat(@PathVariable long id){
         return categoryService.deleteCategory(id);
     }
-
     @GetMapping("/sellers")
     public List<Seller> getAllSellers(){
         return sellerService.getAllSellers();
@@ -89,5 +88,9 @@ public class AdminController {
     public Seller getOneSeller(@PathVariable int id){
 
         return sellerService.getSellerBySId(id);
+    }
+    @DeleteMapping("products/{id}")
+    public boolean deleteProduct(@PathVariable long id){
+        return productsService.deleteProduct(id);
     }
 }

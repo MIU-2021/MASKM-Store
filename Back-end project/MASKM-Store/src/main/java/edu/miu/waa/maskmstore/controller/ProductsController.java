@@ -54,10 +54,7 @@ public class ProductsController {
     public Product getProductById(@PathVariable long id){
         return productsService.getProductById(id).orElse(null);
     }
-    @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable long id){
-        return "";
-    }
+
 
     @PostMapping("/{id}/reviews")
     public Product addReview(@RequestBody Review review,@PathVariable long id){
@@ -67,6 +64,11 @@ public class ProductsController {
     @GetMapping("/{id}/reviews")
     public List<Review> getAllReviewsForProduct(@PathVariable long id){
         return productsService.getAllReviewsForProduct(id);
+    }
+
+    @PutMapping("/{id}")
+    public Product editProduct(@PathVariable long id,@RequestBody Product product){
+        return productsService.editProduct(id,product);
     }
 
 }

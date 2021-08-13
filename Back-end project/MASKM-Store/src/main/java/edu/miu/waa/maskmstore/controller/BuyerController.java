@@ -7,6 +7,7 @@ import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.service.BuyerService;
 import edu.miu.waa.maskmstore.service.OrderService;
 import edu.miu.waa.maskmstore.service.SellerService;
+import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -106,9 +107,5 @@ public class BuyerController {
     }
 
 
-//    @GetMapping("/{id}/orders")
-//    public List<Order> getAllOrdersForBuyer(@PathVariable long id){
-//        return buyerService.getAllOrdersForBuyer(id);
-//    }
 
 }
