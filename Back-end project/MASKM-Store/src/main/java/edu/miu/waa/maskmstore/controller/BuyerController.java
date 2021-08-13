@@ -78,16 +78,7 @@ public class BuyerController {
     }
     @PostMapping("/{userName}/order/delivered/{id}")
     public Order deliveredOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
-        Buyer buyer =buyerService.getBuyerByUsername(userName);
-        List<Long> lOID= buyerService.getBuyerByUsername(userName).getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
-        if( lOID.contains(oId)) {
-            Order order=orderService.getOrderById(oId);
-            order.setOrderStatus(OrderStatus.Delivered);
-            orderService.save(order);
-            buyerService.save(buyer);
-            return order;
-        }
-        return null;
+        return orderService.deliveredOrder(userName,oId);
     }
 
     @PostMapping("/{userName}/order/returned/{id}")
