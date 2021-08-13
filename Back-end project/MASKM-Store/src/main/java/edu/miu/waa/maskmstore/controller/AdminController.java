@@ -78,19 +78,7 @@ public class AdminController {
     public String deleteCat(@PathVariable long id){
         return categoryService.deleteCategory(id);
     }
-//    @PostMapping("/cats/{id}")
-//    public ProductSubCategory addSubCats(@PathVariable long id,@RequestBody ProductSubCategory productSubCategory){
-//        return categoryService.addSubCategory(id,productSubCategory);
-//    }
-//    @PutMapping("/cats/{cat_id}/{subCat_id}")
-//    public ProductSubCategory editSubCat(@RequestBody ProductSubCategory productSubCategory,@PathVariable long cat_id,@PathVariable long subCat_id){
-//        return categoryService.editSubCategory(cat_id,subCat_id,productSubCategory);
-//    }
-//    @DeleteMapping("/cats/{cat_id}/{subCat_id}")
-//    public String deleteSubCat(@PathVariable long cat_id,@PathVariable long subCat_id){
-//        return categoryService.deleteSubCategory(cat_id,subCat_id);
-//    }
-/*List sellers -- GET sellers/*/
+
     @GetMapping("/sellers")
     public List<Seller> getAllSellers(){
         return sellerService.getAllSellers();

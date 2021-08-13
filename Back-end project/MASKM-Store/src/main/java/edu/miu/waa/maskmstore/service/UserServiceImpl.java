@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService{
             seller.setUser(user);
             addSeller(seller);
         }
-//        userRepository.save(user);
+       userRepository.save(user);
         return true;
     }
 
