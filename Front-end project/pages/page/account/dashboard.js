@@ -42,10 +42,9 @@ import { Form, FormGroup, FormText, ResponsiveEmbed } from "react-bootstrap";
 import EditProfile from "../../../components/common/EditProfile";
 import EditProduct from "../../../components/common/EditProduct";
 import { DeleteOrder, OrderData } from "../../../services/Order.Services";
-import { CurrentUser, RoleAuthenticated } from "../../../services/User.Services";
+import { CurrentUser, RoleAuthenticated, UpdateUser } from "../../../services/User.Services";
 import OrderDetail from "./orderDetail";
 import Following from "./Following";
-import { myFollows } from '../../../services/User.Services';
 import ProfilePage from "./common/profile-page";
 
 
@@ -124,35 +123,36 @@ const Dashboard = () => {
         },
         {
             img: homework,
-            title: "50",
-            desc: "Order Pending",
+            title: currentUser?currentUser.points:0,
+            desc: "Cuppon points",
         },
     ];
 
     useEffect(() => {
         setRole(RoleAuthenticated());
-    }, []);
+    }, [activeTab]);
 
     useEffect(() => {
         CurrentUser()
             .then(resp => {
                 console.log(resp);
                 setCurrentUser(resp);
-               // setOrderData(resp.orders);
-                //setFollowing(resp.)
+                setOrderData(resp.orders);
+                setFollowing(resp.sellersFollowed)
             })
             .catch();
 
-    }, [])
+    }, [activeTab])
 
+    
     useEffect(() => {
-        setFollowing(myFollows());
+        if (!RoleAuthenticated() || RoleAuthenticated().toUpperCase() != 'BUYER')
+            router.push("/page/account/login");
     }, []);
-    useEffect(() => {
-        if(!RoleAuthenticated() || RoleAuthenticated().toUpperCase() != 'BUYER')
-             router.push("/page/account/login");
-    }, []);
-
+    const saveProfileClickHandle=()=>{
+        UpdateUser(currenteUser);
+        setActiveTab(1);
+    }
     const deleteOrderEventHandler = (orderId) => {
         var answer = window.confirm("Delete Order?");
         if (answer) {
@@ -163,11 +163,11 @@ const Dashboard = () => {
         return (
             <tr>
                 <th scope="row">{ord.id}</th>
-                <td>{ord.date}</td>
-                <td>{ord.status}</td>
+                <td>{ord.createdOn}</td>
+                <td>{ord.orderStatus}</td>
                 <td>
                     <i onClick={() => { setActiveTab("9"); setOrderSelected(ord); }} className="fa fa-search-plus mr-1" aria-hidden="true"></i>
-                    {ord.status != 'Shipped' ? <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => deleteOrderEventHandler(ord.id)}></i> : <i></i>}
+                    {ord.orderStatus != 'Shipped' ? <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => deleteOrderEventHandler(ord.id)} ></i> : <i></i>}
                 </td>
             </tr>
         );
@@ -177,11 +177,11 @@ const Dashboard = () => {
         return (
             <tr>
                 <th scope="row">{ord.id}</th>
-                <td>{ord.date}</td>
-                <td>{ord.status}</td>
+                <td>{ord.createdOn}</td>
+                <td>{ord.orderStatus}</td>
                 <td>
                     <i onClick={() => { setActiveTab("9"); setOrderSelected(ord); }} className="fa fa-search-plus mr-1" aria-hidden="true"></i>
-                    {ord.status != 'Shipped' ? <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => deleteOrderEventHandler(ord.id)} ></i> : <i></i>}
+                    {ord.orderStatus != 'Shipped' ? <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => deleteOrderEventHandler(ord.id)} ></i> : <i></i>}
                 </td>
             </tr>
         );
@@ -236,22 +236,7 @@ const Dashboard = () => {
                                                     Profile
                                                 </NavLink>
                                             </NavItem>
-                                            <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                                                <NavLink
-                                                    className={activeTab === "5" ? "active" : ""}
-                                                    onClick={() => setActiveTab("5")}
-                                                >
-                                                    Settings
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                                                <NavLink
-                                                    className={activeTab === "6" ? "active" : ""}
-                                                    onClick={toggle}
-                                                >
-                                                    Logout
-                                                </NavLink>
-                                            </NavItem>
+                                            
                                         </Nav>
                                     </div>
                                 </div>
@@ -274,37 +259,7 @@ const Dashboard = () => {
                                                     })}
                                                 </Row>
                                             </div>
-                                            <Row>
-                                                <Col md="7">
-                                                    <Card>
-                                                        <CardBody>
-                                                            <div id="chart">
-                                                                <Chart
-                                                                    options={lineChart1.options}
-                                                                    series={lineChart1.series}
-                                                                    height="170"
-                                                                    type="area"
-                                                                />
-                                                            </div>
-                                                        </CardBody>
-                                                    </Card>
-                                                </Col>
-                                                <Col md="5">
-                                                    <Card>
-                                                        <CardBody>
-                                                            <div id="chart-order">
-                                                                <Chart
-                                                                    options={apexPieChart.options}
-                                                                    series={apexPieChart.series}
-                                                                    type="donut"
-                                                                    width={380}
-                                                                />
-                                                            </div>
-                                                        </CardBody>
-                                                    </Card>
-                                                </Col>
-                                            </Row>
-                                            <Row>
+                                              <Row>
                                                 <Col lg="12">
                                                     <Card className="dashboard-table">
                                                         <CardBody>
@@ -319,14 +274,14 @@ const Dashboard = () => {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {/* {orderData.slice(0, 5).map((data, i) => {
+                                                                    {orderData.slice(0, 5).map((data, i) => {
                                                                     return (
                                                                         <RecentOrder
                                                                             key={i}
                                                                             ord={data}
                                                                         />
                                                                     );
-                                                                })} */}
+                                                                })} 
                                                                 </tbody>
                                                             </table>
                                                         </CardBody>
@@ -363,14 +318,14 @@ const Dashboard = () => {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {/* {orderData.map((data, i) => {
+                                                                     {orderData.map((data, i) => {
                                                                     return (
                                                                         <AllOrder
                                                                             key={i}
                                                                             ord={data}
                                                                         />
                                                                     );
-                                                                })} */}
+                                                                })} 
                                                                 </tbody>
                                                             </table>
                                                         </CardBody>
@@ -384,21 +339,210 @@ const Dashboard = () => {
                                                     <Card className="mt-0">
                                                         <CardBody>
                                                             <div className="dashboard-box">
-                                                                <div className="dashboard-title">
-                                                                    <h4>profile</h4>
-                                                                    <span
-                                                                        onClick={() => setActiveTab("7")}
-                                                                    >
-                                                                        edit
-                                                                    </span>
-                                                                </div>
+                                                                
                                                                 <div className="dashboard-detail">
                                                                     <ul>
-                                                                         {
-                                                                        currentUser && currentUser.user ?
-                                                                            <ProfilePage user={currentUser.user}></ProfilePage>
-                                                                            : ''
-                                                                    } 
+                                                                        <section className="contact-page register-page">
+                                                                            {currentUser && currentUser.user ?
+                                                                            <Container>
+                                                                                <Row>
+                                                                                    <Col sm="12">
+                                                                                        <h3>PERSONAL DETAIL</h3>
+                                                                                        <Form className="theme-form">
+                                                                                            <Row>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="name">First Names</Label>
+                                                                                                    <Input type="text" className="form-control" id="name"
+                                                                                                        onChange={(e) => { 
+                                                                                                            let usr={...currentUser};
+                                                                                                            usr.user.fname=e.target.value;
+                                                                                                            setCurrentUser(usr);
+                                                                                                         }}
+                                                                                                        value={currentUser.user.fname} placeholder="Enter Your name"
+                                                                                                        required />
+                                                                                                </Col>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="email">Last Name</Label>
+                                                                                                    <Input type="text" className="form-control" id="last-name" 
+                                                                                                    onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.user.lname=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.user.lname} placeholder="Last name" required />
+                                                                                                </Col>
+
+                                                                                                <Col md="6">
+                                                                                                    <Label for="review">Phone number</Label>
+                                                                                                    <Input type="text" maxLength='9' className="form-control" id="review" 
+                                                                                                     onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.user.phone=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.user.phone?currentUser.user.phone:''} placeholder="Enter your number"
+                                                                                                         />
+                                                                                                </Col>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="email">Email</Label>
+                                                                                                    <Input type="text" className="form-control" id="email" 
+                                                                                                     onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.user.email=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.user.email} placeholder="Email" required />
+                                                                                                </Col>
+
+                                                                                            </Row>
+                                                                                            <Row>
+                                                                                                <Col md="12">
+                                                                                                    <h3>SHIPPING ADDRESS</h3>
+                                                                                                </Col>
+                                                                                            </Row>
+
+                                                                                            <Row>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="name">Address Line</Label>
+                                                                                                    <Input type="text" className="form-control" id="home-ploat"
+                                                                                                    value={currentUser.shippingAddress.addressLine?currentUser.shippingAddress.addressLine:''} 
+                                                                                                    
+                                                                                                    placeholder="company name"
+                                                                                                        required />
+                                                                                                </Col>
+                                                                                                <Col md="6" className="select_input">
+                                                                                                    <Label for="review">Country *</Label>
+                                                                                                    <Input type="text" className="form-control" id="address-two" 
+                                                                                                     onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.shippingAddress.country=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.shippingAddress.country} placeholder="Address"
+                                                                                                        required="" />
+                                                                                                    {/* <select className="form-control" size="1">
+                                            <option value="India">India</option>
+                                            <option value="UAE">UAE</option>
+                                            <option value="U.K">U.K</option>
+                                            <option value="US">US</option>
+                                        </select> */}
+                                                                                                </Col>
+
+
+                                                                                                <Col md="6">
+                                                                                                    <Label for="review">Region/State *</Label>
+                                                                                                    <Input type="text" className="form-control" id="region-state" 
+                                                                                                    onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.shippingAddress.state=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.shippingAddress.state} placeholder="Region/state"
+                                                                                                        required="" />
+                                                                                                </Col>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="review">City *</Label>
+                                                                                                    <Input type="text" className="form-control" id="city" 
+                                                                                                    onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.shippingAddress.city=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.shippingAddress.city} placeholder="City" required="" />
+                                                                                                </Col>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="email">Zip Code *</Label>
+                                                                                                    <Input type="text" className="form-control" id="zip-code" 
+                                                                                                     onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.shippingAddress.zipCode=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.shippingAddress.zipCode} placeholder="zip-code"
+                                                                                                        required="" />
+                                                                                                </Col>
+
+                                                                                            </Row>
+
+                                                                                            <Row>
+                                                                                                <Col md="12">
+                                                                                                    <h3>BILLING ADDRESS</h3>
+                                                                                                </Col>
+                                                                                            </Row>
+                                                                                            <Row>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="name">Address Line</Label>
+                                                                                                    <Input type="text" className="form-control" id="home-ploat" 
+                                                                                                     onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.billingAddress.addressLine=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.billingAddress.addressLine} placeholder="company name"
+                                                                                                        required="" />
+                                                                                                </Col>
+                                                                                                <Col md="6" className="select_input">
+                                                                                                    <Label for="review">Country *</Label>
+                                                                                                    <Input type="text" className="form-control" id="address-two" 
+                                                                                                    onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.billingAddress.country=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.billingAddress.country} placeholder="Address"
+                                                                                                        required="" />
+                                                                                                    {/* <select className="form-control" size="1">
+                                            <option value="India">India</option>
+                                            <option value="UAE">UAE</option>
+                                            <option value="U.K">U.K</option>
+                                            <option value="US">US</option>
+                                        </select> */}
+                                                                                                </Col>
+
+
+                                                                                                <Col md="6">
+                                                                                                    <Label for="review">Region/State *</Label>
+                                                                                                    <Input type="text" className="form-control" id="region-state" 
+                                                                                                     onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.billingAddress.state=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.billingAddress.state} placeholder="Region/state"
+                                                                                                        required="" />
+                                                                                                </Col>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="review">City *</Label>
+                                                                                                    <Input type="text" className="form-control" id="city" 
+                                                                                                    onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.billingAddress.city=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.billingAddress.city} placeholder="City" required="" />
+                                                                                                </Col>
+                                                                                                <Col md="6">
+                                                                                                    <Label for="email">Zip Code *</Label>
+                                                                                                    <Input type="text" className="form-control" id="zip-code" 
+                                                                                                     onChange={(e) => { 
+                                                                                                        let usr={...currentUser};
+                                                                                                        usr.billingAddress.zipCode=e.target.value;
+                                                                                                        setCurrentUser(usr);
+                                                                                                     }}
+                                                                                                    value={currentUser.billingAddress.zipCode} placeholder="zip-code"
+                                                                                                        required="" />
+                                                                                                </Col>
+                                                                                                <div className="col-md-12">
+                                                                                                    <button className="btn btn-sm btn-solid" onClick={saveProfileClickHandle}>Save setting</button>
+                                                                                                </div>
+                                                                                            </Row>
+                                                                                        </Form>
+                                                                                    </Col>
+                                                                                </Row>
+                                                                            </Container>
+                                                                            :''}
+                                                                        </section>
+
 
                                                                         {/* {ProfileData.map((data, i) => {
                                                                         return (

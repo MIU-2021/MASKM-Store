@@ -76,8 +76,9 @@ export const ProductsbyOrder = (oderId) => {
 }
 
 export const DeleteOrder = (oderId) => {
-//   let arr = OrderData.filter(function(item) {
-//     return item.id !== oderId
-// })
+  return _get('products/'+oderId)
+  .then(response => {
+      return response;
+  })
   return OrderData
 }

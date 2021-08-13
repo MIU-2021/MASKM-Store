@@ -18,7 +18,7 @@ import {
 const Following = (props) => {
 
     const FollowingList = () => {
-        console.log(props.Following.count);
+        console.log(props.Following);
         
           return (
             <React.Fragment>
