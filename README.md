@@ -86,3 +86,32 @@ Soufiane Ennali :612359
 KARIM A R ABUREJILA :612403
 Maher Samoudi :612382
 ```
+5 Duration of work
+
+```sh
+4 days
+```
+5 Special Thanks
+
+```sh
+Special Thanks for our professor who did a lot of effort to make this course easy for us and we can see this from on this project, 
+which we learned with him a lot of stuff who help us on Career.
+
+Special Thanks Also for Our Friend he's name is Emad form the last Entry <Thank you Emad>.
+
+```
+
+```sh
+
+Wich make this picture is so expensive 😊 😊 However we were very happy to finish this project on very short time.
+```
+
+9 Back-End Github
+
+Back-End :https://github.com/MIU-2021/MASKM-Store/tree/main/Back-end%20project
+
+Front-End :https://github.com/MIU-2021/MASKM-Store/tree/main/Front-end%20project
+
+```sh
+Copyrights Maharishi international university ©2021 All Rights Reserved
+```

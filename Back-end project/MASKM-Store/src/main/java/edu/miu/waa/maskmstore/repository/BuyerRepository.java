@@ -31,6 +31,8 @@ public interface BuyerRepository extends CrudRepository<Buyer,Long> {
     public List<Seller> getSellerFollowedByBuyerId(@Param("id")long id);
 
 
+
+
     @Query("select b.points from Buyer b where b.bId = :id ")
     public long getBuyerPoints(@Param("id") long id);
 
