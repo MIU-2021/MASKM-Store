@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,8 +36,6 @@ public class BuyerController {
 
     @PostMapping("/profile/{userName}/edit")
     public void ediBuyer(@RequestBody Buyer buyer,String userName){
-        //Buyer buyer =new Buyer();
-        buyerService.getBuyerByUsername(userName);
         buyerService.addBuyer(buyer);
     }
     @GetMapping
@@ -52,10 +51,10 @@ public class BuyerController {
     public Buyer getBuyerById(@PathVariable("id") long id){
         return buyerService.getBuyerBybId(id);
     }
-    @GetMapping("/profile/{userName}")
-    public Buyer getBuyerByUserName(@PathVariable String userName){
+    /*@GetMapping("/profile/{userName}")
+    *//*public Buyer getBuyerById(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName);
-    }
+    }*/
     @GetMapping("/{userName}/follow")
     public List<Seller> getAllSellerFollowedByBuyer(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName).getSellersFollowed();
@@ -99,8 +98,10 @@ public class BuyerController {
 
     @PostMapping("/{userName}/order")
     public void addOrder(@RequestBody Order order, @PathVariable String userName){
+
            Buyer buyer =buyerService.getBuyerByUsername(userName);
-           if (buyer.getCreditCard()!=null)
+
+        if (buyer.getCreditCard()!=null)
            {
            buyer.setPoints((int) order.getPrice());
            buyerService.addOrder(userName, order);
@@ -117,19 +118,18 @@ public class BuyerController {
 
     @GetMapping("/{userName}/orders")
     public List<Order> getAllOrdersForBuyer(@PathVariable String userName){
-
-        return buyerService.getAllOrdersForBuyer(buyerService.getBuyerByUsername(userName).getBId());
+                return buyerService.getAllOrdersForBuyer(buyerService.getBuyerByUsername(userName).getBId());
     }
 
     @GetMapping("/profile/{userName}")
-    public Buyer getBuyerById(@PathVariable String userName){
+    public Buyer getBuyerByUserName(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName);
     }
 
 
-    @GetMapping("/{id}/orders")
-    public List<Order> getAllOrdersForBuyer(@PathVariable long id){
-        return buyerService.getAllOrdersForBuyer(id);
-    }
+//    @GetMapping("/{id}/orders")
+//    public List<Order> getAllOrdersForBuyer(@PathVariable long id){
+//        return buyerService.getAllOrdersForBuyer(id);
+//    }
 
 }

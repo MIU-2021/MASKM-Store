@@ -65,9 +65,11 @@ public class Product {
     private LocalDate createdOn;
 
     @OneToOne(mappedBy = "product")
+    @JsonIgnore
     private Stock stock;
 
     @ManyToOne
+    @JsonIgnore
     private Seller seller;
 
 

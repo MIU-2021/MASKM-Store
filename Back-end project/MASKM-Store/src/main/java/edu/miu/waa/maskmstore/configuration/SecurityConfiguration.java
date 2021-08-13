@@ -36,12 +36,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeRequests()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/configuration/ui").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/configuration/security").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui/*").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
                .antMatchers("/auth").permitAll()
                 .antMatchers("/register").permitAll()
                .antMatchers("/products/**").permitAll()
                 .antMatchers("/cats/**").permitAll()
                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/buyer/**").hasAuthority("BUYER")
+                .antMatchers("/buyer/**").permitAll()
                 .antMatchers("/seller/**").hasAuthority("SELLER")
                .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
