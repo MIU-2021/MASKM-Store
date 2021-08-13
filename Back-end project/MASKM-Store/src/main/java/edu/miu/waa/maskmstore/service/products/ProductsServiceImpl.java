@@ -163,6 +163,16 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
+    public boolean deleteProduct(long id) {
+        if (productsRepository.deletableProduct(id).size()==0 || productsRepository.deletableProduct(id)==null)
+        {
+            productsRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public Product addReviewToProduct(long id, Review review) {
         try {
             if (productsRepository.existsById(id)){
