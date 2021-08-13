@@ -103,10 +103,11 @@ public class BuyerController {
         return buyerService.deleteOrder(userName,id);
     }
 
-    @DeleteMapping("/{userName}/order/{id}/listItems")
+    @GetMapping("/{userName}/order/{id}/listItems")
     public List<LineItem> listOrderItems(@PathVariable("userName") String userName, @PathVariable("id") long id){
         return buyerService.listOrderItems(userName,id);
     }
+
 
     @GetMapping("/profile/{userName}")
     public Buyer getBuyerByUserName(@PathVariable String userName){

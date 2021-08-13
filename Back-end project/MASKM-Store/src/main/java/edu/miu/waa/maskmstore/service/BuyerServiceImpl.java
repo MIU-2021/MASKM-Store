@@ -101,6 +101,9 @@ public class BuyerServiceImpl implements BuyerService{
     public void addOrder(Order order, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
         order.setBuyer(buyer);
+
+
+        order.setPrice(order.getLineItems().stream().map(l->l.getPrice()).reduce((double)0,(a,b)->a+b));
         orderRepository.save(order);
 
         List<Order> orders = orderRepository.findAllOrdersByBuyerId(buyer.getBId());
