@@ -1,7 +1,7 @@
 import axios from "axios";
 //const url = process.env.SERVER_API_URL;
 const urlAhmed = 'http://172.19.140.140:2021';//ahmed
-const url = 'http://172.19.140.171:2021';//souphiane
+const url = 'http://172.19.140.95:2021';//souphiane
 //const url = 'https://fakestoreapi.com';
 const urlkarim = 'http://172.19.140.95:2021'
 //const url = 'https://fakestoreapi.com';
@@ -42,6 +42,7 @@ export const _post = (path, body) => {
     if (token && token != undefined) {
         headers.Authorization = `Bearer ${token}`;
     }
+    console.log("hh",headers.Authorization);
     console.log(`${url}/${path}`, body, headers);
     return axios
         .post(`${url}/${path}`, body, {
@@ -68,17 +69,7 @@ export const _getApiKarim = (path) => {
         });
 }
 
-export const _postKarimApi = (path, body) => {
-    console.log("body", body);
-    return axios
-        .post(`${urlkarim}/${path}`, body)
-        .then(response => {
-            console.log("response", response);
-            return response.data;
-        }).catch((error) => {
-            console.log("error: ", error);
-        });
-}
+
 
 export const _put = (path, body) => {
 

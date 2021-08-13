@@ -13,7 +13,7 @@ export const fecthAllReviewsByProduct = (id) => {
 
 
 export const postReviewForproduct = (data, productid) => {
-    return _postKarimApi(`products/${productid}/reviews`,data)
+    return _post(`products/${productid}/reviews`,data)
         .then(response => {
             return response;
         })

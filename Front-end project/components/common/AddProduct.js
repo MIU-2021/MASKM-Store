@@ -13,9 +13,9 @@ const AddProduct = () => {
     const [picture, setPicture] = useState(null);
     function handleClick()  {
 
-        let datas1 = {"title":productName, "description":productDescription, "price":productPrice, "image":"https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg"};
+        let datas1 = {"title":productName, "description":productDescription, "price":productPrice, "image":"https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg" };
         console.log(datas1);
-        AddProductForSeller("nader" , category , datas1).then(response => {
+        AddProductForSeller("milton" , 1 , datas1).then(response => {
             //console.log("product return",response);
             //setData(response);
             //setLoading(false);
@@ -43,7 +43,7 @@ const AddProduct = () => {
                 <FormGroup>
                     <Label for="category">Category</Label>
                     <Input type="select" name="category" id="category" onChange={e => setCategory(e.target.value)}>
-                        <option value="7">Footbal</option>
+                        <option value="1">Footbal</option>
                         <option value="5">Sport</option>
                     </Input>
                 </FormGroup>

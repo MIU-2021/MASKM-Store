@@ -48,6 +48,7 @@ const LeftSidebarPage = ({ pathId }) => {
   // });
   function fetchProductsHandler() {
     fecthProductByID(pathId).then(response => {
+      console.log("gggg",response);
       setData(response);
       setLoading(false);
       return response.data;

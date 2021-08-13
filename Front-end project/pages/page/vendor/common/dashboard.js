@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import {
@@ -32,6 +32,7 @@ import pro1 from "../../../../public/assets/images/pro3/1.jpg";
 import pro27 from "../../../../public/assets/images/pro3/27.jpg";
 import pro36 from "../../../../public/assets/images/pro3/36.jpg";
 import dynamic from "next/dynamic";
+
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 import { apexPieChart, lineChart1 } from "../../../../data/vendorData";
@@ -39,6 +40,9 @@ import AddProduct from "../../../../components/common/AddProduct";
 import {Form, FormGroup, FormText} from "react-bootstrap";
 import EditProfile from "../../../../components/common/EditProfile";
 import EditProduct from "../../../../components/common/EditProduct";
+import {RoleAuthenticated, UserAuthenticated} from "../../../../services/User.Services";
+import {fecthProductByID} from "../../../../services/Products.Services";
+import {deleteProductBySeller, fetchProductsBySellerUsername} from "../../../../services/Seller.Services";
 
 const SummaryData = [
   {
@@ -60,15 +64,15 @@ const SummaryData = [
 
 const Summary = ({ img, title, desc }) => {
   return (
-    <Col md="4">
-      <div className="counter-box">
-        <Media src={img} className="img-fluid" />
-        <div>
-          <h3>{title}</h3>
-          <h5>{desc}</h5>
+      <Col md="4">
+        <div className="counter-box">
+          <Media src={img} className="img-fluid" />
+          <div>
+            <h3>{title}</h3>
+            <h5>{desc}</h5>
+          </div>
         </div>
-      </div>
-    </Col>
+      </Col>
   );
 };
 
@@ -125,18 +129,16 @@ const ProductData = [
 
 const TrendingProduct = ({ img, productName, price, sales }) => {
   return (
-    <tr>
-      <th scope="row">
-        <Media src={img} className="blur-up lazyloaded" />
-      </th>
-      <td>{productName}</td>
-      <td>{price}</td>
-      <td>{sales}</td>
-    </tr>
+      <tr>
+        <th scope="row">
+          <Media src={img} className="blur-up lazyloaded" />
+        </th>
+        <td>{productName}</td>
+        <td>{price}</td>
+        <td>{sales}</td>
+      </tr>
   );
 };
-
-
 
 const OrderData = [
   {
@@ -197,22 +199,22 @@ const OrderData = [
 
 const RecentOrder = ({ id, productDetails, status }) => {
   return (
-    <tr>
-      <th scope="row">{id}</th>
-      <td>{productDetails}</td>
-      <td>{status}</td>
-    </tr>
+      <tr>
+        <th scope="row">{id}</th>
+        <td>{productDetails}</td>
+        <td>{status}</td>
+      </tr>
   );
 };
 
 const AllOrder = ({ id, productDetails, status, price }) => {
   return (
-    <tr>
-      <th scope="row">{id}</th>
-      <td>{productDetails}</td>
-      <td>{status}</td>
-      <td>{price}</td>
-    </tr>
+      <tr>
+        <th scope="row">{id}</th>
+        <td>{productDetails}</td>
+        <td>{status}</td>
+        <td>{price}</td>
+      </tr>
   );
 };
 
@@ -230,429 +232,461 @@ const ProfileData = [
 
 const ProfileDetail = ({ title, detail }) => {
   return (
-    <li>
-      <div className="details">
-        <div className="left">
-          <h6>{title}</h6>
+      <li>
+        <div className="details">
+          <div className="left">
+            <h6>{title}</h6>
+          </div>
+          <div className="right">
+            <h6>{detail}</h6>
+          </div>
         </div>
-        <div className="right">
-          <h6>{detail}</h6>
-        </div>
-      </div>
-    </li>
+      </li>
   );
 };
 
 const Dashboard = () => {
-  const AllProduct = ({ img, productName, category, price, stock, sales }) => {
-    return (
-        <tr>
-          <th scope="row">
-            <Media src={img} className="blur-up lazyloaded" />
-          </th>
-          <td>{productName}e</td>
-          <td>{category}</td>
-          <td>{price}</td>
-          <td>{stock}</td>
-          <td>{sales}</td>
-          <td>
-            <i  onClick={() => {setActiveTab("8");setEditProductId(5);}} className="fa fa-pencil-square-o mr-1" aria-hidden="true"></i>
-            <i className="fa fa-trash-o ml-1" aria-hidden="true"></i>
-          </td>
-        </tr>
-    );
-  };
+
+  // const AllProduct = ({ product }) => {
+  //   return (
+  //
+  //   );
+  // };
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("1");
-  const [EditProductId, setEditProductId] = useState();
+  const [editProduct, setEditProduct] = useState({});
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
+  const [currentUser, setCurrentUser] = useState({});
+  const [userName, setUserName] = useState(null);
+  const [role, setRole] = useState(null);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(null);
+
+  useEffect(() => {
+    setUserName(UserAuthenticated());
+  });
+
+  useEffect(() => {
+    if(editProduct.id)
+    setActiveTab("8");
+  }, [editProduct]);
+
+  useEffect(() => {
+    if(!RoleAuthenticated() || RoleAuthenticated().toUpperCase() != 'SELLER')
+      router.push("/page/account/login");
+  }, []);
+
+  function deleteproduct(id ) {
+    deleteProductBySeller(id , UserAuthenticated()).then(response => {
+      console.log("res" ,response);
+      //setData(response);
+      setLoading(false);
+      //return response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function fetchProductsForSellerHandler() {
+    fetchProductsBySellerUsername(UserAuthenticated()).then(response => {
+      console.log("res" ,response);
+      setData(response);
+      setLoading(false);
+      //return response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  useEffect(fetchProductsForSellerHandler, []);
+
 
   return (
-    <section className="dashboard-section section-b-space">
-      <Container>
-        <Row>
-          <Col lg="3">
-            <div className="dashboard-sidebar">
-              <div className="profile-top">
-                <div className="profile-image">
-                  <Media src={seventeen} alt="" className="img-fluid" />
-                </div>
-                <div className="profile-detail">
-                  <h5>Fashion Store</h5>
-                  <h6>750 followers | 10 review</h6>
-                  <h6>mark.enderess@mail.com</h6>
-                </div>
-              </div>
-              <div className="faq-tab">
-                <Nav tabs className="border-tab-primary">
-                  <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                    <NavLink
-                      className={activeTab === "1" ? "active" : ""}
-                      onClick={() => setActiveTab("1")}
-                    >
-                      Dashboard
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                    <NavLink
-                      className={activeTab === "2" ? "active" : ""}
-                      onClick={() => setActiveTab("2")}
-                    >
-                      Products
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                    <NavLink
-                      className={activeTab === "3" ? "active" : ""}
-                      onClick={() => setActiveTab("3")}
-                    >
-                      Order
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                    <NavLink
-                      className={activeTab === "4" ? "active" : ""}
-                      onClick={() => setActiveTab("4")}
-                    >
-                      Profile
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                    <NavLink
-                      className={activeTab === "5" ? "active" : ""}
-                      onClick={() => setActiveTab("5")}
-                    >
-                      Settings
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                    <NavLink
-                      className={activeTab === "6" ? "active" : ""}
-                      onClick={toggle}
-                    >
-                      Logout
-                    </NavLink>
-                  </NavItem>
-                </Nav>
-              </div>
-            </div>
-          </Col>
-          <Col lg="9">
-            <div className="faq-content">
-              <TabContent activeTab={activeTab}>
-                <TabPane tabId="1">
-                  <div className="counter-section">
-                    <Row>
-                      {SummaryData.map((data, i) => {
-                        return (
-                          <Summary
-                            key={i}
-                            img={data.img}
-                            title={data.title}
-                            desc={data.desc}
-                          />
-                        );
-                      })}
-                    </Row>
+      <section className="dashboard-section section-b-space">
+        <Container>
+          <Row>
+            <Col lg="3">
+              <div className="dashboard-sidebar">
+                <div className="profile-top">
+                  <div className="profile-image">
+                    <Media src={seventeen} alt="" className="img-fluid" />
                   </div>
-                  <Row>
-                    <Col md="7">
-                      <Card>
-                        <CardBody>
-                          <div id="chart">
-                            <Chart
-                              options={lineChart1.options}
-                              series={lineChart1.series}
-                              height="170"
-                              type="area"
-                            />
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                    <Col md="5">
-                      <Card>
-                        <CardBody>
-                          <div id="chart-order">
-                            <Chart
-                              options={apexPieChart.options}
-                              series={apexPieChart.series}
-                              type="donut"
-                              width={380}
-                            />
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col lg="6">
-                      <Card className="dashboard-table">
-                        <CardBody>
-                          <h3>trending products</h3>
-                          <table className="table mb-0 table-responsive-sm">
-                            <thead>
+                  <div className="profile-detail">
+                    <h5>Fashion Store</h5>
+                    <h6>750 followers | 10 review</h6>
+                    <h6>mark.enderess@mail.com</h6>
+                  </div>
+                </div>
+                <div className="faq-tab">
+                  <Nav tabs className="border-tab-primary">
+                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                      <NavLink
+                          className={activeTab === "1" ? "active" : ""}
+                          onClick={() => setActiveTab("1")}
+                      >
+                        Dashboard
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                      <NavLink
+                          className={activeTab === "2" ? "active" : ""}
+                          onClick={() => setActiveTab("2")}
+                      >
+                        Products
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                      <NavLink
+                          className={activeTab === "3" ? "active" : ""}
+                          onClick={() => setActiveTab("3")}
+                      >
+                        Order
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                      <NavLink
+                          className={activeTab === "4" ? "active" : ""}
+                          onClick={() => setActiveTab("4")}
+                      >
+                        Profile
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                      <NavLink
+                          className={activeTab === "5" ? "active" : ""}
+                          onClick={() => setActiveTab("5")}
+                      >
+                        Settings
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
+                      <NavLink
+                          className={activeTab === "6" ? "active" : ""}
+                          onClick={toggle}
+                      >
+                        Logout
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </div>
+              </div>
+            </Col>
+            <Col lg="9">
+              <div className="faq-content">
+                <TabContent activeTab={activeTab}>
+                  <TabPane tabId="1">
+                    <div className="counter-section">
+                      <Row>
+                        {SummaryData.map((data, i) => {
+                          return (
+                              <Summary
+                                  key={i}
+                                  img={data.img}
+                                  title={data.title}
+                                  desc={data.desc}
+                              />
+                          );
+                        })}
+                      </Row>
+                    </div>
+                    <Row>
+                      <Col md="7">
+                        <Card>
+                          <CardBody>
+                            <div id="chart">
+                              <Chart
+                                  options={lineChart1.options}
+                                  series={lineChart1.series}
+                                  height="170"
+                                  type="area"
+                              />
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                      <Col md="5">
+                        <Card>
+                          <CardBody>
+                            <div id="chart-order">
+                              <Chart
+                                  options={apexPieChart.options}
+                                  series={apexPieChart.series}
+                                  type="donut"
+                                  width={380}
+                              />
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <Card className="dashboard-table">
+                          <CardBody>
+                            <h3>trending products</h3>
+                            <table className="table mb-0 table-responsive-sm">
+                              <thead>
                               <tr>
                                 <th scope="col">image</th>
                                 <th scope="col">product name</th>
                                 <th scope="col">price</th>
                                 <th scope="col">sales</th>
                               </tr>
-                            </thead>
-                            <tbody>
+                              </thead>
+                              <tbody>
                               {ProductData.slice(0, 3).map((data, i) => {
                                 return (
-                                  <TrendingProduct
-                                    key={i}
-                                    img={data.img}
-                                    productName={data.productName}
-                                    price={data.price}
-                                    sales={data.sales}
-                                  />
+                                    <TrendingProduct
+                                        key={i}
+                                        img={data.img}
+                                        productName={data.productName}
+                                        price={data.price}
+                                        sales={data.sales}
+                                    />
                                 );
                               })}
-                            </tbody>
-                          </table>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                    <Col lg="6">
-                      <Card className="dashboard-table">
-                        <CardBody>
-                          <h3>recent orders</h3>
-                          <table className="table mb-0">
-                            <thead>
+                              </tbody>
+                            </table>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                      <Col lg="6">
+                        <Card className="dashboard-table">
+                          <CardBody>
+                            <h3>recent orders</h3>
+                            <table className="table mb-0">
+                              <thead>
                               <tr>
                                 <th scope="col">order id</th>
                                 <th scope="col">product details</th>
                                 <th scope="col">status</th>
                               </tr>
-                            </thead>
-                            <tbody>
+                              </thead>
+                              <tbody>
                               {OrderData.slice(0, 5).map((data, i) => {
                                 return (
-                                  <RecentOrder
-                                    key={i}
-                                    id={data.id}
-                                    productDetails={data.productDetails}
-                                    status={data.status}
-                                  />
+                                    <RecentOrder
+                                        key={i}
+                                        id={data.id}
+                                        productDetails={data.productDetails}
+                                        status={data.status}
+                                    />
                                 );
                               })}
-                            </tbody>
-                          </table>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="2">
-                  <Row>
-                    <Col sm="12">
-                      <Card className="dashboard-table mt-0">
-                        <CardBody>
-                          <div className="top-sec">
-                            <h3>all products</h3>
-                            <a href="#" className="btn btn-sm btn-solid" onClick={() => setActiveTab("6")}>
-                              add product
-                            </a>
-                          </div>
-                          <table className="table-responsive-md table mb-0">
-                            <thead>
+                              </tbody>
+                            </table>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="2">
+                    <Row>
+                      <Col sm="12">
+                        <Card className="dashboard-table mt-0">
+                          <CardBody>
+                            <div className="top-sec">
+                              <h3>all products</h3>
+                              <a href="#" className="btn btn-sm btn-solid" onClick={() => setActiveTab("6")}>
+                                add product
+                              </a>
+                            </div>
+                            <table className="table-responsive-md table mb-0">
+                              <thead>
                               <tr>
                                 <th scope="col">image</th>
                                 <th scope="col">product name</th>
                                 <th scope="col">category</th>
                                 <th scope="col">price</th>
-                                <th scope="col">stock</th>
-                                <th scope="col">sales</th>
-                                <th scope="col">edit/delete</th>
+                                <th scope="col">Action</th>
                               </tr>
-                            </thead>
-                            <tbody>
-                              {ProductData.map((data, i) => {
+                              </thead>
+                              <tbody>
+                              {data.map((product, i) => {
                                 return (
-                                  <AllProduct
-                                    key={i}
-                                    img={data.img}
-                                    productName={data.productName}
-                                    category={data.category}
-                                    stock={data.stock}
-                                    price={data.price}
-                                    sales={data.sales}
-                                  />
+                                    <tr key={i}>
+                                      <th scope="row">
+                                        <Media src={product.image} className="blur-up lazyloaded" />
+                                      </th>
+                                      <td>{product.title}</td>
+                                      <td>{product.productCategory.name}</td>
+                                      <td>{product.price}</td>
+                                      <td>
+                                        <i  onClick={() => {setEditProduct(product)}} className="fa fa-pencil-square-o mr-1" aria-hidden="true"></i>
+                                        <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => deleteproduct(product.id)}></i>
+                                      </td>
+                                    </tr>
                                 );
                               })}
-                            </tbody>
-                          </table>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="3">
-                  <Row>
-                    <Col sm="12">
-                      <Card className="dashboard-table mt-0">
-                        <CardBody>
-                          <div className="top-sec">
-                            <h3>orders</h3>
-                            <a href="#" className="btn btn-sm btn-solid">
-                              add product
-                            </a>
-                          </div>
-                          <table className="table table-responsive-sm mb-0">
-                            <thead>
+                              </tbody>
+                            </table>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="3">
+                    <Row>
+                      <Col sm="12">
+                        <Card className="dashboard-table mt-0">
+                          <CardBody>
+                            <div className="top-sec">
+                              <h3>orders</h3>
+                              <a href="#" className="btn btn-sm btn-solid">
+                                add product
+                              </a>
+                            </div>
+                            <table className="table table-responsive-sm mb-0">
+                              <thead>
                               <tr>
                                 <th scope="col">order id</th>
                                 <th scope="col">product details</th>
                                 <th scope="col">status</th>
                                 <th scope="col">price</th>
                               </tr>
-                            </thead>
-                            <tbody>
+                              </thead>
+                              <tbody>
                               {OrderData.map((data, i) => {
                                 return (
-                                  <AllOrder
-                                    key={i}
-                                    id={data.id}
-                                    productDetails={data.productDetails}
-                                    status={data.status}
-                                    price={data.price}
-                                  />
+                                    <AllOrder
+                                        key={i}
+                                        id={data.id}
+                                        productDetails={data.productDetails}
+                                        status={data.status}
+                                        price={data.price}
+                                    />
                                 );
                               })}
-                            </tbody>
-                          </table>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="4">
-                  <Row>
-                    <Col sm="12">
-                      <Card className="mt-0">
-                        <CardBody>
-                          <div className="dashboard-box">
-                            <div className="dashboard-title">
-                              <h4>profile</h4>
-                              <span
-                                  onClick={() => setActiveTab("7")}
-                              >
+                              </tbody>
+                            </table>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="4">
+                    <Row>
+                      <Col sm="12">
+                        <Card className="mt-0">
+                          <CardBody>
+                            <div className="dashboard-box">
+                              <div className="dashboard-title">
+                                <h4>profile</h4>
+                                <span
+                                    onClick={() => setActiveTab("7")}
+                                >
                                 edit
                               </span>
-                            </div>
-                            <div className="dashboard-detail">
-                              <ul>
-                                {ProfileData.map((data, i) => {
-                                  return (
-                                    <ProfileDetail
-                                      key={i}
-                                      title={data.title}
-                                      detail={data.detail}
-                                    />
-                                  );
-                                })}
-                              </ul>
-                            </div>
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="5">
-                  <Row>
-                    <Col sm="12">
-                      <Card className="mt-0">
-                        <CardBody>
-                          <div className="dashboard-box">
-                            <div className="dashboard-title">
-                              <h4>settings</h4>
-                            </div>
-                            <div className="dashboard-detail">
-                              <div className="account-setting">
-                                <Form>
-                                  <FormGroup>
-                                    <Label for="storename">Store Name</Label>
-                                    <Input type="text" name="storename" id="storename" placeholder="write the store name" />
-                                  </FormGroup>
-                                  <FormGroup>
-                                    <Label for="storeurl">store url</Label>
-                                    <Input type="text" name="s" id="storeurl" placeholder="store url here" />
-                                  </FormGroup>
-
-                                  <Button>create store</Button>
-                                </Form>
                               </div>
-
+                              <div className="dashboard-detail">
+                                <ul>
+                                  {ProfileData.map((data, i) => {
+                                    return (
+                                        <ProfileDetail
+                                            key={i}
+                                            title={data.title}
+                                            detail={data.detail}
+                                        />
+                                    );
+                                  })}
+                                </ul>
+                              </div>
                             </div>
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="6">
-                  <Row>
-                    <Col sm="12">
-                      <Card className="mt-0">
-                        <CardBody>
-                          <AddProduct />
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="7">
-                  <Row>
-                    <Col sm="12">
-                      <Card className="mt-0">
-                        <CardBody>
-                          <EditProfile />
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
-                <TabPane tabId="8">
-                  <Row>
-                    <Col sm="12">
-                      <Card className="mt-0">
-                        <CardBody>
-                          <EditProduct EditProductId={EditProductId} />
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                </TabPane>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="5">
+                    <Row>
+                      <Col sm="12">
+                        <Card className="mt-0">
+                          <CardBody>
+                            <div className="dashboard-box">
+                              <div className="dashboard-title">
+                                <h4>settings</h4>
+                              </div>
+                              <div className="dashboard-detail">
+                                <div className="account-setting">
+                                  <Form>
+                                    <FormGroup>
+                                      <Label for="storename">Store Name</Label>
+                                      <Input type="text" name="storename" id="storename" placeholder="write the store name" />
+                                    </FormGroup>
+                                    <FormGroup>
+                                      <Label for="storeurl">store url</Label>
+                                      <Input type="text" name="s" id="storeurl" placeholder="store url here" />
+                                    </FormGroup>
 
-              </TabContent>
-              <Modal isOpen={modal} toggle={toggle} centered>
-                <ModalHeader toggle={toggle}>Logging Out</ModalHeader>
-                <ModalBody className="p-4">Do you want to logout?</ModalBody>
-                <ModalFooter>
-                  <Link href={"/"}>
-                    <a className="btn-solid btn-custom" color="secondary">
-                      Yes
-                    </a>
-                  </Link>
-                  <Button
-                    className="btn-solid btn-custom"
-                    color="secondary"
-                    onClick={toggle}
-                  >
-                    No
-                  </Button>
-                </ModalFooter>
-              </Modal>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+                                    <Button>create store</Button>
+                                  </Form>
+                                </div>
+
+                              </div>
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="6">
+                    <Row>
+                      <Col sm="12">
+                        <Card className="mt-0">
+                          <CardBody>
+                            <AddProduct />
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="7">
+                    <Row>
+                      <Col sm="12">
+                        <Card className="mt-0">
+                          <CardBody>
+                            <EditProfile />
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+                  <TabPane tabId="8">
+                    <Row>
+                      <Col sm="12">
+                        <Card className="mt-0">
+                          <CardBody>
+                            <EditProduct product={editProduct} />
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </TabPane>
+
+                </TabContent>
+                <Modal isOpen={modal} toggle={toggle} centered>
+                  <ModalHeader toggle={toggle}>Logging Out</ModalHeader>
+                  <ModalBody className="p-4">Do you want to logout?</ModalBody>
+                  <ModalFooter>
+                    <Link href={"/"}>
+                      <a className="btn-solid btn-custom" color="secondary">
+                        Yes
+                      </a>
+                    </Link>
+                    <Button
+                        className="btn-solid btn-custom"
+                        color="secondary"
+                        onClick={toggle}
+                    >
+                      No
+                    </Button>
+                  </ModalFooter>
+                </Modal>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
   );
 };
 
