@@ -6,6 +6,8 @@ import edu.miu.waa.maskmstore.repository.OrderRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public class BuyerServiceImpl implements BuyerService{
     SellerRepository sellerRepository;
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
 
     @Override
@@ -97,6 +102,8 @@ public class BuyerServiceImpl implements BuyerService{
         orders.add(order);
         buyer.setOrders(orders);
         buyerRepository.save(buyer);
+
+        sendEmail(buyer.getUser().getEmail(),"test","tessssst");
 }
 
     @Override
@@ -114,5 +121,17 @@ public class BuyerServiceImpl implements BuyerService{
     public Address getShippingAddressBysId(long id){
         return buyerRepository.findShippingAddress(id);
 
+    }
+
+    private void sendEmail(String emailUser, String subject, String text) {
+        try {
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(emailUser);
+            email.setSubject(subject);
+            email.setText(text);
+            mailSender.send(email);
+            System.out.println("Email is Sent");
+        }catch (Exception ex)
+        {System.out.println(ex.getMessage());}
     }
 }

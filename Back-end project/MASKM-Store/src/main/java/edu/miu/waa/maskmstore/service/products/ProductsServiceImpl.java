@@ -11,6 +11,8 @@ import edu.miu.waa.maskmstore.repository.SellerRepository;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
