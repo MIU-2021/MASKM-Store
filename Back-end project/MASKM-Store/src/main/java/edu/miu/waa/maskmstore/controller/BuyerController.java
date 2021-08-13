@@ -101,7 +101,7 @@ public class BuyerController {
 
            Buyer buyer =buyerService.getBuyerByUsername(userName);
 
-        if (buyer.getCreditCard()!=null)
+        if (buyer.getCreditCard().getCardNumber()!=null)
            {
            buyer.setPoints((int) order.getPrice());
            buyerService.addOrder(userName, order);
