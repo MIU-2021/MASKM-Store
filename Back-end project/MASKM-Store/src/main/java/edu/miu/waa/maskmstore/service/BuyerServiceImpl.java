@@ -93,6 +93,7 @@ public class BuyerServiceImpl implements BuyerService{
 //        buyer.getUser().setR
         buyerRepository.save(buyer);
     }
+    //Correct One
     @Override
     public void addOrder(Order order, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
