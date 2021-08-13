@@ -75,12 +75,26 @@ public class SellerServiceImpl implements  SellerService{
     }
 
     @Override
+    public List<Long> getOrderIdsBySellerBySId(long sId) {
+
+
+        return sellerRepository.getOrdersBySellerBySId(sId);
+
+
+    }
+
+    @Override
     public List<Seller> getAllSellers() {
         return (List<Seller>) sellerRepository.findAll();
     }
 
     @Override
     public void addSeller(Seller seller) {
+        sellerRepository.save(seller);
+    }
+
+    @Override
+    public void save(Seller seller) {
         sellerRepository.save(seller);
     }
 

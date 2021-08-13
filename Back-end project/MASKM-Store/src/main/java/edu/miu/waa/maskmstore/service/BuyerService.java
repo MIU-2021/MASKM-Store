@@ -26,6 +26,5 @@ public interface BuyerService {
     public Order getOrderByBuyerUserNameOrderId(long id, String userName);
 
 
-
-
+    public void save(Buyer buyer);
 }

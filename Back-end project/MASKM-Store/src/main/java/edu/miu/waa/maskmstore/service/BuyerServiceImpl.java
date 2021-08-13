@@ -1,9 +1,6 @@
 package edu.miu.waa.maskmstore.service;
 
-import edu.miu.waa.maskmstore.domain.Address;
-import edu.miu.waa.maskmstore.domain.Buyer;
-import edu.miu.waa.maskmstore.domain.Order;
-import edu.miu.waa.maskmstore.domain.Seller;
+import edu.miu.waa.maskmstore.domain.*;
 import edu.miu.waa.maskmstore.repository.BuyerRepository;
 import edu.miu.waa.maskmstore.repository.OrderRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
@@ -87,6 +84,7 @@ public class BuyerServiceImpl implements BuyerService{
 
     @Override
     public void addBuyer(Buyer buyer) {
+//        buyer.getUser().setR
         buyerRepository.save(buyer);
     }
     @Override
@@ -105,6 +103,11 @@ public class BuyerServiceImpl implements BuyerService{
     public Order getOrderByBuyerUserNameOrderId(long id, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
         return orderRepository.findById(buyerRepository.getOrderByBuyerUserNameOrderId( id,  buyer.getBId())).get();
+    }
+
+    @Override
+    public void save(Buyer buyer) {
+        buyerRepository.save(buyer);
     }
 
     @Override

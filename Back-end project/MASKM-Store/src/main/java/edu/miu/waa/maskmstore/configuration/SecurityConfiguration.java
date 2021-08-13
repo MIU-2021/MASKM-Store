@@ -36,14 +36,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/auth").permitAll()
+               .antMatchers("/auth").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/products/**").permitAll()
+               .antMatchers("/products/**").permitAll()
                 .antMatchers("/cats/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+               .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/buyer/**").hasAuthority("BUYER")
                 .antMatchers("/seller/**").hasAuthority("SELLER")
-                .anyRequest().authenticated()
+               .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -39,6 +39,13 @@ public class LoginUserDetails implements UserDetails {
         return username;
     }
 
+    public String getRoles() {
+
+        System.out.println("Role");
+        System.out.println(roles.stream().map(role -> role.getRole()).collect(Collectors.toList()));
+        return roles.stream().map(role -> role.getRole()).collect(Collectors.toList()).get(0);
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

@@ -2,14 +2,17 @@ package edu.miu.waa.maskmstore.controller;
 
 import edu.miu.waa.maskmstore.domain.Buyer;
 import edu.miu.waa.maskmstore.domain.Order;
+import edu.miu.waa.maskmstore.domain.OrderStatus;
 import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.service.BuyerService;
+import edu.miu.waa.maskmstore.service.OrderService;
 import edu.miu.waa.maskmstore.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = {"*"})
@@ -21,6 +24,8 @@ public class BuyerController {
     BuyerService buyerService;
     @Autowired
     SellerService sellerService;
+    @Autowired
+    OrderService orderService;
 
     @PostMapping
     public void addBuyer(@RequestBody Buyer buyer){
@@ -64,12 +69,46 @@ public class BuyerController {
                     sellerService.getSellerByUserName(sUserName).getSId()
             );
     }
+    @PostMapping("/{userName}/order/delivered/{id}")
+    public Order deliveredOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
+        Buyer buyer =buyerService.getBuyerByUsername(userName);
+        List<Long> lOID= buyerService.getBuyerByUsername(userName).getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
+        if( lOID.contains(oId)) {
+            Order order=orderService.getOrderById(oId);
+            order.setOrderStatus(OrderStatus.Delivered);
+            orderService.save(order);
+            buyerService.save(buyer);
+            return order;
+        }
+        return null;
+    }
 
+    @PostMapping("/{userName}/order/returned/{id}")
+    public Order returndOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
+        Buyer buyer =buyerService.getBuyerByUsername(userName);
+        List<Long> lOID= buyerService.getBuyerByUsername(userName).getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
+        Order order=orderService.getOrderById(oId);
+        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned) {
+
+            order.setOrderStatus(OrderStatus.Returned);
+            buyer.setPoints((int) (buyer.getPoints() - order.getPrice()));
+            orderService.save(order);
+            buyerService.save(buyer);
+            return order;
+        }
+        return null;
+    }
 
     @PostMapping("/{userName}/order")
     public void addOrder(@RequestBody Order order, @PathVariable String userName){
-
-           buyerService.addOrder(userName, order);
+           Buyer buyer =buyerService.getBuyerByUsername(userName);
+//           if (buyer.getPaymentMethods()!=null)
+//           {
+//           buyer.setPoints((int) order.getPrice());
+//           buyerService.addOrder(userName, order);
+//           order.setOrderPaid(true);
+//           buyerService.save(buyer);
+//           }
     }
 
     @GetMapping("/{userName}/order/{id}")

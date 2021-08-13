@@ -14,5 +14,6 @@ public interface OrderRepository extends PagingAndSortingRepository<Order,Long>{
 
     @Query(value = "select b.orders from Buyer b where b.bId=:buyerId")
     public List<Order> findAllOrdersByBuyerId(long buyerId);
+    public Order findOrderById(long id);
 
 }
