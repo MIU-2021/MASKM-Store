@@ -138,9 +138,9 @@ public class BuyerServiceImpl implements BuyerService{
         buyer.setOrders(orders);
         buyerRepository.save(buyer);
 
-        String ordersText = orders.stream().collect(Collectors.toList()).toString();
+        String orderText = order.toString();
 
-        sendEmail(buyer.getUser().getEmail(),"MASKM STORE : Order Details",ordersText);
+        sendEmail(buyer.getUser().getEmail(),"MASKM STORE : Order Details",orderText);
 }
 
     private void sendEmail(String emailUser,String subject,String text) {
