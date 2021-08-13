@@ -142,6 +142,17 @@ public class BuyerServiceImpl implements BuyerService{
     }
 
     @Override
+    public Buyer editBuyer(String userName, Buyer buyer) {
+        try {
+            Buyer Old=buyerRepository.findBuyerByUsername(userName);
+            return buyerRepository.save(buyer);
+        }catch (IllegalArgumentException e){
+            System.out.println("Error Edit Buyer:"+e);
+            return null;
+        }
+    }
+
+    @Override
     public Order getOrderByBuyerUserNameOrderId(long id, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
         return orderRepository.findById(buyerRepository.getOrderByBuyerUserNameOrderId( id,  buyer.getBId())).get();
