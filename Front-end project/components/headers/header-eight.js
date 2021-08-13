@@ -66,7 +66,7 @@ const HeaderEight = ({ logoName }) => {
                       <ul>
                        
                         {/* <Currency icon={settings} /> */}
-                        <CartContainer icon={cart} />
+                        <CartContainer icon={cart} /> 
                       </ul>
                     </div>
                   </div>
