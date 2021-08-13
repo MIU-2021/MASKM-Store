@@ -57,6 +57,7 @@ const NavBar = () => {
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
 
   const fillMenu = (cats) => {
+    setMainMenu([]);
     const currentUrl = location.pathname;
     let childrenCategories = [];
     cats.forEach(c => {

@@ -63,9 +63,10 @@ export const register = (user) => {
 
 export const CurrentUser = () => {
     //const userName = localStorage.getItem('username');
-    const userName = 'ahmed';
+    const userName = UserAuthenticated();
     return _get('buyer/profile/' + userName)
         .then(response => {
+            console.log(response);
             return response;
         })
         .catch(err => console.log(err));

@@ -21,7 +21,7 @@ export const fecthProductByID = (id) => {
 };
 
 export const fecthProductByCategory = (categoryId) => {
-    return _get('products/category/'+categoryId)
+    return _get('products?cat'+categoryId)
         .then(response => {
             return response;
         })

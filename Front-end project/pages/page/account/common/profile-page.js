@@ -3,7 +3,8 @@ import { Container, Row, Form, Input, Label, Col } from 'reactstrap';
 import { CurrentUser } from '../../../../services/User.Services';
 
 const ProfilePage = (props) => {
-    const user = props.user.user;
+    const user = props.user;
+    console.log(user);
     return (
         <>
             <section className="contact-page register-page">
@@ -15,31 +16,22 @@ const ProfilePage = (props) => {
                                 <Row>
                                     <Col md="6">
                                         <Label for="name">First Namess</Label>
-                                        <Input type="text" className="form-control" id="name" value={user.fName} placeholder="Enter Your name"
+                                        <Input type="text" className="form-control" id="name" value={user.fname} placeholder="Enter Your name"
                                             required="" />
                                     </Col>
                                     <Col md="6">
                                         <Label for="email">Last Name</Label>
-                                        <Input type="text" className="form-control" id="last-name" value={user.lName} placeholder="Email" required="" />
+                                        <Input type="text" className="form-control" id="last-name" value={user.lname} placeholder="Email" required="" />
                                     </Col>
-                                    <Col md="1">
-                                        <Label for="review">Country</Label>
-                                        <Input type="text" maxLength='3' size="6" className="form-control" id="review" value={user.phone.countryCode} placeholder="Code country"
-                                            required="" />
-                                    </Col>
-                                    <Col md="1">
-                                        <Label for="review">Area</Label>
-                                        <Input type="text" maxLength='3' size="6" className="form-control" id="review" value={user.phone.areaCode} placeholder="Code area"
-                                            required="" />
-                                    </Col>
-                                    <Col md="4">
+                                   
+                                    <Col md="6">
                                         <Label for="review">Phone number</Label>
-                                        <Input type="text" maxLength='9' className="form-control" id="review" value={user.phone.number} placeholder="Enter your number"
+                                        <Input type="text" maxLength='9' className="form-control" id="review" value={user.phone} placeholder="Enter your number"
                                             required="" />
                                     </Col>
                                     <Col md="6">
                                         <Label for="email">Email</Label>
-                                        <Input type="text" className="form-control" id="email" value={user.phone.email} placeholder="Email" required="" />
+                                        <Input type="text" className="form-control" id="email" value={user.email} placeholder="Email" required="" />
                                     </Col>
 
                                 </Row>
@@ -48,6 +40,7 @@ const ProfilePage = (props) => {
                                         <h3>SHIPPING ADDRESS</h3>
                                     </Col>
                                 </Row>
+                                {user.shippingAddress?
                                 <Row>
                                     <Col md="6">
                                         <Label for="name">Address Line</Label>
@@ -82,13 +75,14 @@ const ProfilePage = (props) => {
                                             required="" />
                                     </Col>
                                    
-                                </Row>
+                                </Row>:''}
 
                                 <Row>
                                     <Col md="12">
                                         <h3>BILLING ADDRESS</h3>
                                     </Col>
                                 </Row>
+                                {user.shippingAddress?
                                 <Row>
                                     <Col md="6">
                                         <Label for="name">Address Line</Label>
@@ -125,7 +119,7 @@ const ProfilePage = (props) => {
                                     <div className="col-md-12">
                                         <button className="btn btn-sm btn-solid" type="submit">Save setting</button>
                                     </div>
-                                </Row>
+                                </Row>:''}
                             </Form>
                         </Col>
                     </Row>

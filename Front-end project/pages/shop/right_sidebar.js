@@ -38,11 +38,11 @@ const RightSidebar = ({ pathId }, props) => {
                 openSidebar={() => openCloseSidebar(sidebarView)}
                 catId={catId}
               />
-              <FilterPage
+              {/* <FilterPage
                 sm="3"
                 sidebarView={sidebarView}
                 closeSidebar={() => openCloseSidebar(sidebarView)}
-              />
+              /> */}
             </Row>
           </Container>
         </div>

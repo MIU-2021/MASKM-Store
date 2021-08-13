@@ -1,9 +1,9 @@
 import axios from "axios";
 //const url = process.env.SERVER_API_URL;
-const urlAhmed = 'http://172.19.140.140:2021';//ahmed
-const url = 'http://172.19.140.171:2021';//souphiane
+//const urlAhmed = 'http://172.19.140.140:2021';//ahmed
+//const url = 'http://172.19.140.171:2021';//souphiane
 //const url = 'https://fakestoreapi.com';
-const urlkarim = 'http://172.19.140.95:2021'
+const url = 'http://172.19.140.95:2021'//karim
 //const url = 'https://fakestoreapi.com';
 
 
