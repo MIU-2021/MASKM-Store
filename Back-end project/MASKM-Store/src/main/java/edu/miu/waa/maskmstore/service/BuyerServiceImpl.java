@@ -32,8 +32,6 @@ public class BuyerServiceImpl implements BuyerService{
 
     @Autowired
     private JavaMailSender mailSender;
-    @Autowired
-    Configuration fmConfiguration;
 
 
 
