@@ -85,15 +85,8 @@ public class BuyerController {
     @PostMapping("/{userName}/order")
     public void addOrder(@RequestBody Order order, @PathVariable String userName){
 
-           Buyer buyer =buyerService.getBuyerByUsername(userName);
+        buyerService.addOrder(order,userName);
 
-        if (buyer.getCreditCard().getCardNumber()!=null)
-           {
-           buyer.setPoints((int) order.getPrice());
-           buyerService.addOrder(userName, order);
-           order.setOrderPaid(true);
-           buyerService.save(buyer);
-           }
     }
 
     @GetMapping("/{userName}/order/{id}")

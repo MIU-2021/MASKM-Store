@@ -29,4 +29,6 @@ public interface BuyerService {
     public void save(Buyer buyer);
 
     public Order returnedOrder(String userName, long oId);
+
+    public void addOrder(Order order, String userName);
 }
