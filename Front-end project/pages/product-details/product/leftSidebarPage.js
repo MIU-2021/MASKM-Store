@@ -99,7 +99,7 @@ const LeftSidebarPage = ({ pathId }) => {
         <Container>
           <Row>
             <Col sm="3" className="collection-filter">
-              <Filter />
+              {/* <Filter /> */}
               <Service />
             </Col>
             <Col lg="9" sm="12" xs="12">

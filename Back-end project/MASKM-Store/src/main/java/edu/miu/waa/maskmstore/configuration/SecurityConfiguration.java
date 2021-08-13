@@ -50,10 +50,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/cats/**").permitAll()
                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/buyer/**").permitAll()
-                .antMatchers("/seller/**").hasAuthority("SELLER")
+                .antMatchers("/seller/**").permitAll()
                .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-http.cors();
+                http.cors();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.headers().frameOptions().sameOrigin(); // to show my database

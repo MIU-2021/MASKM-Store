@@ -33,9 +33,9 @@ public class BuyerController {
         buyerService.addBuyer(buyer);
     }
 
-    @PostMapping("/profile/{userName}/edit")
+    @PutMapping("/profile/{userName}")
     public void ediBuyer(@RequestBody Buyer buyer,String userName){
-        buyerService.addBuyer(buyer);
+        buyerService.editBuyer(userName,buyer);
     }
     @GetMapping
     public List<Buyer> getAllBuyer(){

@@ -36,9 +36,11 @@ const OrderSuccess = () => {
                                 <h3>your order details</h3>
 
                                 {cartItems.map((item, i) =>
+                               
                                     <Row className="product-order-detail" key={i}>
+                                         {console.log(item)}
                                         <Col xs="3" >
-                                            <Media src={item.images[0].src} alt=""
+                                            <Media src={item.image} alt=""
                                                 className="img-fluid blur-up lazyload" />
                                         </Col>
                                         <Col xs="3" className="order_detail">

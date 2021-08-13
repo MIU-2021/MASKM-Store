@@ -37,4 +37,6 @@ public interface BuyerService {
     public boolean deleteOrder(String userName, long id);
 
     public List<LineItem>  listOrderItems(String userName, long id);
+
+    public Buyer editBuyer(String userName, Buyer buyer);
 }

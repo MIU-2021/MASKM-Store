@@ -42,25 +42,13 @@ import EditProfile from "../../../../components/common/EditProfile";
 import EditProduct from "../../../../components/common/EditProduct";
 import {RoleAuthenticated, UserAuthenticated} from "../../../../services/User.Services";
 import {fecthProductByID} from "../../../../services/Products.Services";
-import {deleteProductBySeller, fetchProductsBySellerUsername} from "../../../../services/Seller.Services";
+import {
+  deleteProductBySeller,
+  fetchProductsBySellerUsername,
+  getSellerOrders, getSellerProfileData, makeOrderCanceled, makeOrderShipped
+} from "../../../../services/Seller.Services";
 
-const SummaryData = [
-  {
-    img: order,
-    title: "25",
-    desc: "Total Products",
-  },
-  {
-    img: sale,
-    title: "12500",
-    desc: "Total Sales",
-  },
-  {
-    img: homework,
-    title: "50",
-    desc: "Order Pending",
-  },
-];
+
 
 const Summary = ({ img, title, desc }) => {
   return (
@@ -207,16 +195,7 @@ const RecentOrder = ({ id, productDetails, status }) => {
   );
 };
 
-const AllOrder = ({ id, productDetails, status, price }) => {
-  return (
-      <tr>
-        <th scope="row">{id}</th>
-        <td>{productDetails}</td>
-        <td>{status}</td>
-        <td>{price}</td>
-      </tr>
-  );
-};
+
 
 const ProfileData = [
   { title: "Company Name", detail: "Fashion Store" },
@@ -246,6 +225,25 @@ const ProfileDetail = ({ title, detail }) => {
 };
 
 const Dashboard = () => {
+  const AllOrder = ({ id, creationdate, status, price , payment }) => {
+    return (
+        <tr>
+          <th scope="row">{id}</th>
+          <td>{creationdate}</td>
+          <td>{price}</td>
+          <td>{payment==true?"Yes":"No"}</td>
+          <td>{status}</td>
+
+          <td>{status=="Shipped" || status=="Cancelled" ?
+              ""
+            :<span>
+              <i className="fa fa-check-circle-o mr-1" aria-hidden="true" onClick={() =>makeOrderShippedhandler(UserAuthenticated() , id)}></i>
+              <i className="fa fa-window-close-o ml-1" aria-hidden="true" onClick={() =>makeOrderCanceledhandler(UserAuthenticated() , id)}></i>
+                </span>}
+          </td>
+        </tr>
+    );
+  };
 
   // const AllProduct = ({ product }) => {
   //   return (
@@ -262,6 +260,11 @@ const Dashboard = () => {
   const [role, setRole] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(null);
+  const [totalProdustcs , setTotalProducts] = useState(0);
+  const [Orders , setOrders] = useState([]);
+  const [countOrders , setCountOrders] = useState(0);
+  const [userProfileData , setUserProfileData] = useState(0);
+
 
   useEffect(() => {
     setUserName(UserAuthenticated());
@@ -277,10 +280,28 @@ const Dashboard = () => {
       router.push("/page/account/login");
   }, []);
 
+  const SummaryData = [
+    {
+      img: order,
+      title: totalProdustcs,
+      desc: "Total Products",
+    },
+    {
+      img: sale,
+      title: "12500",
+      desc: "Total Sales",
+    },
+    {
+      img: homework,
+      title: countOrders,
+      desc: "Order Pending",
+    },
+  ];
+
   function deleteproduct(id ) {
     deleteProductBySeller(id , UserAuthenticated()).then(response => {
       console.log("res" ,response);
-      //setData(response);
+      setData(data.filter(p => p.id != id));
       setLoading(false);
       //return response.data;
     }).catch((error) => {
@@ -292,13 +313,55 @@ const Dashboard = () => {
     fetchProductsBySellerUsername(UserAuthenticated()).then(response => {
       console.log("res" ,response);
       setData(response);
+      setTotalProducts(response.length)
       setLoading(false);
       //return response.data;
     }).catch((error) => {
       console.log(error);
     });
   }
+
+  function getSellerOrdershandler() {
+    getSellerOrders(UserAuthenticated()).then(response => {
+      console.log("pending orders" ,response);
+      setOrders(response);
+      setCountOrders(response.length)
+      setLoading(false);
+      //return response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function makeOrderShippedhandler(username , productid) {
+    makeOrderShipped(username,productid).then(response => {
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function makeOrderCanceledhandler(username , productid) {
+    makeOrderCanceled(username,productid).then(response => {
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function GetProfilePic() {
+
+    getSellerProfileData(UserAuthenticated()).then(response => {
+      setUserProfileData(response);
+      console.log("ffff",userProfileData);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+
+
   useEffect(fetchProductsForSellerHandler, []);
+  useEffect(getSellerOrdershandler, []);
+
 
 
   return (
@@ -343,22 +406,7 @@ const Dashboard = () => {
                         Order
                       </NavLink>
                     </NavItem>
-                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                      <NavLink
-                          className={activeTab === "4" ? "active" : ""}
-                          onClick={() => setActiveTab("4")}
-                      >
-                        Profile
-                      </NavLink>
-                    </NavItem>
-                    <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                      <NavLink
-                          className={activeTab === "5" ? "active" : ""}
-                          onClick={() => setActiveTab("5")}
-                      >
-                        Settings
-                      </NavLink>
-                    </NavItem>
+
                     <NavItem className="nav nav-tabs" id="myTab" role="tablist">
                       <NavLink
                           className={activeTab === "6" ? "active" : ""}
@@ -532,28 +580,29 @@ const Dashboard = () => {
                           <CardBody>
                             <div className="top-sec">
                               <h3>orders</h3>
-                              <a href="#" className="btn btn-sm btn-solid">
-                                add product
-                              </a>
                             </div>
                             <table className="table table-responsive-sm mb-0">
                               <thead>
                               <tr>
                                 <th scope="col">order id</th>
-                                <th scope="col">product details</th>
-                                <th scope="col">status</th>
-                                <th scope="col">price</th>
+                                <th scope="col">Creation date</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Payment</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
                               </tr>
                               </thead>
                               <tbody>
-                              {OrderData.map((data, i) => {
+                              {Orders.map((data, i) => {
+                                //id, creationdate, status, price , payment
                                 return (
                                     <AllOrder
                                         key={i}
                                         id={data.id}
-                                        productDetails={data.productDetails}
-                                        status={data.status}
+                                        creationdate={data.createdOn}
+                                        status={data.orderStatus}
                                         price={data.price}
+                                        payment={data.orderPaid}
                                     />
                                 );
                               })}
@@ -564,72 +613,7 @@ const Dashboard = () => {
                       </Col>
                     </Row>
                   </TabPane>
-                  <TabPane tabId="4">
-                    <Row>
-                      <Col sm="12">
-                        <Card className="mt-0">
-                          <CardBody>
-                            <div className="dashboard-box">
-                              <div className="dashboard-title">
-                                <h4>profile</h4>
-                                <span
-                                    onClick={() => setActiveTab("7")}
-                                >
-                                edit
-                              </span>
-                              </div>
-                              <div className="dashboard-detail">
-                                <ul>
-                                  {ProfileData.map((data, i) => {
-                                    return (
-                                        <ProfileDetail
-                                            key={i}
-                                            title={data.title}
-                                            detail={data.detail}
-                                        />
-                                    );
-                                  })}
-                                </ul>
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </TabPane>
-                  <TabPane tabId="5">
-                    <Row>
-                      <Col sm="12">
-                        <Card className="mt-0">
-                          <CardBody>
-                            <div className="dashboard-box">
-                              <div className="dashboard-title">
-                                <h4>settings</h4>
-                              </div>
-                              <div className="dashboard-detail">
-                                <div className="account-setting">
-                                  <Form>
-                                    <FormGroup>
-                                      <Label for="storename">Store Name</Label>
-                                      <Input type="text" name="storename" id="storename" placeholder="write the store name" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                      <Label for="storeurl">store url</Label>
-                                      <Input type="text" name="s" id="storeurl" placeholder="store url here" />
-                                    </FormGroup>
-
-                                    <Button>create store</Button>
-                                  </Form>
-                                </div>
-
-                              </div>
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </TabPane>
-                  <TabPane tabId="6">
+                   <TabPane tabId="6">
                     <Row>
                       <Col sm="12">
                         <Card className="mt-0">

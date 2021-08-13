@@ -23,7 +23,7 @@ public class LineItem {
     private double price;
 
     //@OneToOne(cascade = CascadeType.ALL)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
 }
