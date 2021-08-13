@@ -26,4 +26,6 @@ public interface SellerService {
     public Order shipSellerOrder(String userName, long oId);
 
     public Order cancelSellerOrder(String userName, long oId);
+
+    public Order getOrderByIdForSeller(String userName, long oId);
 }

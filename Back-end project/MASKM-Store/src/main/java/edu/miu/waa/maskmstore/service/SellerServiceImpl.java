@@ -129,4 +129,17 @@ public class SellerServiceImpl implements  SellerService{
         return null;
     }
 
+    @Override
+    public Order getOrderByIdForSeller(String userName, long oId) {
+        if( getOrderIdsBySellerBySId(
+                getSellerByUserName(userName).getSId())
+                .contains(oId)
+        ) {
+            Order order=orderService.getOrderById(oId);
+            return order;
+        }
+        return null;
+
+    }
+
 }

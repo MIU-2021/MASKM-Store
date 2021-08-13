@@ -1,8 +1,6 @@
 package edu.miu.waa.maskmstore.controller;
 
-import edu.miu.waa.maskmstore.domain.Buyer;
 import edu.miu.waa.maskmstore.domain.Order;
-import edu.miu.waa.maskmstore.domain.OrderStatus;
 import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.service.OrderService;
@@ -42,22 +40,14 @@ public class SellerController {
 
     @GetMapping("/{userName}/order/{id}")
     public Order getOrderByIdForSeller(@PathVariable("userName") String userName,@PathVariable("id") long oId){
-
-        if( sellerService.getOrderIdsBySellerBySId(
-            sellerService.getSellerByUserName(userName).getSId())
-            .contains(oId)
-        ) {
-
-            Order order=orderService.getOrderById(oId);
-
-            return order;
-        }
-        return null;
+    return sellerService.getOrderByIdForSeller(userName,oId);
     }
+
     @PostMapping("/{userName}/order/cancel/{id}")
     public Order cancelSellerOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
         return sellerService.cancelSellerOrder(userName,oId);
     }
+
     @PostMapping("/{userName}/order/shipped/{id}")
     public Order shipSellerOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
      return sellerService.shipSellerOrder(userName,oId);
