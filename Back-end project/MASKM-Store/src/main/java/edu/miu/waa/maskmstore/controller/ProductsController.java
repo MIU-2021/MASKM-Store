@@ -39,6 +39,9 @@ public class ProductsController {
         }
         else if (sellerUserName!=null)
             return productsService.getAllProductsForOneSeller(Pageable.unpaged(),sellerUserName);
+        else if (cat_id!=null)
+            return productsService.getAllProductsWithCat(Pageable.unpaged(),Integer.parseInt(cat_id));
+
         else
             return productsService.getAllProducts(Pageable.unpaged());
     }
