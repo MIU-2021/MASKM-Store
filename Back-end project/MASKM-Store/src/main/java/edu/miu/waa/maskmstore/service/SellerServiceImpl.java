@@ -115,4 +115,18 @@ public class SellerServiceImpl implements  SellerService{
         return null;
     }
 
+    @Override
+    public Order cancelSellerOrder(String userName, long oId) {
+        Seller seller =sellerService.getSellerByUserName(userName);
+        List<Long> lOID= sellerService.getOrderIdsBySellerBySId(seller.getSId());
+        if( lOID.contains(oId)) {
+            Order order=orderService.getOrderById(oId);
+            if (order.getOrderStatus()!=OrderStatus.Shipped)
+                order.setOrderStatus(OrderStatus.Cancelled);
+            orderService.save(order);
+            return order;
+        }
+        return null;
+    }
+
 }
