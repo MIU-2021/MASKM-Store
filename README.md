@@ -8,7 +8,7 @@ App Build with Spring Framework in Back-End And React in Front-End
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 ```
-<img src="ScreenShosts/logo-MASKM.png" width="1200" height="200">
+![logo-MASKM](https://user-images.githubusercontent.com/39139830/129425115-221179ef-4696-4a0b-8fb2-75cc3bd69e27.png)
 
 
 2 Prerequisites
