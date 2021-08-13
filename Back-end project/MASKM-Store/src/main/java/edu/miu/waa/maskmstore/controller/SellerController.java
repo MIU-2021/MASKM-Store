@@ -29,6 +29,13 @@ public class SellerController {
 
         sellerService.addSeller(seller);
     }
+
+    @GetMapping("/{seller_userName}")
+    private Seller getOneSeller(@PathVariable String seller_userName){
+        return sellerService.getSellerByUserName(seller_userName);
+    }
+
+
     @GetMapping
     public List<Seller> getSellers(){
         return sellerService.getAllSellers();

@@ -117,7 +117,7 @@ public class BuyerServiceImpl implements BuyerService{
     @Override
     public boolean deleteOrder(String userName, long id) {
         Order order=orderService.getOrderById(id);
-        if(order.getOrderStatus()!=OrderStatus.Shipped||order.getOrderStatus()!=OrderStatus.Delivered)
+        if(order.getOrderStatus()!=OrderStatus.Shipped.getOrderStatus()||order.getOrderStatus()!=OrderStatus.Delivered.getOrderStatus())
         {
             Buyer buyer = buyerRepository.findBuyerByUsername(userName);
             buyer.getOrders().remove(order);
@@ -168,9 +168,9 @@ public class BuyerServiceImpl implements BuyerService{
         Buyer buyer =buyerRepository.findBuyerByUsername(userName);
         List<Long> lOID=buyer.getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
         Order order=orderRepository.findOrderById(oId);
-        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned) {
+        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned.getOrderStatus()) {
 
-            order.setOrderStatus(OrderStatus.Returned);
+            order.setOrderStatus(OrderStatus.Returned.getOrderStatus());
             buyer.setPoints((int) (buyer.getPoints() - order.getPrice()));
             orderRepository.save(order);
             buyerRepository.save(buyer);

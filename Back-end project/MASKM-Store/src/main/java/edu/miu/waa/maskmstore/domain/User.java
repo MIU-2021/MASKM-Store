@@ -53,6 +53,8 @@ public class User {
     @JsonIgnore*/
     private Set<Role> roles = new HashSet<>();
 
+    private String image;
+
     public void addRole(Role role){
         roles.add(role);
     }

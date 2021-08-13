@@ -107,7 +107,7 @@ public class SellerServiceImpl implements  SellerService{
         List<Long> lOID= this.getOrderIdsBySellerBySId(seller.getSId());
         if( lOID.contains(oId)) {
             Order order=orderService.getOrderById(oId);
-            order.setOrderStatus(OrderStatus.Shipped);
+            order.setOrderStatus(OrderStatus.Shipped.getOrderStatus());
             orderService.save(order);
             sellerService.save(seller);
             return order;
@@ -121,8 +121,8 @@ public class SellerServiceImpl implements  SellerService{
         List<Long> lOID= sellerService.getOrderIdsBySellerBySId(seller.getSId());
         if( lOID.contains(oId)) {
             Order order=orderService.getOrderById(oId);
-            if (order.getOrderStatus()!=OrderStatus.Shipped)
-                order.setOrderStatus(OrderStatus.Cancelled);
+            if (order.getOrderStatus()!=OrderStatus.Shipped.getOrderStatus())
+                order.setOrderStatus(OrderStatus.Cancelled.getOrderStatus());
             orderService.save(order);
             return order;
         }

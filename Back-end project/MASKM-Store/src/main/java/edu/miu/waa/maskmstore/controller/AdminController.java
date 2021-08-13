@@ -1,11 +1,13 @@
 package edu.miu.waa.maskmstore.controller;
 
+import edu.miu.waa.maskmstore.domain.Admin;
 import edu.miu.waa.maskmstore.domain.Review;
 import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
 import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
 import edu.miu.waa.maskmstore.service.SellerService;
+import edu.miu.waa.maskmstore.service.admin.AdminService;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,14 @@ public class AdminController {
     ProductsService productsService;
     @Autowired
     SellerService sellerService;
+
+    @Autowired
+    AdminService adminService;
+
+    @GetMapping("{admin_userName}/profile")
+    public Admin getAdminProfile(@PathVariable String admin_userName){
+        return adminService.getAdminProfile(admin_userName);
+    }
 
     @GetMapping("/products/{id}")
     public Product approveProduct(@RequestParam("approved") boolean approved, @PathVariable long id){
