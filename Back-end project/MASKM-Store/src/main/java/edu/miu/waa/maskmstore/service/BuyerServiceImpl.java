@@ -5,11 +5,15 @@ import edu.miu.waa.maskmstore.repository.BuyerRepository;
 import edu.miu.waa.maskmstore.repository.OrderRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.MimeMessage;
+import java.lang.module.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +32,9 @@ public class BuyerServiceImpl implements BuyerService{
 
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    Configuration fmConfiguration;
+
 
 
     @Override
@@ -111,8 +118,25 @@ public class BuyerServiceImpl implements BuyerService{
         buyer.setOrders(orders);
         buyerRepository.save(buyer);
 
-        sendEmail(buyer.getUser().getEmail(),"test","test");
+        String ordersText = orders.stream().collect(Collectors.toList()).toString();
+
+        sendEmail(buyer.getUser().getEmail(),"MASKM STORE : Order Details",ordersText);
 }
+
+    private void sendEmail(String emailUser,String subject,String text) {
+
+        try {
+
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(emailUser);
+            email.setSubject(subject);
+            email.setText(text);
+            mailSender.send(email);
+            System.out.println("Email is Sent");
+        }catch (Exception ex)
+        {System.out.println(ex.getMessage());}
+    }
+
 
     @Override
     public boolean deleteOrder(String userName, long id) {
@@ -139,6 +163,17 @@ public class BuyerServiceImpl implements BuyerService{
                     return o.getLineItems();
                         else return null;}
                 );
+    }
+
+    @Override
+    public Buyer editBuyer(String userName, Buyer buyer) {
+        try {
+            Buyer Old=buyerRepository.findBuyerByUsername(userName);
+            return buyerRepository.save(buyer);
+        }catch (IllegalArgumentException e){
+            System.out.println("Error Edit Buyer:"+e);
+            return null;
+        }
     }
 
     @Override
@@ -175,15 +210,5 @@ public class BuyerServiceImpl implements BuyerService{
 
     }
 
-    private void sendEmail(String emailUser, String subject, String text) {
-        try {
-            SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo(emailUser);
-            email.setSubject(subject);
-            email.setText(text);
-            mailSender.send(email);
-            System.out.println("Email is Sent");
-        }catch (Exception ex)
-        {System.out.println(ex.getMessage());}
-    }
+
 }
