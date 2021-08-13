@@ -51,10 +51,7 @@ public class BuyerController {
     public Buyer getBuyerById(@PathVariable("id") long id){
         return buyerService.getBuyerBybId(id);
     }
-    /*@GetMapping("/profile/{userName}")
-    *//*public Buyer getBuyerById(@PathVariable String userName){
-        return buyerService.getBuyerByUsername(userName);
-    }*/
+
     @GetMapping("/{userName}/follow")
     public List<Seller> getAllSellerFollowedByBuyer(@PathVariable String userName){
         return buyerService.getBuyerByUsername(userName).getSellersFollowed();
@@ -81,33 +78,15 @@ public class BuyerController {
     }
 
     @PostMapping("/{userName}/order/returned/{id}")
-    public Order returndOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
-        Buyer buyer =buyerService.getBuyerByUsername(userName);
-        List<Long> lOID= buyerService.getBuyerByUsername(userName).getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
-        Order order=orderService.getOrderById(oId);
-        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned) {
-
-            order.setOrderStatus(OrderStatus.Returned);
-            buyer.setPoints((int) (buyer.getPoints() - order.getPrice()));
-            orderService.save(order);
-            buyerService.save(buyer);
-            return order;
-        }
-        return null;
+    public Order returnedOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
+       return  buyerService.returnedOrder(userName,oId);
     }
 
     @PostMapping("/{userName}/order")
     public void addOrder(@RequestBody Order order, @PathVariable String userName){
 
-           Buyer buyer =buyerService.getBuyerByUsername(userName);
+        buyerService.addOrder(order,userName);
 
-        if (buyer.getCreditCard()!=null)
-           {
-           buyer.setPoints((int) order.getPrice());
-           buyerService.addOrder(userName, order);
-           order.setOrderPaid(true);
-           buyerService.save(buyer);
-           }
     }
 
     @GetMapping("/{userName}/order/{id}")

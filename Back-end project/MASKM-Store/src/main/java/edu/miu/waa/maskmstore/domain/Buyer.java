@@ -10,6 +10,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,20 +41,20 @@ public class Buyer {
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
-    private Address shippingAddress;
+    private Address shippingAddress=new Address();
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
-    private Address billingAddress;
+    private Address billingAddress=new Address();
 
     @Valid
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable
-    private List<Seller> sellersFollowed;
+    private List<Seller> sellersFollowed=new ArrayList<>();
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
-    private CreditCard creditCard;
+    private CreditCard creditCard=new CreditCard();
 
 
 }

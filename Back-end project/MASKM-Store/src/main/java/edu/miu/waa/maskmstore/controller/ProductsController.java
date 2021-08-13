@@ -45,7 +45,10 @@ public class ProductsController {
         else
             return productsService.getAllProducts(Pageable.unpaged());
     }
-
+    @PutMapping("/delete/{id}")
+    public boolean deleteProductById(@PathVariable long id){
+        return productsService.deleteProduct(id);
+    }
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable long id){
