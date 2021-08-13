@@ -69,16 +69,7 @@ public class SellerController {
     }
     @PostMapping("/{userName}/order/shipped/{id}")
     public Order shipSellerOrder(@PathVariable("userName") String userName,@PathVariable("id") long oId){
-        Seller seller =sellerService.getSellerByUserName(userName);
-        List<Long> lOID= sellerService.getOrderIdsBySellerBySId(seller.getSId());
-        if( lOID.contains(oId)) {
-            Order order=orderService.getOrderById(oId);
-            order.setOrderStatus(OrderStatus.Shipped);
-            orderService.save(order);
-            sellerService.save(seller);
-            return order;
-        }
-        return null;
+     return sellerService.shipSellerOrder(userName,oId);
     }
 
     @PostMapping("/{userName}")

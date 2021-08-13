@@ -2,6 +2,7 @@ package edu.miu.waa.maskmstore.service;
 
 import edu.miu.waa.maskmstore.domain.Address;
 import edu.miu.waa.maskmstore.domain.Order;
+import edu.miu.waa.maskmstore.domain.OrderStatus;
 import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.domain.stock.ProductApprovedStatus;
@@ -19,6 +20,12 @@ public class SellerServiceImpl implements  SellerService{
     SellerRepository sellerRepository;
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    SellerService sellerService;
 
     public Seller getSellerByEmail(String email){
         return sellerRepository.findSellerByEmail(email);
@@ -76,11 +83,7 @@ public class SellerServiceImpl implements  SellerService{
 
     @Override
     public List<Long> getOrderIdsBySellerBySId(long sId) {
-
-
         return sellerRepository.getOrdersBySellerBySId(sId);
-
-
     }
 
     @Override
@@ -96,6 +99,20 @@ public class SellerServiceImpl implements  SellerService{
     @Override
     public void save(Seller seller) {
         sellerRepository.save(seller);
+    }
+
+    @Override
+    public Order shipSellerOrder(String userName, long oId) {
+        Seller seller =sellerRepository.findSellerByUsername(userName);
+        List<Long> lOID= this.getOrderIdsBySellerBySId(seller.getSId());
+        if( lOID.contains(oId)) {
+            Order order=orderService.getOrderById(oId);
+            order.setOrderStatus(OrderStatus.Shipped);
+            orderService.save(order);
+            sellerService.save(seller);
+            return order;
+        }
+        return null;
     }
 
 }

@@ -22,4 +22,6 @@ public interface SellerService {
     public void addSeller(Seller seller);
 
     public void save(Seller seller);
+
+    public Order shipSellerOrder(String userName, long oId);
 }
