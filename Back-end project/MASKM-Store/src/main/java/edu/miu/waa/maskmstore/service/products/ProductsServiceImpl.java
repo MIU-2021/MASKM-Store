@@ -11,6 +11,8 @@ import edu.miu.waa.maskmstore.repository.SellerRepository;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -160,6 +162,20 @@ public class ProductsServiceImpl implements ProductsService{
             System.out.println("FEATURE ERROR: "+e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public boolean deleteProduct(long product_id,String seller_userName) {
+        if (productsRepository.deletableProduct(product_id).size()==0 || productsRepository.deletableProduct(product_id)==null)
+        {
+            Seller seller=sellerRepository.findSellerByUsername(seller_userName);
+            List<Product> products=seller.getProducts();
+            products.remove(productsRepository.getProductById(product_id).get());
+            sellerRepository.save(seller);
+            productsRepository.deleteById(product_id);
+            return true;
+        }
+        return false;
     }
 
     @Override

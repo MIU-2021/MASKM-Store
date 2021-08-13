@@ -6,9 +6,12 @@ import edu.miu.waa.maskmstore.repository.OrderRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BuyerServiceImpl implements BuyerService{
@@ -19,6 +22,11 @@ public class BuyerServiceImpl implements BuyerService{
     SellerRepository sellerRepository;
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
 
     @Override
@@ -87,8 +95,9 @@ public class BuyerServiceImpl implements BuyerService{
 //        buyer.getUser().setR
         buyerRepository.save(buyer);
     }
+    //Correct One
     @Override
-    public void addOrder(String userName, Order order) {
+    public void addOrder(Order order, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
         order.setBuyer(buyer);
         orderRepository.save(order);
@@ -97,7 +106,23 @@ public class BuyerServiceImpl implements BuyerService{
         orders.add(order);
         buyer.setOrders(orders);
         buyerRepository.save(buyer);
+
+        sendEmail(buyer.getUser().getEmail(),"test","test");
 }
+
+    @Override
+    public boolean deleteOrder(String userName, long id) {
+        Order order=orderService.getOrderById(id);
+        if(order.getOrderStatus()!=OrderStatus.Shipped||order.getOrderStatus()!=OrderStatus.Delivered)
+        {
+            Buyer buyer = buyerRepository.findBuyerByUsername(userName);
+            buyer.getOrders().remove(order);
+            buyerRepository.save(buyer);
+            orderRepository.delete(order);
+            return true;
+        }
+            return false;
+    }
 
     @Override
     public Order getOrderByBuyerUserNameOrderId(long id, String userName) {
@@ -111,8 +136,37 @@ public class BuyerServiceImpl implements BuyerService{
     }
 
     @Override
+    public Order returnedOrder(String userName, long oId) {
+        Buyer buyer =buyerRepository.findBuyerByUsername(userName);
+        List<Long> lOID=buyer.getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
+        Order order=orderRepository.findOrderById(oId);
+        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned) {
+
+            order.setOrderStatus(OrderStatus.Returned);
+            buyer.setPoints((int) (buyer.getPoints() - order.getPrice()));
+            orderRepository.save(order);
+            buyerRepository.save(buyer);
+            return order;
+        }
+        return null;
+    }
+
+
+    @Override
     public Address getShippingAddressBysId(long id){
         return buyerRepository.findShippingAddress(id);
 
+    }
+
+    private void sendEmail(String emailUser, String subject, String text) {
+        try {
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(emailUser);
+            email.setSubject(subject);
+            email.setText(text);
+            mailSender.send(email);
+            System.out.println("Email is Sent");
+        }catch (Exception ex)
+        {System.out.println(ex.getMessage());}
     }
 }

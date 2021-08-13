@@ -19,6 +19,7 @@ public interface ProductsService {
     public Product editProduct(long id,Product product);
     public Product makeItApprovedOrRejected(long id,String status);
     public Product makeItFeatured(long id,boolean featured);
+    public boolean deleteProduct(long product_id,String seller_userName);
 
     public Product addReviewToProduct(long id, Review review);
     public List<Review> getAllReviewsForProduct(long id);
