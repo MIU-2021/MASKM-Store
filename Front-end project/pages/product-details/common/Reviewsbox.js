@@ -16,7 +16,7 @@ const Reviewsbox = () => {
         });
     }, []);
     return (
-        <React.Fragment>
+        <div>
             {data ?
                 <div className="ReviewsBox">
                     {data.map((d) => {
@@ -47,7 +47,7 @@ const Reviewsbox = () => {
                 :
                 <div></div>
             }
-        </React.Fragment>
+        </div>
     )
 
 }

@@ -94,7 +94,7 @@ const HeaderOne = ({
                   <div>
                     <div className="icon-nav">
                       <ul>
-                        <li className="onhover-div mobile-search">
+                        {/* <li className="onhover-div mobile-search">
                           <div>
                             <Media
                               src={search}
@@ -103,7 +103,7 @@ const HeaderOne = ({
                               alt=""
                             />
                           </div>
-                        </li>
+                        </li> */}
 
                         {/*Header Cart Component */}
                         {direction === undefined ? (
