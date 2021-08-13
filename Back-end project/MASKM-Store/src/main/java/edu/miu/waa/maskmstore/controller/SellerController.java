@@ -57,8 +57,8 @@ public class SellerController {
     public Product addProduct(@RequestBody Product product, @RequestParam("cat") long cat_id, @PathVariable String userName){
         return productsService.addProduct(product,cat_id,userName);
     }
-    @DeleteMapping("products/{id}")
-    public boolean deleteProduct(@PathVariable long id){
-        return productsService.deleteProduct(id);
+    @DeleteMapping("{seller_userName}/products/{product_id}")
+    public boolean deleteProduct(@PathVariable long product_id, @PathVariable String seller_userName){
+        return productsService.deleteProduct(product_id,seller_userName);
     }
 }

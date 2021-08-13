@@ -89,8 +89,8 @@ public class AdminController {
 
         return sellerService.getSellerBySId(id);
     }
-    @DeleteMapping("products/{id}")
-    public boolean deleteProduct(@PathVariable long id){
-        return productsService.deleteProduct(id);
-    }
+//    @DeleteMapping("products/{productId}")
+//    public boolean deleteProduct(@PathVariable long id){
+//        return productsService.deleteProduct(id);
+//    }
 }
