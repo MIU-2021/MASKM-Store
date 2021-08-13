@@ -55,12 +55,11 @@ export const _post = (path, body) => {
 }
 
 export const _getApiKarim = (path) => {
-    console.log(`${urlAhmed}/${path}`);
-    return axios
+        return axios
         // .get(`${url}/${path}`, {
         //     headers: headers
         // })
-        .get(`${urlAhmed}/${path}`)
+        .get(`${url}/${path}`)
         .then(response => {
             return response.data;
         }).catch((error) => {

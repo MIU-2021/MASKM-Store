@@ -29,7 +29,7 @@ export const editProductByID = (id,data) => {
 };
 
 export const fecthProductByCategory = (categoryId) => {
-    return _get('products?cat'+categoryId)
+    return _get('products?cat='+categoryId)
         .then(response => {
             return response;
         })

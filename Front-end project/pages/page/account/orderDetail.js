@@ -43,7 +43,7 @@ const OrderDetail = (props) => {
                                         <h3>Order Date</h3>
                                     </div>
                                     <div className="right">
-                                        <h6>{props.Order.date}</h6>
+                                        <h6>{props.Order.createdOn}</h6>
                                     </div>
                                 </div>
                             </Col>
@@ -53,7 +53,7 @@ const OrderDetail = (props) => {
                                         <h3>Status</h3>
                                     </div>
                                     <div className="right">
-                                    <h6>{props.Order.status}</h6>
+                                    <h6>{props.Order.orderStatus}</h6>
                                     </div>
                                 </div>
                             </Col>
