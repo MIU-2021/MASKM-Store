@@ -1,9 +1,6 @@
 package edu.miu.waa.maskmstore.controller;
 
-import edu.miu.waa.maskmstore.domain.Buyer;
-import edu.miu.waa.maskmstore.domain.Order;
-import edu.miu.waa.maskmstore.domain.OrderStatus;
-import edu.miu.waa.maskmstore.domain.Seller;
+import edu.miu.waa.maskmstore.domain.*;
 import edu.miu.waa.maskmstore.service.BuyerService;
 import edu.miu.waa.maskmstore.service.OrderService;
 import edu.miu.waa.maskmstore.service.SellerService;
@@ -105,6 +102,12 @@ public class BuyerController {
     public boolean deleteOrder(@PathVariable("userName") String userName, @PathVariable("id") long id){
         return buyerService.deleteOrder(userName,id);
     }
+
+    @GetMapping("/{userName}/order/{id}/listItems")
+    public List<LineItem> listOrderItems(@PathVariable("userName") String userName, @PathVariable("id") long id){
+        return buyerService.listOrderItems(userName,id);
+    }
+
 
     @GetMapping("/profile/{userName}")
     public Buyer getBuyerByUserName(@PathVariable String userName){

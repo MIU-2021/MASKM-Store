@@ -1,19 +1,61 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button, Form, FormGroup, FormText} from "react-bootstrap";
-import {Input, Label} from "reactstrap";
+import {Input, Label, Media} from "reactstrap";
+import {fecthAllCategories} from "../../services/Categories.Services";
+import {editProductByID} from "../../services/Products.Services";
+import {fetchProductsBySellerUsername} from "../../services/Seller.Services";
+import {UserAuthenticated} from "../../services/User.Services";
 
 
-const EditProduct = (props) => {
+const EditProduct = ({product}) => {
+    const formRef = useRef();
+    const [categories,setCategories] = useState([]);
+
+    useEffect(() => {
+        fecthAllCategories().then(response => {
+            console.log("filer",response);
+            setCategories(response);
+            //setLoading(false);
+            //return response.data;
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
+
+    useEffect(() => {
+        const form = formRef.current;
+        form["productname"].value = product.title;
+        form["productprice"].value = product.price;
+        form["productdescription"].value = product.description;
+        form["category"].value = product.productCategory?.id;
+        form["productpicture"].value = product.image;
+    }, [product]);
+
+    const EditProductHandler = () => {
+        const p = product;
+        const form = formRef.current;
+        p.title = form["productname"].value;
+        p.price = form["productprice"].value;
+        p.description = form["productdescription"].value;
+        p.productCategory.id = form["category"].value ;
+        p.image = form["productpicture"].value ;
+
+        editProductByID(p.id,p).then(response => {
+            console.log("resss" ,response);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     return (
-        <div>
-            <Form>
+        <Form ref={formRef}>
                 <FormGroup>
                     <Label for="productname">Product Name</Label>
-                    <Input type="text" name="productname" id="productname" placeholder={props.EditProductId} />
+                    <Input type="text" name="productname" id="productname"/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="productprice">Product price</Label>
-                    <Input type="number" name="productprice" id="productprice" placeholder="price here" />
+                    <Input type="number" name="productprice" id="productprice"/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="productdescription">product description</Label>
@@ -21,29 +63,25 @@ const EditProduct = (props) => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="category">Category</Label>
-                    <Input type="select" name="category" id="category">
-                        <option>Footbal</option>
-                    </Input>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="subcategory">Sub Category</Label>
-                    <Input type="select" name="subcategory" id="subcategory">
-                        <option>subcat</option>
-                    </Input>
-                </FormGroup>
+                    <Input type="select" name="category" id="category"
+                        >
+                        {categories.map((c, i) => {
+                            return (
+                                <option value={c.id} key={i}>
+                                    {c.name}
+                                </option>
+                            );
+                        })}
 
+                    </Input>
+                </FormGroup>
                 <FormGroup>
                     <Label for="productpicture">Picture</Label>
-                    <Input type="file" name="productpicture" id="productpicture" />
-                    <FormText color="muted">
-                        This is some placeholder block-level help text for the above input.
-                        It's a bit lighter and easily wraps to a new line.
-                    </FormText>
+                    <Input type="text" name="productpicture" id="productpicture"/>
                 </FormGroup>
 
-                <Button>Add Product</Button>
+                <Button onClick={EditProductHandler}>Edit Product</Button>
             </Form>
-        </div>
     )
 }
 

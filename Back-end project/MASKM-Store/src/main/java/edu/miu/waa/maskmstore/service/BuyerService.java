@@ -4,6 +4,7 @@ import edu.miu.waa.maskmstore.domain.Address;
 import edu.miu.waa.maskmstore.domain.Buyer;
 
 
+import edu.miu.waa.maskmstore.domain.LineItem;
 import edu.miu.waa.maskmstore.domain.Order;
 import org.springframework.data.domain.Pageable;
 
@@ -33,4 +34,6 @@ public interface BuyerService {
     public void addOrder(Order order ,String userName);
 
     public boolean deleteOrder(String userName, long id);
+
+    public List<LineItem>  listOrderItems(String userName, long id);
 }
