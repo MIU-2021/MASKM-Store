@@ -45,7 +45,7 @@ import {fecthProductByID} from "../../../../services/Products.Services";
 import {
   deleteProductBySeller,
   fetchProductsBySellerUsername,
-  getSellerOrders, makeOrderShipped
+  getSellerOrders, makeOrderCanceled, makeOrderShipped
 } from "../../../../services/Seller.Services";
 
 
@@ -194,22 +194,6 @@ const RecentOrder = ({ id, productDetails, status }) => {
       </tr>
   );
 };
-function makeOrderShippedhandler(username , productid) {
-  makeOrderShipped(username,productid).then(response => {
-    //return response.data;
-  }).catch((error) => {
-    console.log(error);
-  });
-}
-
-function makeOrderCanceledhandler(username , productid) {
-  makeOrderShipped(username,productid).then(response => {
-    console.log("pending orders" ,response);
-    //return response.data;
-  }).catch((error) => {
-    console.log(error);
-  });
-}
 
 
 
@@ -250,11 +234,11 @@ const Dashboard = () => {
           <td>{payment==true?"Yes":"No"}</td>
           <td>{status}</td>
 
-          <td>{status=="Shipped"?
+          <td>{status=="Shipped" || status=="Cancelled" ?
               ""
             :<span>
               <i className="fa fa-check-circle-o mr-1" aria-hidden="true" onClick={() =>makeOrderShippedhandler(UserAuthenticated() , id)}></i>
-              <i className="fa fa-window-close-o ml-1" aria-hidden="true" onClick={() =>makeOrderShippedhandler(UserAuthenticated() , id)}></i>
+              <i className="fa fa-window-close-o ml-1" aria-hidden="true" onClick={() =>makeOrderCanceledhandler(UserAuthenticated() , id)}></i>
                 </span>}
           </td>
         </tr>
@@ -277,8 +261,8 @@ const Dashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(null);
   const [totalProdustcs , setTotalProducts] = useState(0);
-  const [pendingOrders , setPendingOrders] = useState([]);
-  const [countPendingOrders , setCountPendingOrders] = useState(0);
+  const [Orders , setOrders] = useState([]);
+  const [countOrders , setCountOrders] = useState(0);
 
 
   useEffect(() => {
@@ -308,7 +292,7 @@ const Dashboard = () => {
     },
     {
       img: homework,
-      title: countPendingOrders,
+      title: countOrders,
       desc: "Order Pending",
     },
   ];
@@ -339,14 +323,29 @@ const Dashboard = () => {
   function getSellerOrdershandler() {
     getSellerOrders(UserAuthenticated()).then(response => {
       console.log("pending orders" ,response);
-      setPendingOrders(response);
-      setCountPendingOrders(response.length)
+      setOrders(response);
+      setCountOrders(response.length)
       setLoading(false);
       //return response.data;
     }).catch((error) => {
       console.log(error);
     });
   }
+
+  function makeOrderShippedhandler(username , productid) {
+    makeOrderShipped(username,productid).then(response => {
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function makeOrderCanceledhandler(username , productid) {
+    makeOrderCanceled(username,productid).then(response => {
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
 
 
   useEffect(fetchProductsForSellerHandler, []);
@@ -597,7 +596,7 @@ const Dashboard = () => {
                               </tr>
                               </thead>
                               <tbody>
-                              {pendingOrders.map((data, i) => {
+                              {Orders.map((data, i) => {
                                 //id, creationdate, status, price , payment
                                 return (
                                     <AllOrder
