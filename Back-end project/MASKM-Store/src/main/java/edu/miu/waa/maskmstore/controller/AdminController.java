@@ -18,15 +18,8 @@ import java.util.List;
 @CrossOrigin(origins = {"*"})
 public class AdminController {
 
-    @GetMapping
-    public String getFirst(){
-        return "HelloWorld MASKM Admin Page";
-    }
-
-
     @Autowired
     ProductsService productsService;
-
     @Autowired
     SellerService sellerService;
 
