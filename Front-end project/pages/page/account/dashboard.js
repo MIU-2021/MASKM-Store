@@ -64,36 +64,6 @@ const Summary = ({ img, title, desc }) => {
 };
 
 
-const ProfileData = [
-    { title: "Company Name", detail: "Fashion Store" },
-    { title: "Email Address", detail: "Mark.Enderess@Mail.Com" },
-    { title: "Country / Region", detail: "Downers Grove, IL" },
-    { title: "Year Established", detail: "2021" },
-    { title: "Total Employees", detail: "101 - 200 People" },
-    { title: "Category", detail: "Clothing" },
-    { title: "Street Address", detail: "549 Sulphur Springs Road" },
-    { title: "City/State", detail: "Downers Grove, IL" },
-    { title: "Zip", detail: "60515" },
-];
-
-const ProfileDetail = ({ title, detail }) => {
-    return (
-        <li>
-            <div className="details">
-                <div className="left">
-                    <h6>{title}</h6>
-                </div>
-                <div className="right">
-                    <h6>{detail}</h6>
-                </div>
-            </div>
-        </li>
-    );
-};
-
-
-
-//const currentUser = CurrentUser("milronfre");
 const Dashboard = () => {
 
 

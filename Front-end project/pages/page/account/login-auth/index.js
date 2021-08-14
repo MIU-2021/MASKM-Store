@@ -94,8 +94,8 @@ const Login = () => {
                             <div className="theme-card authentication-right">
                                 <h6 className="title-font">Create A Account</h6>
                                 <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be
-                            able to order from our shop. To start shopping click register.</p><a href="#"
-                                    className="btn btn-solid" onClick={() => router.push(`/page/account/checkout`)}>Create an Account</a>
+                            able to order from our shop. To start shopping click register.</p><a
+                                    className="btn btn-solid" onClick={() => router.push(`/page/account/register`)}>Create an Account</a>
                             </div>
                         </Col>
                     </Row>
