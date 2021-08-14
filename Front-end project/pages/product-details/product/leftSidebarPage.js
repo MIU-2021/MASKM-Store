@@ -1,55 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProductTab from "../common/product-tab";
 import Service from "../common/service";
-import NewProduct from "../../shop/common/newProduct";
 import Slider from "react-slick";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
 import ImageZoom from "../common/image-zoom";
 import DetailsWithPrice from "../common/detail-price";
-import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
-import { fecthProductByID} from "../../../services/Products.Services";
-
-const GET_SINGLE_PRODUCTS = gql`
-  query product($id: Int!) {
-    product(id: $id) {
-      id
-      title
-      description
-      type
-      brand
-      category
-      price
-      new
-      sale
-      discount
-      stock
-      variants {
-        id
-        sku
-        size
-        color
-        image_id
-      }
-      images {
-        alt
-        src
-      }
-    }
-  }
-`;
+import { fecthProductByID } from "../../../services/Products.Services";
+import { FollowingSellers, FollowSeller, SellerbyProductId, UnFollowSeller } from "../../../services/Seller.Services";
+import { elementType } from "prop-types";
 
 const LeftSidebarPage = ({ pathId }) => {
-  // var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
-  //   variables: {
-  //     id: parseInt(pathId),
-  //   },
-  // });
   function fetchProductsHandler() {
     fecthProductByID(pathId).then(response => {
-      console.log("gggg",response);
       setData(response);
+      console.log(response);
+      SellerbyProductId(response.id).then((sellerProd) => {
+        setSeller(sellerProd);
+      });
       setLoading(false);
       return response.data;
     }).catch((error) => {
@@ -61,6 +28,9 @@ const LeftSidebarPage = ({ pathId }) => {
   const [state, setState] = useState({ nav1: null, nav2: null });
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [seller, setSeller] = useState({});
+  const [sellersFollowing, setSellersFollowing] = useState({});
+  const [isFollowing, setIsFollowing] = useState(false);
   const slider1 = useRef();
   const slider2 = useRef();
 
@@ -86,6 +56,17 @@ const LeftSidebarPage = ({ pathId }) => {
     });
   }, [data]);
 
+  useEffect(() => {
+    FollowingSellers().then((resp) =>
+      resp.forEach((elem) => {
+        console.log(elem, seller);
+        if (elem.uid == seller.iu) {
+          setIsFollowing(true);
+        }
+      }))
+      .catch((err) => console.log(err));
+  }, [data]);
+
   const { nav1, nav2 } = state;
 
   const filterClick = () => {
@@ -98,6 +79,7 @@ const LeftSidebarPage = ({ pathId }) => {
       <div className="collection-wrapper">
         <Container>
           <Row>
+
             <Col sm="3" className="collection-filter">
               {/* <Filter /> */}
               <Service />
@@ -115,32 +97,59 @@ const LeftSidebarPage = ({ pathId }) => {
                   </Col>
                 </Row>
                 {!data ||
-                data.length === 0 ||
-                loading ? (
+                  data.length === 0 ||
+                  loading ? (
                   "loading"
                 ) : (
-                  <Row>
-                    <Col lg="6" className="product-thumbnail">
-                      <Slider
-                        {...products}
-                        asNavFor={nav2}
-                        ref={(slider) => (slider1.current = slider)}
-                        className="product-slick"
-                      >
+                  <div>
+                    <Row>
+                      <Col lg="6" className="product-thumbnail"></Col>
+
+                      {seller && seller.user ?
+                        <Col lg="6" className="product-thumbnail">
+                          Seller: {seller.user.fname }  { seller.user.lname}
+
+                          {isFollowing ? <a href="#" className="btn btn-solid"
+                            onClick={() => {
+                              UnFollowSeller(seller.user.fname).then(()=>setIsFollowing(false));
+                              
+                            }}>
+                            unfollow
+                          </a> :
+                            <a href="#" className="btn btn-solid"
+                              onClick={() => FollowSeller(seller.user.fname).then(()=>setIsFollowing(true))}>
+                              Follow
+                            </a>
+                          }
+
+                        </Col>
+                        : ''
+                      }
+                    </Row>
+                    <Row>
+
+                      <Col lg="6" className="product-thumbnail">
+                        <Slider
+                          {...products}
+                          asNavFor={nav2}
+                          ref={(slider) => (slider1.current = slider)}
+                          className="product-slick"
+                        >
 
                           <div >
                             <ImageZoom image={data.image} />
                           </div>
 
-                      </Slider>
+                        </Slider>
 
-                    </Col>
-                    <Col lg="6" className="rtl-text">
-                      <DetailsWithPrice
-                        item={data}
-                      />
-                    </Col>
-                  </Row>
+                      </Col>
+                      <Col lg="6" className="rtl-text">
+                        <DetailsWithPrice
+                          item={data}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
                 )}
               </Container>
               <ProductTab />

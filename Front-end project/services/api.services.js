@@ -54,31 +54,6 @@ export const _post = (path, body) => {
         )
 }
 
-export const _getApiKarim = (path) => {
-        return axios
-        // .get(`${url}/${path}`, {
-        //     headers: headers
-        // })
-        .get(`${url}/${path}`)
-        .then(response => {
-            return response.data;
-        }).catch((error) => {
-            console.log(error);
-        });
-}
-
-export const _postKarimApi = (path, body) => {
-    console.log("body", body);
-    return axios
-        .post(`${urlkarim}/${path}`, body)
-        .then(response => {
-            console.log("response", response);
-            return response.data;
-        }).catch((error) => {
-            console.log("error: ", error);
-        });
-}
-
 export const _put = (path, body) => {
 
     const token = localStorage.getItem("token");
