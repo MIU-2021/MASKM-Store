@@ -8,6 +8,7 @@ import edu.miu.waa.maskmstore.domain.stock.ProductCategory;
 import edu.miu.waa.maskmstore.repository.CategoryRepository;
 import edu.miu.waa.maskmstore.repository.ProductsRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
+import edu.miu.waa.maskmstore.service.ReviewRepository;
 import edu.miu.waa.maskmstore.service.categories.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,8 @@ public class ProductsServiceImpl implements ProductsService{
     CategoryRepository categoryRepository;
     @Autowired
     SellerRepository sellerRepository;
+    @Autowired
+    ReviewRepository  reviewRepository;
 
     @Override
     public Product addProduct(Product product,long cat_id,String userName) {
@@ -37,21 +40,22 @@ public class ProductsServiceImpl implements ProductsService{
             product.setAvgRating();
             Seller seller=sellerRepository.findSellerByUsername(userName);
             if (seller!=null){
-                ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
-                product.setSeller(seller);
-                if (productCategory!=null){
-                    product.setProductCategory(productCategory);
+                if (seller.getStatus().equals(ProductApprovedStatus.APPROVED.getProductStatus())){
+                    ProductCategory productCategory=categoryRepository.findById(cat_id).orElse(null);
+                    product.setSeller(seller);
+                    if (productCategory!=null){
+                        product.setProductCategory(productCategory);
+                    }
+                    List<Product> products=seller.getProducts();
+                    products.add(product);
+                    sellerRepository.save(seller);
+                    System.out.println("This Product:"+product.getTitle()+" Added for "+userName);
+                    return product;
+                }else {
+                    throw new IllegalArgumentException("this Seller is Not Accepted: "+userName);
                 }
-                List<Product> products=seller.getProducts();
-                products.add(product);
-                sellerRepository.save(seller);
             }
-
-
-
-            return product;
-
-
+            throw new IllegalArgumentException("We Don't have this User: "+userName);
         }catch (IllegalArgumentException e){
             System.out.println("ADDING ERROR: "+e.getMessage());
             return null;
@@ -81,12 +85,15 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Override
     public List<Product> getAllProducts(Pageable pageable) {
-        return (List<Product>)productsRepository.findAll();
+        return ((List<Product>)productsRepository.findAll());
     }
 
     @Override
     public List<Product> getAllProductsForOneSeller(Pageable pageable,String sellerUserName) {
-        return (List<Product>)sellerRepository.findAllProductBySellerUserName(sellerUserName,pageable);
+        return ((List<Product>)sellerRepository.
+                findAllProductBySellerUserName(sellerUserName,pageable))
+                .stream().peek(Product::setAvgRating)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -166,16 +173,21 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Override
     public boolean deleteProduct(long product_id,String seller_userName) {
-        if (productsRepository.deletableProduct(product_id).size()==0 || productsRepository.deletableProduct(product_id)==null)
-        {
-            Seller seller=sellerRepository.findSellerByUsername(seller_userName);
-            List<Product> products=seller.getProducts();
-            products.remove(productsRepository.getProductById(product_id).get());
-            sellerRepository.save(seller);
-            productsRepository.deleteById(product_id);
-            return true;
+        try {
+            if (productsRepository.deletableProduct(product_id).size()==0 || productsRepository.deletableProduct(product_id)==null)
+            {
+                Seller seller=sellerRepository.findSellerByUsername(seller_userName);
+                List<Product> products=seller.getProducts();
+                products.remove(productsRepository.getProductById(product_id).get());
+                sellerRepository.save(seller);
+                productsRepository.deleteById(product_id);
+                return true;
+            }
+            throw new IllegalArgumentException("Can't Delete This product "+product_id+"because it's purchased before.");
+        }catch (IllegalArgumentException e){
+            System.out.println("Delete ERROR: "+e.getMessage());
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -218,39 +230,18 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
-    public Review approveReview(long product_id, long review_id, String approved) {
+    public Review approveReview(long review_id, String approved) {
         try {
-            if (productsRepository.existsById(product_id)){
-                Product product=productsRepository.findById(product_id).get();
-                if (approved.equals("Approved")){
-                    List<Review> reviews=product.getReviews();
-//                    reviews.stream().map(review -> {
-//                        if (review.getId()==review_id){
-//                            review.setStatus(ProductApprovedStatus.APPROVED.getProductStatus());
-//                        }
-//                        return review;
-//                    });
-                    reviews.forEach(review -> {
-                        if (review.getId()==review_id){
-                            review.setStatus(ProductApprovedStatus.APPROVED.getProductStatus());
-                        }
-                    });
-                    return productsRepository.save(product)
-                            .getReviews().stream()
-                            .filter(review -> review.getId()==review_id).findFirst().get();
-
+            if (reviewRepository.existsById(review_id)){
+                if (approved.equals("Approved")) {
+                    Review review=reviewRepository.findById(review_id).get();
+                    review.setStatus(ProductApprovedStatus.APPROVED.getProductStatus());
+                    return reviewRepository.save(review);
                 }
                 if (approved.equals("Rejected")){
-                    List<Review> reviews=product.getReviews();
-                    reviews.stream().map(review -> {
-                        if (review.getId()==review_id){
-                            review.setStatus(ProductApprovedStatus.REJECTED.getProductStatus());
-                        }
-                        return review;
-                    });                    return productsRepository.save(product)
-                            .getReviews().stream()
-                            .filter(review -> review.getId()==review_id).findFirst().get();
-
+                    Review review=reviewRepository.findById(review_id).get();
+                    review.setStatus(ProductApprovedStatus.APPROVED.getProductStatus());
+                    return reviewRepository.save(review);
 
                 }
                 return null;

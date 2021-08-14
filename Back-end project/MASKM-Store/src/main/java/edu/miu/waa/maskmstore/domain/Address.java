@@ -31,7 +31,6 @@ public class Address {
     private String country;
 
     @NotBlank
-
     private String city;
 
     private String state;

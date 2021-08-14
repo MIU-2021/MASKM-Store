@@ -1,6 +1,7 @@
 package edu.miu.waa.maskmstore.controller;
 
 import edu.miu.waa.maskmstore.domain.Review;
+import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,10 @@ public class ProductsController {
     public Product getProductById(@PathVariable long id){
         return productsService.getProductById(id).orElse(null);
     }
-
+    @GetMapping("/{product_id}/seller")
+    public Seller getSellerByProduct(@PathVariable long product_id){
+        return productsService.getProductById(product_id).get().getSeller();
+    }
 
     @PostMapping("/{id}/reviews")
     public Product addReview(@RequestBody Review review,@PathVariable long id){

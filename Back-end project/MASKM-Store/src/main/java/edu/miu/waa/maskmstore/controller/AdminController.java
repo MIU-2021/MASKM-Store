@@ -51,12 +51,12 @@ public class AdminController {
     public Product makeProductFeatured(@RequestParam("get") boolean featured, @PathVariable long id){
         return productsService.makeItFeatured(id,featured);
     }
-    @GetMapping("/products/{product_id}/reviews/{review_id}")
-    public Review approveReview(@PathVariable long product_id, @PathVariable long review_id,@RequestParam("approved") boolean approved){
+    @GetMapping("reviews/{review_id}")
+    public Review approveReview(@PathVariable long review_id,@RequestParam("approved") boolean approved){
         if (approved)
-            return productsService.approveReview(product_id,review_id,"Approved");
+            return productsService.approveReview(review_id,"Approved");
         else
-            return productsService.approveReview(product_id,review_id,"Rejected");
+            return productsService.approveReview(review_id,"Rejected");
 
     }
 

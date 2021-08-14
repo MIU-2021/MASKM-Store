@@ -1,0 +1,1189 @@
+{
+	"info": {
+		"_postman_id": "78f65e15-0efc-4609-ab57-d8f8fcee940e",
+		"name": "MASKM-Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GetAllProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/products/",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddProdcut",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWx0b24iLCJyb2xlIjoiU0VMTEVSIiwiZXhwIjoxNjI4OTEzODM5LCJpYXQiOjE2Mjg4MjM4Mzl9.5jKKzWlY4A6VWN_Xl20Jya6pfO3vcT1WYCQgtTMmXO4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Iphone\",\r\n    \"description\":\"Iphone 6s Used by Apple\",\r\n    \"price\":1200,\r\n    \"image\":\"https://www.notebookcheck.net/uploads/tx_nbc2/4_zu_3_teaser_05.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/products?cat=21",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "cat",
+									"value": "21"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOneProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/products/34",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products",
+								"34"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllProductWithPaging",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/products?page=1&limit=1",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ApproveProuctByAdmin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/admin/products/1?approved=true",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"products",
+								"1"
+							],
+							"query": [
+								{
+									"key": "approved",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FeaturedProuctByAdmin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/admin/products/6/featured?get=true",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"products",
+								"6",
+								"featured"
+							],
+							"query": [
+								{
+									"key": "get",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllProductWithPaging&cat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/products?page=1&limit=2&cat=1",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "cat",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddProdcutBySeller",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWx0b24iLCJyb2xlIjoiU0VMTEVSIiwiZXhwIjoxNjI4OTE0Mjc5LCJpYXQiOjE2Mjg4MjQyNzl9.6HNK4Qlta6CeOSfYlP8UuEH2OEn6hvOO83RXOI29oi4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"AirPods\",\r\n    \"description\":\"New by Apple\",\r\n    \"price\":150,\r\n    \"image\":\"https://media.wired.com/photos/5c9d5e938c79ea63995ca04d/1:1/w_1800,h_1800,c_limit/Apple-AirPods-worlds-most-popular-wireless-headphones_03202019.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/seller/milton?cat=1",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"seller",
+								"milton"
+							],
+							"query": [
+								{
+									"key": "cat",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllProductBySellerUserName",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/products?page=1&limit=5&userName=milton",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "userName",
+									"value": "milton"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProductByAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWx0b24iLCJyb2xlIjoiU0VMTEVSIiwiZXhwIjoxNjI4OTMzNjg2LCJpYXQiOjE2Mjg4NDM2ODZ9.98bnAjIyOqzODliG82RHVAsxnf7nDS6-qj-GpOHxNpw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/seller/milton/products/19",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"seller",
+								"milton",
+								"products",
+								"19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "AddReview",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW1lciIsInJvbGUiOiJCVVlFUiIsImV4cCI6MTYyODk2NjM4OSwiaWF0IjoxNjI4ODc2Mzg5fQ.Rkc5hm7Z0iRoU2rd6Tu43pbhTJ7ZU6_1ZfI_EiJwNK0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\":\"Like You Duck\",\r\n    \"stars\":5\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/products/19/reviews",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products",
+								"19",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllReviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/products/5/reviews/",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products",
+								"5",
+								"reviews",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ApproveReview",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTYyODkxMDM5NywiaWF0IjoxNjI4ODIwMzk3fQ.dB2sJYC1GeQFitrxVfqJ35LV33xtE1UAHLGYXNBe1aU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/admin/products/19/reviews/72?approved=true",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"products",
+								"19",
+								"reviews",
+								"72"
+							],
+							"query": [
+								{
+									"key": "approved",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllReviewsWithoutApproval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyODk2NjMyMywiaWF0IjoxNjI4ODc2MzIzfQ.7z3InB50U2aKTKjAQmozZ6FmCM0DGHtXyux34fmRi44",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/admin/reviews/",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"reviews",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "SubCat",
+					"item": [
+						{
+							"name": "EditOneSubCat",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteSubCat",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "AddSubCat",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Phones\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:2021/admin/cats/1",
+									"host": [
+										"localhost"
+									],
+									"port": "2021",
+									"path": [
+										"admin",
+										"cats",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetSubCats",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AddCategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTYyODkxMDM5NywiaWF0IjoxNjI4ODIwMzk3fQ.dB2sJYC1GeQFitrxVfqJ35LV33xtE1UAHLGYXNBe1aU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Electronices\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/admin/cats",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"cats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllCats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/cats",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"cats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOneCat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/cats/1",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"cats",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOneCat",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/admin/cats/4",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"cats",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditOneCat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buyers",
+			"item": [
+				{
+					"name": "AddBuyer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\":{\r\n        \"username\": \"KARIMABURJEILA1\",\r\n        \"password\": \"123456\",\r\n        \"email\": \"Kareemaburejila@gmail.com\",\r\n        \"phone\": null,\r\n        \"fname\": \"KARIM \",\r\n        \"lname\": \"ABUREJILA\"\r\n    },\r\n    \"shippingAddress\":{\r\n        \"country\":\"US\",\r\n        \"city\":\"Fairfield\",\r\n        \"state\":\"IOWA\",\r\n        \"addressLine\":\"1000N St 4th\",\r\n        \"zipCode\":52556,\r\n        \"addressType\":\"Shipping\"\r\n\r\n    },\r\n    \"billingAddress\":{\r\n        \"country\":\"Palestine\",\r\n        \"city\":\"Gaza\",\r\n        \"addressLine\":\"Soosi Building 3th 16\",\r\n        \"zipCode\":97200,\r\n        \"addressType\":\"Billing\"\r\n    },\r\n    \"creditCard\":{\r\n        \"cardNumber\":\"6703-4444-4444-4449\",\r\n        \"cvv\":\"654\",\r\n        \"expDate\":\"09-29\"\r\n\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/buyer",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBuyerByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/buyer/profile/samer",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"profile",
+								"samer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetALlBuyer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/buyer/samer",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"samer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditBuyer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"points\": 0,\r\n    \"orders\": [],\r\n    \"user\": {\r\n        \"username\": \"samer\",\r\n        \"password\": \"123456\",\r\n        \"email\": \"Samer@gmail.com\",\r\n        \"phone\": null,\r\n        \"roles\": [\r\n            {\r\n                \"id\": 14,\r\n                \"role\": \"BUYER\"\r\n            }\r\n        ],\r\n        \"fname\": \"KARIM \",\r\n        \"lname\": \"ABUREJILA\",\r\n        \"uid\": 13\r\n    },\r\n    \"shippingAddress\": {\r\n        \"country\":\"US\",\r\n        \"city\":\"FairField\",\r\n        \"addressLine\":\"1000N 4st\",\r\n        \"zipCode\":52556,\r\n        \"addressType\":\"Shipping\"\r\n    },\r\n    \"billingAddress\": {\r\n        \"country\":\"Eygpt\",\r\n        \"city\":\"FairField\",\r\n        \"addressLine\":\"1000N 4st\",\r\n        \"zipCode\":12421,\r\n        \"addressType\":\"Billing\"\r\n    },\r\n    \"sellersFollowed\": [],\r\n    \"creditCard\": {\r\n        \"cardNumber\":\"6666-6666-6666-6666\",\r\n        \"cvv\":\"625\",\r\n        \"expDate\":\"12-21\"\r\n    },\r\n    \"bid\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/buyer/profile/samer/edit",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"profile",
+								"samer",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buyer",
+			"item": [
+				{
+					"name": "GetAllBuyer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW1lciIsInJvbGUiOiJCVVlFUiIsImV4cCI6MTYyODkxNDU4OCwiaWF0IjoxNjI4ODI0NTg4fQ.iqy-YLUxysP4nid5eKwxlEm_zsF0jZxBAogsLZMIAH0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "172.19.140.95:2021/buyer/samer/orders",
+							"host": [
+								"172",
+								"19",
+								"140",
+								"95"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"samer",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller",
+			"item": [
+				{
+					"name": "GetAllSeler",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/seller",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"seller"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ApproveSeller",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyODk2NjMyMywiaWF0IjoxNjI4ODc2MzIzfQ.7z3InB50U2aKTKjAQmozZ6FmCM0DGHtXyux34fmRi44",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/admin/seller/milton?approved=true",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"seller",
+								"milton"
+							],
+							"query": [
+								{
+									"key": "approved",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSellerByProductID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "LoginSeller",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"milton\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginBuyer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"samer\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"karim\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "RegisteBuyer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"samer\",\r\n        \"password\": \"123456\",\r\n        \"email\": \"Samer@gmail.com\",\r\n        \"firstName\": \"KARIM \",\r\n        \"lastName\": \"ABUREJILA\",\r\n        \"role\":\"BUYER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/register",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegistSeller",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"milton\",\r\n        \"password\": \"123456\",\r\n        \"email\": \"Milton@gmail.com\",\r\n        \"firstName\": \"Milton \",\r\n        \"lastName\": \"ABUREJILA\",\r\n        \"role\":\"SELLER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/register",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "GetAllOrders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW1lciIsInJvbGUiOiJCVVlFUiIsImV4cCI6MTYyODkxNDU4OCwiaWF0IjoxNjI4ODI0NTg4fQ.iqy-YLUxysP4nid5eKwxlEm_zsF0jZxBAogsLZMIAH0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/buyer/samer/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"samer",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW1lciIsInJvbGUiOiJCVVlFUiIsImV4cCI6MTYyODk3MjQzNiwiaWF0IjoxNjI4ODgyNDM2fQ.YFgDFFG_qa9GF7XNQpRlnOL7w4RpxJzhejU6fon0TNI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"createdOn\": \"2021-08-12\",\r\n        \"lineItems\": [\r\n            {\r\n                \"quantity\": 1,\r\n                \"price\": 36.0,\r\n                \"product\": {\r\n                    \"id\": 5,\r\n                    \"featured\": false,\r\n                    \"title\": \"Nader Product with Seller\",\r\n                    \"description\": \"nader Product description\",\r\n                    \"image\": \"https://static.nike.com/a/images/t_PDP_1280_v1/f_auto/6e4b2c60-8c1c-44b1-bf35-f4b538b28e64/mens-t-shirt-93lL4G.png\",\r\n                    \"rating\": 0.0,\r\n                    \"status\": \"Pending\",\r\n                    \"price\": 36.0,\r\n                    \"productCategory\": {\r\n                        \"id\": 1,\r\n                        \"name\": \"Clothes\"\r\n                    },\r\n                    \"createdOn\": \"2021-08-12\"\r\n                }\r\n            },\r\n            {\r\n                \"quantity\": 2,\r\n                \"price\": 250.0,\r\n                \"product\": {\r\n                    \"id\": 19,\r\n                    \"featured\": false,\r\n                    \"title\": \"Shoes Nike\",\r\n                    \"description\": \"this Shoes for girls \",\r\n                    \"image\": \"https://s3.amazonaws.com/nikeinc/assets/84925/Sp19_BB_Nike_Adapt_20181218_NIKE0538_Detail5_rectangle_1600.jpg?1547068102\",\r\n                    \"rating\": 0.0,\r\n                    \"status\": \"Pending\",\r\n                    \"price\": 250.0,\r\n                    \"productCategory\": {\r\n                        \"id\": 1,\r\n                        \"name\": \"Clothes\"\r\n                    },\r\n                    \"createdOn\": \"2021-08-12\"\r\n                }\r\n            }\r\n        ],\r\n        \"orderPaid\": true,\r\n        \"orderStatus\": \"Pending\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/buyer/samer/order",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"samer",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOneId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/buyer/samer/order/31",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"samer",
+								"order",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/buyer/samer/order/47",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"samer",
+								"order",
+								"47"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddNewOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lineItemsDTO\":[\r\n        {\r\n            \"quantity\":2,\r\n            \"productId\":19\r\n        },\r\n        {\r\n            \"quantity\":1,\r\n            \"productId\":5\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/buyer/samer/order",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"buyer",
+								"samer",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "GetAdminProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJpbSIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyODk3MTE4OSwiaWF0IjoxNjI4ODgxMTg5fQ.DUmFEzbm9QdZefA15NJ0MWbH3DgiRpa9WAfjWR2JBc0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2021/admin/karim/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"admin",
+								"karim",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"karim\",\r\n    \"password\":\"123456\",\r\n    \"firstName\":\"Karim\",\r\n    \"lastName\":\"AbuRejila\",\r\n    \"email\":\"Kareemaburejila@gmail.com\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2021/register",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
