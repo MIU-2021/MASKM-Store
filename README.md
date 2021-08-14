@@ -13,8 +13,8 @@ These instructions will get you a copy of the project up and running on your loc
 2 Project Videos
 
 ```sh
-Back-end-video {https://www.youtube.com/watch?v=CsZP2unQpR0}
-Front-end-video {https://www.youtube.com/watch?v=-8oWSkZQqQI}
+Back-end-video - https://www.youtube.com/watch?v=CsZP2unQpR0
+Front-end-video - https://www.youtube.com/watch?v=-8oWSkZQqQI
 ```
 3 Prerequisites
 
