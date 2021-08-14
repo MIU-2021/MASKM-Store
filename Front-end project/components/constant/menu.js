@@ -106,52 +106,52 @@ export const MENUITEMS= [
    //       }
    //    ]
    // },
-   {
-      title: 'Pages', type: 'sub', children: [
-         {
-            title: 'admin', type: 'sub', tag: 'new', children: [
-               { path: '/page/admin/admin-dashboard', title: 'admin Dashboard', type: 'link' },
-            ]
-         },
-         {
-            title: 'vendor', type: 'sub', tag: 'new', children: [
-               { path: '/page/vendor/vendor-dashboard', title: 'Seller Dashboard', type: 'link' },
-               { path: '/page/vendor/vendor-profile', title: 'Seller Profile', type: 'link' },
-               { path: '/page/vendor/become-vendor', title: 'Seller Vendor', type: 'link' },
-            ]
-         },
-         {
-            title: 'Account', type: 'sub', children: [
-               { path: '/page/account/wishlist', title: 'Wishlist', type: 'link' },
-               { path: '/page/account/cart', title: 'cart', type: 'link' },
-               { path: '/page/account/dashboard', title: 'dashboard', type: 'link' },
-               { path: '/page/account/login', title: 'login', type: 'link' },
-               { path: '/page/account/login-auth', title: 'login-auth', type: 'link' },
-               { path: '/page/account/register', title: 'register', type: 'link' },
-               { path: '/page/account/contact', title: 'contact', type: 'link' },
-               { path: '/page/account/forget-pwd', title: 'forgot-password', type: 'link' },
-               { path: '/page/account/profile', title: 'profile', type: 'link' },
-               { path: '/page/account/checkout', title: 'checkout', type: 'link' },
-            ]
-         },
-         { path: '/page/about-us', title: 'about-us', type: 'link' },
-         { path: '/page/search', title: 'search', type: 'link' },
-         { path: '/page/typography', title: 'typography', type: 'link', tag: 'new' },
-         { path: '/page/review', title: 'review', type: 'link' },
-         { path: '/page/order-success', title: 'order-success', type: 'link' },
-         {
-            title: 'compare', type: 'sub', children: [
-               { path: '/page/compare', title: 'compare', type: 'link' },
-               { path: '/page/compare-2', title: 'compare-2', type: 'link', tag: 'new' }
-            ]
-         },
-         { path: '/page/collection', title: 'collection', type: 'link' },
-         { path: '/page/lookbook', title: 'lookbook', type: 'link' },
-         { path: '/page/site-map', title: 'site-map', type: 'link' },
-         { path: '/page/404', title: '404', type: 'link' },
-         { path: '/page/coming-soon', title: 'coming-soon', type: 'link' },
-         { path: '/page/faq', title: 'faq', type: 'link' },
-      ]
-   },
+   // {
+   //    title: 'Pages', type: 'sub', children: [
+   //       {
+   //          title: 'admin', type: 'sub', tag: 'new', children: [
+   //             { path: '/page/admin/admin-dashboard', title: 'admin Dashboard', type: 'link' },
+   //          ]
+   //       },
+   //       {
+   //          title: 'vendor', type: 'sub', tag: 'new', children: [
+   //             { path: '/page/vendor/vendor-dashboard', title: 'Seller Dashboard', type: 'link' },
+   //             { path: '/page/vendor/vendor-profile', title: 'Seller Profile', type: 'link' },
+   //             { path: '/page/vendor/become-vendor', title: 'Seller Vendor', type: 'link' },
+   //          ]
+   //       },
+   //       {
+   //          title: 'Account', type: 'sub', children: [
+   //             { path: '/page/account/wishlist', title: 'Wishlist', type: 'link' },
+   //             { path: '/page/account/cart', title: 'cart', type: 'link' },
+   //             { path: '/page/account/dashboard', title: 'dashboard', type: 'link' },
+   //             { path: '/page/account/login', title: 'login', type: 'link' },
+   //             { path: '/page/account/login-auth', title: 'login-auth', type: 'link' },
+   //             { path: '/page/account/register', title: 'register', type: 'link' },
+   //             { path: '/page/account/contact', title: 'contact', type: 'link' },
+   //             { path: '/page/account/forget-pwd', title: 'forgot-password', type: 'link' },
+   //             { path: '/page/account/profile', title: 'profile', type: 'link' },
+   //             { path: '/page/account/checkout', title: 'checkout', type: 'link' },
+   //          ]
+   //       },
+   //       { path: '/page/about-us', title: 'about-us', type: 'link' },
+   //       { path: '/page/search', title: 'search', type: 'link' },
+   //       { path: '/page/typography', title: 'typography', type: 'link', tag: 'new' },
+   //       { path: '/page/review', title: 'review', type: 'link' },
+   //       { path: '/page/order-success', title: 'order-success', type: 'link' },
+   //       {
+   //          title: 'compare', type: 'sub', children: [
+   //             { path: '/page/compare', title: 'compare', type: 'link' },
+   //             { path: '/page/compare-2', title: 'compare-2', type: 'link', tag: 'new' }
+   //          ]
+   //       },
+   //       { path: '/page/collection', title: 'collection', type: 'link' },
+   //       { path: '/page/lookbook', title: 'lookbook', type: 'link' },
+   //       { path: '/page/site-map', title: 'site-map', type: 'link' },
+   //       { path: '/page/404', title: '404', type: 'link' },
+   //       { path: '/page/coming-soon', title: 'coming-soon', type: 'link' },
+   //       { path: '/page/faq', title: 'faq', type: 'link' },
+   //    ]
+   // },
 ]
  
