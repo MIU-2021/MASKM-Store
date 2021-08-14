@@ -46,6 +46,7 @@ import { CurrentUser, RoleAuthenticated, UpdateBillingAddress, UpdateCardMethod,
 import OrderDetail from "./orderDetail";
 import Following from "./Following";
 import ProfilePage from "./common/profile-page";
+import { UnFollowSeller } from "../../../services/Seller.Services";
 
 
 const Summary = ({ img, title, desc }) => {
@@ -63,36 +64,6 @@ const Summary = ({ img, title, desc }) => {
 };
 
 
-const ProfileData = [
-    { title: "Company Name", detail: "Fashion Store" },
-    { title: "Email Address", detail: "Mark.Enderess@Mail.Com" },
-    { title: "Country / Region", detail: "Downers Grove, IL" },
-    { title: "Year Established", detail: "2021" },
-    { title: "Total Employees", detail: "101 - 200 People" },
-    { title: "Category", detail: "Clothing" },
-    { title: "Street Address", detail: "549 Sulphur Springs Road" },
-    { title: "City/State", detail: "Downers Grove, IL" },
-    { title: "Zip", detail: "60515" },
-];
-
-const ProfileDetail = ({ title, detail }) => {
-    return (
-        <li>
-            <div className="details">
-                <div className="left">
-                    <h6>{title}</h6>
-                </div>
-                <div className="right">
-                    <h6>{detail}</h6>
-                </div>
-            </div>
-        </li>
-    );
-};
-
-
-
-//const currentUser = CurrentUser("milronfre");
 const Dashboard = () => {
 
 
@@ -155,6 +126,10 @@ const Dashboard = () => {
         if (!RoleAuthenticated() || RoleAuthenticated().toUpperCase() != 'BUYER')
             router.push("/page/account/login");
     }, []);
+
+    const unFollowSellerEventHandler = (username) => {
+        UnFollowSeller(username).then(()=>setActiveTab("1")).catch((err)=>console.log(err));
+    }
     const saveProfileClickHandle = (e) => {
         e.preventDefault();
         console.log(shippingAddress);
@@ -189,6 +164,16 @@ const Dashboard = () => {
         );
     };
 
+    const FollowingSellers = ({ ord }) => {
+        return (
+            <tr>
+                <th scope="row">{ord.user.fname} {ord.user.lname}</th>
+                <td>
+                   <i className="fa fa-trash-o ml-1" aria-hidden="true" onClick={() => unFollowSellerEventHandler(ord.user.username)} ></i>
+                </td>
+            </tr>
+        );
+    };
     const AllOrder = ({ ord }) => {
         return (
             <tr>
@@ -310,7 +295,30 @@ const Dashboard = () => {
                                                 <Col sm="12">
                                                     <Card className="dashboard-table mt-0">
                                                         <CardBody>
-                                                            <Following Following={following}></Following>
+                                                            <Container>
+                                                                {following  ?
+                                                                    <div>
+                                                                        <h3>Following</h3>
+                                                                        <table className="table mb-0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">Seller</th>
+                                                                                    <th scope="col">Unfollow</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                {following.map((data, i) => {
+                                                                                    return (
+                                                                                        <FollowingSellers
+                                                                                            key={i}
+                                                                                            ord={data}
+                                                                                        />
+                                                                                    );
+                                                                                })}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div> : ''}
+                                                            </Container>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -541,7 +549,7 @@ const Dashboard = () => {
                                                                                                             value={billingAddress.zipCode} placeholder="zip-code"
                                                                                                             required="" />
                                                                                                     </Col>
-                                                                                                   
+
                                                                                                 </Row>
                                                                                                 <Row>
                                                                                                     <Col md="12">
@@ -558,7 +566,7 @@ const Dashboard = () => {
                                                                                                                 setCardMethod(meth);
                                                                                                             }}
                                                                                                             value={cardMethod.cardNumber} placeholder="company name"
-                                                                                                             />
+                                                                                                        />
                                                                                                     </Col>
                                                                                                     <Col md="6" className="select_input">
                                                                                                         <Label for="review">Expiration date</Label>
@@ -569,13 +577,13 @@ const Dashboard = () => {
                                                                                                                 setCardMethod(meth);
                                                                                                             }}
                                                                                                             value={cardMethod.expDate} placeholder="company name"
-                                                                                                             />
+                                                                                                        />
 
                                                                                                     </Col>
                                                                                                 </Row>
                                                                                                 <div className="col-md-12">
-                                                                                                        <button className="btn btn-sm btn-solid" onClick={(e) => saveProfileClickHandle(e)}>Save setting</button>
-                                                                                                    </div>
+                                                                                                    <button className="btn btn-sm btn-solid" onClick={(e) => saveProfileClickHandle(e)}>Save setting</button>
+                                                                                                </div>
                                                                                             </Form>
                                                                                         </Col>
                                                                                     </Row>
