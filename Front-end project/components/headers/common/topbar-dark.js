@@ -29,7 +29,7 @@ const TopBarDark = ({ topClass, fluid }) => {
       }
       case 'ADMIN': {
 
-        alert('ADMIN');
+        router.push("/page/admin/admin-dashboard");
         break;
       }
       default: {
@@ -40,10 +40,10 @@ const TopBarDark = ({ topClass, fluid }) => {
   };
 
   const logoutHandle = () => {
-    console.log('logout');
     Logout();
     setUserName(null);
     setRole(null);
+    router.push("/page/account/dashboard");
   };
   return (
     <div className={topClass}>
