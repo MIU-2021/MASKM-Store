@@ -10,8 +10,13 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 ![logo-MASKM](https://user-images.githubusercontent.com/39139830/129425115-221179ef-4696-4a0b-8fb2-75cc3bd69e27.png)
 
+2 Project Videos
 
-2 Prerequisites
+```sh
+Back-end-video {https://www.youtube.com/watch?v=CsZP2unQpR0}
+Front-end-video {https://www.youtube.com/watch?v=-8oWSkZQqQI}
+```
+3 Prerequisites
 
 ```sh
 2.1 Node
@@ -44,11 +49,11 @@ https://www.mysql.com/downloads/
 ```
 
 
-3 Installing
+4 Installing
 
 
 
-3.1 Install the required Prerequisites
+4.1 Install the required Prerequisites
 ```sh
 1- Open MySql Software 
 
@@ -58,26 +63,19 @@ https://www.mysql.com/downloads/
 sh 
     2- Import the back-end and go to src\main\resources\application.properties
 -   In application.properties you should replace 
-    spring.datasource.username=YOUR USERNAME
-    spring.datasource.password=YOUR PASSWORD
+    spring.datasource.url=jdbc:mysql://localhost:3306/MASKM_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    spring.datasource.username=root
+    spring.datasource.password=MASKM@2021
 -After that you can run the project 
 
 3- - Import the front-end and run :
 -   npm install     [for install all the requirement library ]
--   npm start     [for strat the project ]
+-   npm run dev     [for strat the project ]
 -   
 
     
 ```
-3.2 Some Account For Testing.
-
-```sh
-
-//				Admin Of Restaurant       => login :admin     Passwrod : admin   
-                     And you can signup for check the client side.
-```
-
-4 Project Team
+5 Project Team
 
 ```sh
     Milton Fredy Gonzalez Diaz :612356
@@ -86,12 +84,12 @@ sh
     Karim A R Aburjeila :612403
     Maher Samoudi :612382
 ```
-5 Duration of work
+6 Duration of work
 
 ```sh
 4 days
 ```
-5 Special Thanks
+7 Special Thanks
 
 ```sh
 Special Thanks for our professor who did a lot of effort to make this course easy for us and we can see this from on this project, 
@@ -108,7 +106,7 @@ Special Thanks Also for Our Friend he's name is Emad form the last Entry <Thank 
 Wich make this picture is so expensive 😊 😊 However we were very happy to finish this project on very short time.
 ```
 
-9 Back-End Github
+8 Project Github
 
 Back-End :https://github.com/MIU-2021/MASKM-Store/tree/main/Back-end%20project
 
