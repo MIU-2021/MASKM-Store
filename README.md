@@ -80,11 +80,11 @@ sh
 4 Project Team
 
 ```sh
-Milton Fredy Gonzalez Diaz :612356
-Ahamad Elghannam :612398
-Soufiane Ennali :612359
-KARIM A R ABUREJILA :612403
-Maher Samoudi :612382
+    Milton Fredy Gonzalez Diaz :612356
+    Ahamad Elghannam :612398
+    Soufiane Ennali :612359
+    Karim A R Aburjeila :612403
+    Maher Samoudi :612382
 ```
 5 Duration of work
 
