@@ -1,11 +1,9 @@
 package edu.miu.waa.maskmstore.service;
 
-import edu.miu.waa.maskmstore.domain.Address;
-import edu.miu.waa.maskmstore.domain.Buyer;
+import edu.miu.waa.maskmstore.domain.*;
 
 
-import edu.miu.waa.maskmstore.domain.LineItem;
-import edu.miu.waa.maskmstore.domain.Order;
+import edu.miu.waa.maskmstore.dto.OrderDTO;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -31,11 +29,19 @@ public interface BuyerService {
 
     public Order returnedOrder(String userName, long oId);
 
-    public void addOrder(Order order ,String userName);
+    public void addOrder(OrderDTO orderDTO , String userName);
 
     public boolean deleteOrder(String userName, long id);
 
     public List<LineItem>  listOrderItems(String userName, long id);
 
     public Buyer editBuyer(String userName, Buyer buyer);
+
+    public Address addBillingAddress(String userName,Address address);
+    public Address editBillingAddress(long address_id,Address address);
+    public Address addShippingAddress(String userName,Address address);
+    public Address editShippingAddress(long address_id,Address address);
+    public CreditCard addCreditCard(String userName, CreditCard creditCard);
+    public CreditCard editCreditCard(long creditCard_id, CreditCard creditCard);
+
 }

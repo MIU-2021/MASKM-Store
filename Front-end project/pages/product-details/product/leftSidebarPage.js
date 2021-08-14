@@ -9,7 +9,9 @@ import ImageZoom from "../common/image-zoom";
 import DetailsWithPrice from "../common/detail-price";
 import Filter from "../common/filter";
 import { Container, Row, Col, Media } from "reactstrap";
-import { fecthProductByID} from "../../../services/Products.Services";
+import { fecthProductByID } from "../../../services/Products.Services";
+import { SellerbyProductId } from "../../../services/Seller.Services";
+import { AccessAlarm, ThreeDRotation } from '@material-ui/icons';
 
 const GET_SINGLE_PRODUCTS = gql`
   query product($id: Int!) {
@@ -48,8 +50,11 @@ const LeftSidebarPage = ({ pathId }) => {
   // });
   function fetchProductsHandler() {
     fecthProductByID(pathId).then(response => {
-      console.log("gggg",response);
       setData(response);
+      console.log(response);
+      SellerbyProductId(response.id).then((sellerProd) => {
+        setSeller(sellerProd);
+      });
       setLoading(false);
       return response.data;
     }).catch((error) => {
@@ -61,6 +66,7 @@ const LeftSidebarPage = ({ pathId }) => {
   const [state, setState] = useState({ nav1: null, nav2: null });
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [seller, setSeller] = useState({});
   const slider1 = useRef();
   const slider2 = useRef();
 
@@ -98,6 +104,7 @@ const LeftSidebarPage = ({ pathId }) => {
       <div className="collection-wrapper">
         <Container>
           <Row>
+            
             <Col sm="3" className="collection-filter">
               {/* <Filter /> */}
               <Service />
@@ -115,11 +122,23 @@ const LeftSidebarPage = ({ pathId }) => {
                   </Col>
                 </Row>
                 {!data ||
-                data.length === 0 ||
-                loading ? (
+                  data.length === 0 ||
+                  loading ? (
                   "loading"
                 ) : (
+                  <div>
+                    <Row>
+                    <Col lg="6" className="product-thumbnail"></Col>
+                    
+                    {seller && seller.user?
+                    <Col lg="6" className="product-thumbnail">
+                        Seller: {seller.user.fname}<span onClick={()=>{}}> <i class="fa fa-heart"></i></span>
+                    </Col>
+                    :''
+                    }
+                   </Row>
                   <Row>
+                    
                     <Col lg="6" className="product-thumbnail">
                       <Slider
                         {...products}
@@ -128,9 +147,9 @@ const LeftSidebarPage = ({ pathId }) => {
                         className="product-slick"
                       >
 
-                          <div >
-                            <ImageZoom image={data.image} />
-                          </div>
+                        <div >
+                          <ImageZoom image={data.image} />
+                        </div>
 
                       </Slider>
 
@@ -141,6 +160,7 @@ const LeftSidebarPage = ({ pathId }) => {
                       />
                     </Col>
                   </Row>
+                  </div>
                 )}
               </Container>
               <ProductTab />

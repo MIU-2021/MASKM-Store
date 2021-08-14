@@ -34,9 +34,18 @@ public class Order {
     List<LineItem> lineItems=new ArrayList<>();
 
     Boolean orderPaid=false;
-    OrderStatus orderStatus=OrderStatus.Pending;
+    String orderStatus=OrderStatus.Pending.getOrderStatus();
     @ManyToOne
     @JsonIgnore
     private Buyer buyer;
 
+    @Override
+    public String toString() {
+        return "Your Order : " +
+                "\n\tid : " + id +
+                "\n\tcreatedOn : " + createdOn +
+                "\n\tprice : " + price +
+                "\n\t"+ lineItems +
+                "\n\torderStatus : '" + orderStatus;
+    }
 }

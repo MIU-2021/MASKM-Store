@@ -60,13 +60,45 @@ export const CurrentUser = () => {
 
 export const UpdateUser = (user) => {
     const userName = UserAuthenticated();
-    console.log('buyer/profile/' + userName+'/edit',user);
     return _post('buyer/profile/' + userName+'/edit',user)
         .then(response => {
             console.log(response);
             return response;
         })
         .catch(err => console.log(err));    
+}
+
+
+export const UpdateBillingAddress=(address)=>{
+    console.log(address);
+    const userName = UserAuthenticated();
+    return _post('buyer/profile/' + userName+'/billing',address)
+        .then(response => {
+            console.log(response);
+            return response;
+        })
+        .catch(err => console.log(err));   
+}
+
+export const UpdateShippingAddress=(address)=>{
+    const userName = UserAuthenticated();
+    return _post('buyer/profile/' + userName+'/shipping',address)
+        .then(response => {
+            console.log(response);
+            return response;
+        })
+        .catch(err => console.log(err));   
+}
+
+
+export const UpdateCardMethod=(cardMethod)=>{
+    const userName = UserAuthenticated();
+    return _post('buyer/profile/' + userName+'/card',cardMethod)
+        .then(response => {
+            console.log(response);
+            return response;
+        })
+        .catch(err => console.log(err));   
 }
 
 

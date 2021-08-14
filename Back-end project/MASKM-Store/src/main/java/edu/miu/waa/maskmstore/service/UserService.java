@@ -1,5 +1,6 @@
 package edu.miu.waa.maskmstore.service;
 
+import edu.miu.waa.maskmstore.domain.Admin;
 import edu.miu.waa.maskmstore.domain.Buyer;
 import edu.miu.waa.maskmstore.domain.Seller;
 import edu.miu.waa.maskmstore.domain.User;
@@ -17,5 +18,6 @@ public interface UserService {
 
     public void addSeller(Seller seller);
     public void addBuyer(Buyer buyer);
+    public void addAdmin(Admin admin);
 
 }

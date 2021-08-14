@@ -11,14 +11,15 @@ import {
 } from "reactstrap";
 
 const OrderDetail = (props) => {
-    const productData = ProductsbyOrder(props.Order.id);
+    const productData = props.Order.lineItems;
+    console.log(productData);
     const AllProduct = ({ img, productName, category, price, cant }) => {
         return (
             <tr>
-                <th scope="row">
-                    <Media src={img} className="blur-up lazyloaded" />
-                </th>
-                <td>{productName}e</td>
+                <td class="col-md-3">
+                    <Media src={img} className="blur-up lazyloaded img-thumbnail  max-width: 150px;" />
+                </td>
+                <td>{productName}</td>
                 <td>{category}</td>
                 <td>{price}</td>
                 <td>{cant}</td>
@@ -83,27 +84,30 @@ const OrderDetail = (props) => {
                     <table className="table-responsive-md table mb-0">
                         <thead>
                             <tr>
-                                <th scope="col"></th>
+                                <th scope="col" ></th>
                                 <th scope="col">product name</th>
                                 <th scope="col">category</th>
                                 <th scope="col">price</th>
                                 <th scope="col">Cant</th>
                             </tr>
                         </thead>
+                        {productData  ?
                         <tbody>
                             {productData.map((data, i) => {
                                 return (
                                     <AllProduct
                                         key={i}
-                                        img={data.img}
-                                        productName={data.title}
-                                        category={data.category}
+                                        img={data.product.image}
+                                        productName={data.product.title}
+                                        category={data.productCategory? data.productCategory.name:''}
                                         price={data.price}
-                                        cant={data.cant}
+                                        cant={data.quantity}
                                     />
                                 );
                             })}
                         </tbody>
+                        : ''
+                        }
                     </table>
                 </CardBody>
             </Card>

@@ -1,3 +1,6 @@
+import { _delete, _post } from "./api.services";
+import { UserAuthenticated } from "./User.Services";
+
 export const OrderData = (userId) => {
   return [
     
@@ -76,9 +79,17 @@ export const ProductsbyOrder = (oderId) => {
 }
 
 export const DeleteOrder = (oderId) => {
-  return _get('products/'+oderId)
+  const user=UserAuthenticated();
+  return _delete(`buyer/${user}/order/${oderId}`)
+  .then(response => {
+      return response;
+  });
+}
+
+export const CreateOrder=(order)=>{
+  const user=UserAuthenticated();
+  return _post(`buyer/${user}/order`,order)
   .then(response => {
       return response;
   })
-  return OrderData
 }

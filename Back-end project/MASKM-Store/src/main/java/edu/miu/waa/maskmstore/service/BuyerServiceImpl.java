@@ -1,9 +1,11 @@
 package edu.miu.waa.maskmstore.service;
 
 import edu.miu.waa.maskmstore.domain.*;
-import edu.miu.waa.maskmstore.repository.BuyerRepository;
-import edu.miu.waa.maskmstore.repository.OrderRepository;
-import edu.miu.waa.maskmstore.repository.SellerRepository;
+import edu.miu.waa.maskmstore.domain.stock.Product;
+import edu.miu.waa.maskmstore.dto.LineItemDTO;
+import edu.miu.waa.maskmstore.dto.OrderDTO;
+import edu.miu.waa.maskmstore.repository.*;
+import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Pageable;
@@ -29,11 +31,15 @@ public class BuyerServiceImpl implements BuyerService{
     OrderRepository orderRepository;
     @Autowired
     OrderService orderService;
+    @Autowired
+    ProductsService productService;
+    @Autowired
+    AddressRepository addressRepository;
+    @Autowired
+    CreditCardRepository creditCardRepository;
 
     @Autowired
     private JavaMailSender mailSender;
-    @Autowired
-    Configuration fmConfiguration;
 
 
 
@@ -105,12 +111,28 @@ public class BuyerServiceImpl implements BuyerService{
     }
     //Correct One
     @Override
-    public void addOrder(Order order, String userName) {
+    public void addOrder(OrderDTO orderDTO, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
+        Order order=new Order();
         order.setBuyer(buyer);
+       // List<LineItem> lineI=new ArrayList<LineItem>();
+        order.setLineItems(new ArrayList<LineItem>());
 
+        for (int i=0;i<orderDTO.getLineItemsDTO().size();i++)
+        {
+            LineItem li=new LineItem();
+            LineItemDTO lDTO =new LineItemDTO();
+            lDTO=orderDTO.getLineItemsDTO().get(i);
+            Product product =  productService.getProductById(lDTO.getProductId()).get();
+            li.setPrice(product.getPrice());
+            li.setQuantity(lDTO.getQuantity());
+            li.setProduct(product);
+           // lineI.add(lineI);
+            order.getLineItems().add(li);
+        }
+       // order.setLineItems(lineI);
 
-        order.setPrice(order.getLineItems().stream().map(l->l.getPrice()).reduce((double)0,(a,b)->a+b));
+        order.setPrice(order.getLineItems().stream().map(l->l.getPrice()*l.getQuantity()).reduce((double)0,(a,b)->a+b));
         orderRepository.save(order);
 
         List<Order> orders = orderRepository.findAllOrdersByBuyerId(buyer.getBId());
@@ -118,9 +140,9 @@ public class BuyerServiceImpl implements BuyerService{
         buyer.setOrders(orders);
         buyerRepository.save(buyer);
 
-        String ordersText = orders.stream().collect(Collectors.toList()).toString();
+        String orderText = order.toString();
 
-        sendEmail(buyer.getUser().getEmail(),"MASKM STORE : Order Details",ordersText);
+        sendEmail(buyer.getUser().getEmail(),"MASKM STORE : Order Details",orderText);
 }
 
     private void sendEmail(String emailUser,String subject,String text) {
@@ -141,7 +163,7 @@ public class BuyerServiceImpl implements BuyerService{
     @Override
     public boolean deleteOrder(String userName, long id) {
         Order order=orderService.getOrderById(id);
-        if(order.getOrderStatus()!=OrderStatus.Shipped||order.getOrderStatus()!=OrderStatus.Delivered)
+        if(order.getOrderStatus()!=OrderStatus.Shipped.getOrderStatus()||order.getOrderStatus()!=OrderStatus.Delivered.getOrderStatus())
         {
             Buyer buyer = buyerRepository.findBuyerByUsername(userName);
             buyer.getOrders().remove(order);
@@ -177,6 +199,86 @@ public class BuyerServiceImpl implements BuyerService{
     }
 
     @Override
+    public Address addBillingAddress(String userName, Address address) {
+        Buyer old=buyerRepository.findBuyerByUsername(userName);
+        old.setBillingAddress(address);
+        buyerRepository.save(old);
+        return address;
+    }
+
+    @Override
+    public Address editBillingAddress(long address_id, Address address) {
+        Address oldAddress=addressRepository.findById(address_id).orElse(null);
+        if (oldAddress!=null){
+            if (address.getCountry()!=null)
+                oldAddress.setCountry(address.getCountry());
+            if (address.getCity()!=null)
+                oldAddress.setCity(address.getCity());
+            if (address.getState()!=null)
+                oldAddress.setState(address.getState());
+            if (address.getAddressLine()!=null)
+                oldAddress.setAddressLine(address.getAddressLine());
+            if (address.getZipCode()!=0)
+                oldAddress.setZipCode(address.getZipCode());
+            return addressRepository.save(oldAddress);
+        }
+
+        else return null;
+    }
+
+    @Override
+    public Address addShippingAddress(String userName, Address address) {
+        Buyer old=buyerRepository.findBuyerByUsername(userName);
+        old.setShippingAddress(address);
+        buyerRepository.save(old);
+        return address;
+    }
+
+    @Override
+    public Address editShippingAddress(long address_id, Address address) {
+        Address oldAddress=addressRepository.findById(address_id).orElse(null);
+        if (oldAddress!=null){
+            if (address.getCountry()!=null)
+                oldAddress.setCountry(address.getCountry());
+            if (address.getCity()!=null)
+                oldAddress.setCity(address.getCity());
+            if (address.getState()!=null)
+                oldAddress.setState(address.getState());
+            if (address.getAddressLine()!=null)
+                oldAddress.setAddressLine(address.getAddressLine());
+            if (address.getZipCode()!=0)
+                oldAddress.setZipCode(address.getZipCode());
+            return addressRepository.save(oldAddress);
+        }
+        return null;
+
+    }
+
+    @Override
+    public CreditCard addCreditCard(String userName, CreditCard creditCard) {
+        Buyer old=buyerRepository.findBuyerByUsername(userName);
+        old.setCreditCard(creditCard);
+        buyerRepository.save(old);
+        return creditCard;
+    }
+
+    @Override
+    public CreditCard editCreditCard(long creditCard_id, CreditCard creditCard) {
+        CreditCard oldCard=creditCardRepository.findById(creditCard_id).orElse(null);
+        if (oldCard!=null){
+            if (creditCard.getCardNumber()!=null)
+                oldCard.setCardNumber(creditCard.getCardNumber());
+            if (creditCard.getCvv()!=null)
+                oldCard.setCvv(creditCard.getCvv());
+            if (creditCard.getExpDate()!=null)
+                oldCard.setExpDate(creditCard.getExpDate());
+            creditCardRepository.save(oldCard);
+        }
+        return null;
+    }
+
+
+    @Override
     public Order getOrderByBuyerUserNameOrderId(long id, String userName) {
         Buyer buyer=buyerRepository.findBuyerByUsername(userName);
         return orderRepository.findById(buyerRepository.getOrderByBuyerUserNameOrderId( id,  buyer.getBId())).get();
@@ -192,9 +294,9 @@ public class BuyerServiceImpl implements BuyerService{
         Buyer buyer =buyerRepository.findBuyerByUsername(userName);
         List<Long> lOID=buyer.getOrders().stream().map(o->o.getId()).collect(Collectors.toList());
         Order order=orderRepository.findOrderById(oId);
-        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned) {
+        if( lOID.contains(oId) && order.getOrderStatus()!=OrderStatus.Returned.getOrderStatus()) {
 
-            order.setOrderStatus(OrderStatus.Returned);
+            order.setOrderStatus(OrderStatus.Returned.getOrderStatus());
             buyer.setPoints((int) (buyer.getPoints() - order.getPrice()));
             orderRepository.save(order);
             buyerRepository.save(buyer);

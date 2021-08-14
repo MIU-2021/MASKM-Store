@@ -1,6 +1,7 @@
 package edu.miu.waa.maskmstore.controller;
 
 import edu.miu.waa.maskmstore.domain.*;
+import edu.miu.waa.maskmstore.dto.OrderDTO;
 import edu.miu.waa.maskmstore.service.BuyerService;
 import edu.miu.waa.maskmstore.service.OrderService;
 import edu.miu.waa.maskmstore.service.SellerService;
@@ -81,9 +82,9 @@ public class BuyerController {
     }
 
     @PostMapping("/{userName}/order")
-    public void addOrder(@RequestBody Order order, @PathVariable String userName){
+    public void addOrder(@RequestBody OrderDTO orderDTO, @PathVariable String userName){
 
-        buyerService.addOrder(order,userName);
+        buyerService.addOrder(orderDTO,userName);
 
     }
 
@@ -115,5 +116,28 @@ public class BuyerController {
     }
 
 
-
+    @PostMapping("/profile/{seller_UserName}/billing")
+    public Address addBillingAddress(@PathVariable String seller_UserName,@RequestBody Address address){
+        return buyerService.addBillingAddress(seller_UserName,address);
+    }
+    @PutMapping("/profile/{seller_UserName}/billing/{address_id}")
+    public Address editBillingAddress(@PathVariable String seller_UserName, @RequestBody Address address, @PathVariable long address_id){
+        return buyerService.editBillingAddress(address_id,address);
+    }
+    @PostMapping("/profile/{seller_UserName}/shipping")
+    public Address addSippingAddress(@PathVariable String seller_UserName,@RequestBody Address address){
+        return buyerService.addShippingAddress(seller_UserName,address);
+    }
+    @PutMapping("/profile/{seller_UserName}/shipping/{address_id}")
+    public Address editSippingAddress(@PathVariable String seller_UserName, @RequestBody Address address, @PathVariable long address_id){
+        return buyerService.editShippingAddress(address_id,address);
+    }
+    @PostMapping("/profile/{seller_UserName}/card")
+    public CreditCard addCardAddress(@PathVariable String seller_UserName,@RequestBody CreditCard creditCard){
+        return buyerService.addCreditCard(seller_UserName,creditCard);
+    }
+    @PutMapping("/profile/{seller_UserName}/card/{card_id}")
+    public CreditCard editCardAddress(@PathVariable String seller_UserName, @RequestBody CreditCard creditCard, @PathVariable long card_id){
+        return buyerService.editCreditCard(card_id,creditCard);
+    }
 }

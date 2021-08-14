@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import {
@@ -8,6 +8,7 @@ import {
   Media,
   Card,
   CardBody,
+  Input,
   NavItem,
   NavLink,
   TabContent,
@@ -18,10 +19,12 @@ import {
   ModalFooter,
   ModalHeader,
   Button,
+  Label,
 } from "reactstrap";
 import seventeen from "../../../../public/assets/images/logos/17.png";
 import order from "../../../../public/assets/images/icon/dashboard/order.png";
 import sale from "../../../../public/assets/images/icon/dashboard/sale.png";
+import homework from "../../../../public/assets/images/icon/dashboard/homework.png";
 import one from "../../../../public/assets/images/dashboard/product/1.jpg";
 import nine from "../../../../public/assets/images/dashboard/product/9.jpg";
 import thirtyfour from "../../../../public/assets/images/pro3/34.jpg";
@@ -30,30 +33,34 @@ import pro27 from "../../../../public/assets/images/pro3/27.jpg";
 import pro36 from "../../../../public/assets/images/pro3/36.jpg";
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+import { apexPieChart, lineChart1 } from "../../../../data/vendorData";
 import AddProduct from "../../../../components/common/AddProduct";
+import {Form, FormGroup, FormText} from "react-bootstrap";
 import EditProfile from "../../../../components/common/EditProfile";
-import {ApproveSeller, getAllSellers} from "../../../../services/Seller.Services";
-import {ApproveReview, getAllReviewsForAdmin} from "../../../../services/Reviews.Services";
+import EditProduct from "../../../../components/common/EditProduct";
 
 const SummaryData = [
   {
-    id: 1,
     img: order,
-    title: "0",
-    desc: "Pending Sellers",
+    title: "25",
+    desc: "Total Products",
   },
   {
-    id: 2,
     img: sale,
-    title: "0",
-    desc: "Pending Reviews",
+    title: "12500",
+    desc: "Total Sales",
   },
-
+  {
+    img: homework,
+    title: "50",
+    desc: "Order Pending",
+  },
 ];
 
 const Summary = ({ img, title, desc }) => {
   return (
-    <Col md="6">
+    <Col md="4">
       <div className="counter-box">
         <Media src={img} className="img-fluid" />
         <div>
@@ -116,7 +123,7 @@ const ProductData = [
   },
 ];
 
-const TrendingProduct = ({ img, productName, price }) => {
+const TrendingProduct = ({ img, productName, price, sales }) => {
   return (
     <tr>
       <th scope="row">
@@ -124,6 +131,7 @@ const TrendingProduct = ({ img, productName, price }) => {
       </th>
       <td>{productName}</td>
       <td>{price}</td>
+      <td>{sales}</td>
     </tr>
   );
 };
@@ -197,7 +205,18 @@ const RecentOrder = ({ id, productDetails, status }) => {
   );
 };
 
-
+const AllOrder = ({ id, productDetails, status, price }) => {
+  return (
+    <tr>
+      <th scope="row">{id}</th>
+      <td>{productDetails}</td>
+      <td>{status}</td>
+      <td>{price}</td>
+      <td><i className="fa fa-check-circle-o mr-1" aria-hidden="true"></i><i className="fa fa-window-close-o ml-1"
+                                                                              aria-hidden="true"></i></td>
+    </tr>
+  );
+};
 
 const ProfileData = [
   { title: "Company Name", detail: "Fashion Store" },
@@ -227,75 +246,17 @@ const ProfileDetail = ({ title, detail }) => {
 };
 
 const Dashboard = () => {
-  const [pendingSellers,SetPendingSellers] = useState([]);
-  const [pendingReviews,SetPendingReviews] = useState([]);
-
-  function getAllSellersHandler(){
-    getAllSellers().then(response => {
-      SetPendingSellers(response);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
-  function getAllReviewsHandler(){
-    getAllReviewsForAdmin().then(response => {
-      SetPendingReviews(response);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
-  useEffect(getAllSellersHandler, []);
-  useEffect(getAllReviewsHandler, []);
-
-  function getTotalPendingSellers(){
-    return pendingSellers?.filter(r => r.status === "Pending").length;
-  }
-
-  function getTotalPendingReviews(){
-    return pendingReviews?.filter(r => r.status === "Pending").length;
-  }
-
-  function ApproveSellerHandler(username){
-      ApproveSeller(username).then(response => {
-        getAllSellersHandler();
-      }).catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function ApproveReviewHandler(id){
-    ApproveReview(id).then(response => {
-      getAllReviewsHandler();
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
-
-  const AllProduct = ({ img, sellerName, username}) => {
+  const AllProduct = ({ img, productName, category, price, stock, sales }) => {
     return (
         <tr>
           <th scope="row">
             <Media src={img} className="blur-up lazyloaded" />
           </th>
-          <td>{sellerName}</td>
+          <td>{productName}</td>
           <td>
-            <i  onClick={() => {ApproveSellerHandler(username);}} className="fa fa-check-circle-o mr-1" aria-hidden="true"></i>
-
+            <i  onClick={() => {setEditProductId(5);}} className="fa fa-check-circle-o mr-1" aria-hidden="true"></i>
+            <i className="fa fa-window-close-o ml-1" aria-hidden="true"></i>
           </td>
-        </tr>
-    );
-  };
-  const AllOrder = ({ id, productDetails, status, price }) => {
-    return (
-        <tr>
-          <th scope="row">{id}</th>
-          <td>{productDetails}</td>
-          <td>{status}</td>
-          <td>{price}</td>
-          <td><i className="fa fa-check-circle-o mr-1" aria-hidden="true" onClick={() => ApproveReviewHandler(id)}></i></td>
         </tr>
     );
   };
@@ -386,7 +347,7 @@ const Dashboard = () => {
                           <Summary
                             key={i}
                             img={data.img}
-                            title={data.id == 1 ? getTotalPendingSellers() : getTotalPendingReviews() }
+                            title={data.title}
                             desc={data.desc}
                           />
                         );
@@ -394,30 +355,58 @@ const Dashboard = () => {
                     </Row>
                   </div>
                   <Row>
+                    <Col md="7">
+                      <Card>
+                        <CardBody>
+                          <div id="chart">
+                            <Chart
+                              options={lineChart1.options}
+                              series={lineChart1.series}
+                              height="170"
+                              type="area"
+                            />
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                    <Col md="5">
+                      <Card>
+                        <CardBody>
+                          <div id="chart-order">
+                            <Chart
+                              options={apexPieChart.options}
+                              series={apexPieChart.series}
+                              type="donut"
+                              width={380}
+                            />
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                  <Row>
                     <Col lg="6">
                       <Card className="dashboard-table">
                         <CardBody>
-                          <h3>Pending Sellers</h3>
+                          <h3>trending products</h3>
                           <table className="table mb-0 table-responsive-sm">
                             <thead>
                               <tr>
                                 <th scope="col">image</th>
-                                <th scope="col">username</th>
-                                <th scope="col">email</th>
-
+                                <th scope="col">product name</th>
+                                <th scope="col">price</th>
+                                <th scope="col">sales</th>
                               </tr>
                             </thead>
                             <tbody>
-                            {/*//?.filter(s => s.status === "Pending")*/}
-                              {pendingSellers?.filter(s => s.status === "Pending")
-                                  .slice(0, 3).map((data, i) => {
+                              {ProductData.slice(0, 3).map((data, i) => {
                                 return (
                                   <TrendingProduct
                                     key={i}
-                                    img={data.user.image}
-                                    productName={data.user.username}
-                                    price={data.user.email}
-
+                                    img={data.img}
+                                    productName={data.productName}
+                                    price={data.price}
+                                    sales={data.sales}
                                   />
                                 );
                               })}
@@ -429,25 +418,24 @@ const Dashboard = () => {
                     <Col lg="6">
                       <Card className="dashboard-table">
                         <CardBody>
-                          <h3>Pending Reviews</h3>
+                          <h3>recent orders</h3>
                           <table className="table mb-0">
                             <thead>
                               <tr>
-                                <th scope="col">review id</th>
-                                <th scope="col">review text</th>
-                                <th scope="col">stars</th>
+                                <th scope="col">order id</th>
+                                <th scope="col">product details</th>
+                                <th scope="col">status</th>
 
                               </tr>
                             </thead>
                             <tbody>
-                              {pendingReviews?.filter(r => r.status === "Pending")
-                                  .slice(0, 5).map((data, i) => {
+                              {OrderData.slice(0, 5).map((data, i) => {
                                 return (
                                   <RecentOrder
                                     key={i}
                                     id={data.id}
-                                    productDetails={data.comment}
-                                    status={data.stars}
+                                    productDetails={data.productDetails}
+                                    status={data.status}
                                   />
                                 );
                               })}
@@ -475,14 +463,16 @@ const Dashboard = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {pendingSellers?.filter(s => s.status === "Pending")
-                                  .map((data, i) => {
+                              {ProductData.map((data, i) => {
                                 return (
                                   <AllProduct
-                                      key={i}
-                                      img={data.user.image}
-                                      sellerName={data.user.username}
-                                      username={data.user.username}
+                                    key={i}
+                                    img={data.img}
+                                    productName={data.productName}
+                                    category={data.category}
+                                    stock={data.stock}
+                                    price={data.price}
+                                    sales={data.sales}
                                   />
                                 );
                               })}
@@ -511,14 +501,13 @@ const Dashboard = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {pendingReviews?.filter(s => s.status === "Pending")
-                                  .map((data, i) => {
+                              {OrderData.map((data, i) => {
                                 return (
                                   <AllOrder
                                     key={i}
                                     id={data.id}
-                                    productDetails={data.comment}
-                                    status={data.stars}
+                                    productDetails={data.productDetails}
+                                    status={data.status}
 
                                   />
                                 );
@@ -622,7 +611,7 @@ const Dashboard = () => {
                     <Col sm="12">
                       <Card className="mt-0">
                         <CardBody>
-
+                          <EditProduct EditProductId={EditProductId} />
                         </CardBody>
                       </Card>
                     </Col>

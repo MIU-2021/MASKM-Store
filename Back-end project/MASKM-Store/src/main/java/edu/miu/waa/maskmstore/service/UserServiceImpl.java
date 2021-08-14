@@ -1,10 +1,8 @@
 package edu.miu.waa.maskmstore.service;
 
-import edu.miu.waa.maskmstore.domain.Buyer;
-import edu.miu.waa.maskmstore.domain.Role;
-import edu.miu.waa.maskmstore.domain.Seller;
-import edu.miu.waa.maskmstore.domain.User;
+import edu.miu.waa.maskmstore.domain.*;
 import edu.miu.waa.maskmstore.dto.UserRegisterDTO;
+import edu.miu.waa.maskmstore.repository.AdminRepository;
 import edu.miu.waa.maskmstore.repository.BuyerRepository;
 import edu.miu.waa.maskmstore.repository.SellerRepository;
 import edu.miu.waa.maskmstore.repository.UserRepository;
@@ -22,6 +20,8 @@ public class UserServiceImpl implements UserService{
     SellerRepository sellerRepository;
     @Autowired
     BuyerRepository buyerRepository;
+    @Autowired
+    AdminRepository adminRepository;
 
     public Optional<User> findUserByUserName(String userName){
         return userRepository.findUserByUsername(userName);
@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService{
     public void addBuyer(Buyer buyer) {
 //        buyer.getUser().setR
         buyerRepository.save(buyer);
+    }
+    @Override
+    public void addAdmin(Admin admin) {
+//        buyer.getUser().setR
+        adminRepository.save(admin);
     }
     @Override
     public boolean createUser(UserRegisterDTO userRegisterDTO) {
@@ -68,6 +73,10 @@ public class UserServiceImpl implements UserService{
             Seller seller=new Seller();
             seller.setUser(user);
             addSeller(seller);
+        }else if(userRegisterDTO.getRole().equals("ADMIN")){
+            Admin admin=new Admin();
+            admin.setUser(user);
+            addAdmin(admin);
         }
        userRepository.save(user);
         return true;

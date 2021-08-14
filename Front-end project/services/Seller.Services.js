@@ -48,20 +48,3 @@ export const getSellerProfileData = (sellerusername) => {
     // .catch(err => { return new (err) });
 };
 
-export const getAllSellers = () => {
-    return _get(`seller`)
-        .then(response => {
-            return response;
-        })
-    // .catch(err => { return new (err) });
-};
-
-export const ApproveSeller = (username) => {
-    return _get(`admin/seller/${username}?approved=true`)
-        .then(response => {
-            return response;
-        })
-    // .catch(err => { return new (err) });
-};
-
-
