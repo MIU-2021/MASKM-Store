@@ -17,8 +17,8 @@ These instructions will get you a copy of the project up and running on your loc
 2 Project Videos
 
 ```sh
-Back-end-video - https://www.youtube.com/watch?v=CsZP2unQpR0
-Front-end-video - https://www.youtube.com/watch?v=-8oWSkZQqQI
+Back-end-video - (https://www.youtube.com/watch?v=CsZP2unQpR0)
+Front-end-video - (https://www.youtube.com/watch?v=-8oWSkZQqQI)
 ```
 3 Project ScreenShots
 
@@ -39,29 +39,29 @@ Seller Product
 4.1 Node
 
 You can Download from this link : 
-https://nodejs.org/en/download/
+(https://nodejs.org/en/download/)
 
 4.2 Java JDK
-https://www.oracle.com/java/technologies/javase-downloads.html
+(https://www.oracle.com/java/technologies/javase-downloads.html)
 
 4.3 Integrated development environment I suggest intellij or Eclipse for backend and WebStorm Or Visual Studio Code For the front-end . 
 
 Download intellij:
-https://www.jetbrains.com/idea/download/
+(https://www.jetbrains.com/idea/download/)
 
 Download Eclipse:
-https://www.eclipse.org/downloads
+(https://www.eclipse.org/downloads)
 
 Download Webstorm
-https://www.jetbrains.com/webstorm/download/#section=windows
+(https://www.jetbrains.com/webstorm/download/#section=windows)
 
 Download Visual studio code:
-https://code.visualstudio.com/download
+(https://code.visualstudio.com/download)
 
 4.4 Database Management i suggest MySql . 
 
 Download MySql:
-https://www.mysql.com/downloads/
+(https://www.mysql.com/downloads/)
 
 ```
 
@@ -125,9 +125,9 @@ Wich make this picture is so expensive 😊 😊 However we were very happy to f
 
 8 Project Github
 
-Back-End :https://github.com/MIU-2021/MASKM-Store/tree/main/Back-end%20project
+Back-End :(https://github.com/MIU-2021/MASKM-Store/tree/main/Back-end%20project)
 
-Front-End :https://github.com/MIU-2021/MASKM-Store/tree/main/Front-end%20project
+Front-End :(https://github.com/MIU-2021/MASKM-Store/tree/main/Front-end%20project)
 
 ```sh
 Copyrights Maharishi international university ©2021 All Rights Reserved
