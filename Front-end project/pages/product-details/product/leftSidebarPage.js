@@ -163,7 +163,8 @@ const LeftSidebarPage = ({ pathId }) => {
                   </div>
                 )}
               </Container>
-              <ProductTab />
+
+              <ProductTab productid={data.id}/>
             </Col>
           </Row>
         </Container>

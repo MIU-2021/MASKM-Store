@@ -2,8 +2,11 @@ import {postReviewForproduct} from "../../../services/Reviews.Services";
 
 let selectedStar=0;
 let boxtext="";
+let productid = 0;
 class ReviewForm extends React.Component {
+
     constructor(props) {
+        {console.log()}
         super(props);
         this.state = {
             label: null,
@@ -12,9 +15,10 @@ class ReviewForm extends React.Component {
         };
     }
 
+
     handleClick() {
         let datas1 = {comment: boxtext, stars: selectedStar};
-        postReviewForproduct(datas1 , 2).then(response => {
+        postReviewForproduct(datas1 , productid  ).then(response => {
             //console.log("review return",response);
             //setData(response);
             //setLoading(false);
@@ -38,6 +42,7 @@ class ReviewForm extends React.Component {
     }
 
     renderStars() {
+        productid = this.props.productid;
         return ['Terrible!','Bad...','Good.','Great...','Excelent!'].map( (item, index) => {
                 return this.renderStar(item, index + 1);
             }
@@ -48,6 +53,7 @@ class ReviewForm extends React.Component {
     render() {
         return (
             <div class=" reviewboxsubmit main-wrapper">
+
                 {this.renderStars()}
                 <form>
                     <label class="review-label" for="review">

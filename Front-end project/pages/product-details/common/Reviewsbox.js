@@ -3,10 +3,16 @@ import { fecthAllCategories } from "../../../services/Categories.Services";
 import { fecthAllReviewsByProduct } from "../../../services/Reviews.Services";
 import Stars from "./stars";
 
-const Reviewsbox = () => {
+const Reviewsbox = (props) => {
     const [data, setData] = useState([]);
+
     useEffect(() => {
-        fecthAllReviewsByProduct().then(response => {
+
+    }, []);
+
+    useEffect(() => {
+        console.log("pid" , props.productid);
+        fecthAllReviewsByProduct(props.productid).then(response => {
             console.log("reviews", response);
             setData(response);
             //setLoading(false);
@@ -14,7 +20,7 @@ const Reviewsbox = () => {
         }).catch((error) => {
             console.log(error);
         });
-    }, []);
+    }, [props.productid]);
     return (
         <div>
             {data ?

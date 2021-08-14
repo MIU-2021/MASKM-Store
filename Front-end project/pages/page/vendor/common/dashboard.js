@@ -470,7 +470,7 @@ const Dashboard = () => {
                               </tr>
                               </thead>
                               <tbody>
-                              {Orders.slice(0, 5).map((data, i) => {
+                              {Orders?.slice(0, 5).map((data, i) => {
                                 return (
                                     <RecentOrder
                                         key={i}

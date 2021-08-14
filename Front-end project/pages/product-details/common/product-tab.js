@@ -12,7 +12,7 @@ import {
 import ReviewForm from "./reviewform";
 import Reviewsbox from "./Reviewsbox";
 
-const ProductTab = () => {
+const ProductTab = (props) => {
   const [activeTab, setActiveTab] = useState("1");
 
   return (
@@ -44,13 +44,13 @@ const ProductTab = () => {
               <TabContent activeTab={activeTab} className="nav-material">
                 <TabPane tabId="1">
                   <p className="mb-0 pb-0">
-                    <Reviewsbox />
+                    <Reviewsbox productid={props.productid} />
                   </p>
                 </TabPane>
 
                 <TabPane tabId="4">
                   <p className="mb-0 pb-0">
-                    <ReviewForm />
+                    <ReviewForm productid={props.productid} />
                   </p>
                 </TabPane>
               </TabContent>
