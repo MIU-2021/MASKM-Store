@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"Iphone\",\r\n    \"description\":\"Iphone 6s Used by Apple\",\r\n    \"price\":1200,\r\n    \"image\":\"https://www.notebookcheck.net/uploads/tx_nbc2/4_zu_3_teaser_05.jpg\"\r\n}",
+							"raw": "{\r\n    \"title\":\"Men Casual\",\r\n    \"description\":\"Mens Clothes That Any Guy Would Love (1668)\",\r\n    \"price\":600,\r\n    \"image\":\"https://i.pinimg.com/originals/1c/e2/f5/1ce2f52461bc381f09edea1242f16f14.jpg\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -210,7 +210,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWx0b24iLCJyb2xlIjoiU0VMTEVSIiwiZXhwIjoxNjI4OTE0Mjc5LCJpYXQiOjE2Mjg4MjQyNzl9.6HNK4Qlta6CeOSfYlP8UuEH2OEn6hvOO83RXOI29oi4",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWx0b24iLCJyb2xlIjoiU0VMTEVSIiwiZXhwIjoxNjI5MDEwNzQzLCJpYXQiOjE2Mjg5MjA3NDN9.KQ24bRf7OFxRusUGGMYaOm-gGOneJlEi1NSKffYy1a8",
 									"type": "string"
 								}
 							]
@@ -219,7 +219,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"AirPods\",\r\n    \"description\":\"New by Apple\",\r\n    \"price\":150,\r\n    \"image\":\"https://media.wired.com/photos/5c9d5e938c79ea63995ca04d/1:1/w_1800,h_1800,c_limit/Apple-AirPods-worlds-most-popular-wireless-headphones_03202019.jpg\"\r\n}",
+							"raw": "{\r\n    \"title\":\"Samsung Note 10 \",\r\n    \"description\":\"New by Samsung\",\r\n    \"price\":1800,\r\n    \"image\":\"https://www.notebookcheck.net/uploads/tx_nbc2/SamsungGalaxyS20Ultra__1_.JPG\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -306,7 +306,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:2021/seller/milton/products/19",
+							"raw": "localhost:2021/seller/milton/products/5",
 							"host": [
 								"localhost"
 							],
@@ -315,7 +315,7 @@
 								"seller",
 								"milton",
 								"products",
-								"19"
+								"5"
 							]
 						}
 					},
@@ -343,7 +343,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"comment\":\"Like You Duck\",\r\n    \"stars\":5\r\n    \r\n}",
+							"raw": "{\r\n    \"comment\":\"very Good\",\r\n    \"stars\":3.5\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -371,14 +371,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:2021/products/5/reviews/",
+							"raw": "localhost:2021/products/19/reviews/",
 							"host": [
 								"localhost"
 							],
 							"port": "2021",
 							"path": [
 								"products",
-								"5",
+								"19",
 								"reviews",
 								""
 							]
@@ -432,7 +432,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyODk2NjMyMywiaWF0IjoxNjI4ODc2MzIzfQ.7z3InB50U2aKTKjAQmozZ6FmCM0DGHtXyux34fmRi44",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJpbSIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyODk5MzY1MCwiaWF0IjoxNjI4OTAzNjUwfQ.P8jjqMc7p8x5uffz_JinMs0DuJ-FHyp9WxAqycE1tY8",
 									"type": "string"
 								}
 							]
@@ -528,7 +528,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTYyODkxMDM5NywiaWF0IjoxNjI4ODIwMzk3fQ.dB2sJYC1GeQFitrxVfqJ35LV33xtE1UAHLGYXNBe1aU",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJpbSIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyODk5MzI3OCwiaWF0IjoxNjI4OTAzMjc4fQ.vYAcmdLRbYtjPoec_63DDEiMxMxBOstWf1r21X_QnAw",
 									"type": "string"
 								}
 							]
@@ -537,7 +537,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Electronices\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Health\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -771,6 +771,16 @@
 				{
 					"name": "GetAllSeler",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJpbSIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyOTAxMTQ0OCwiaWF0IjoxNjI4OTIxNDQ4fQ.2nEtFU_ESB--58jC1DU2kYd1l184XNJqA6pVpqn3Ods",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -794,7 +804,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyODk2NjMyMywiaWF0IjoxNjI4ODc2MzIzfQ.7z3InB50U2aKTKjAQmozZ6FmCM0DGHtXyux34fmRi44",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJpbSIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTYyOTAxMTQ0OCwiaWF0IjoxNjI4OTIxNDQ4fQ.2nEtFU_ESB--58jC1DU2kYd1l184XNJqA6pVpqn3Ods",
 									"type": "string"
 								}
 							]
@@ -827,7 +837,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "localhost:2021/products/19/seller",
+							"host": [
+								"localhost"
+							],
+							"port": "2021",
+							"path": [
+								"products",
+								"19",
+								"seller"
+							]
+						}
 					},
 					"response": []
 				}
