@@ -1,4 +1,5 @@
 import {_delete, _get, _post} from "./api.services";
+import {UserAuthenticated} from "./User.Services";
 
 export const fetchProductsBySellerUsername = (username) => {
     return _get('products?userName='+username)
