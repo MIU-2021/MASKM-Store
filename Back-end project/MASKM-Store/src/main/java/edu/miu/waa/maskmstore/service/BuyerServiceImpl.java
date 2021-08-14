@@ -4,9 +4,7 @@ import edu.miu.waa.maskmstore.domain.*;
 import edu.miu.waa.maskmstore.domain.stock.Product;
 import edu.miu.waa.maskmstore.dto.LineItemDTO;
 import edu.miu.waa.maskmstore.dto.OrderDTO;
-import edu.miu.waa.maskmstore.repository.BuyerRepository;
-import edu.miu.waa.maskmstore.repository.OrderRepository;
-import edu.miu.waa.maskmstore.repository.SellerRepository;
+import edu.miu.waa.maskmstore.repository.*;
 import edu.miu.waa.maskmstore.service.products.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -35,6 +33,10 @@ public class BuyerServiceImpl implements BuyerService{
     OrderService orderService;
     @Autowired
     ProductsService productService;
+    @Autowired
+    AddressRepository addressRepository;
+    @Autowired
+    CreditCardRepository creditCardRepository;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -138,9 +140,9 @@ public class BuyerServiceImpl implements BuyerService{
         buyer.setOrders(orders);
         buyerRepository.save(buyer);
 
-        String ordersText = orders.stream().collect(Collectors.toList()).toString();
+        String orderText = order.toString();
 
-        sendEmail(buyer.getUser().getEmail(),"MASKM STORE : Order Details",ordersText);
+        sendEmail(buyer.getUser().getEmail(),"MASKM STORE : Order Details",orderText);
 }
 
     private void sendEmail(String emailUser,String subject,String text) {
@@ -195,6 +197,86 @@ public class BuyerServiceImpl implements BuyerService{
             return null;
         }
     }
+
+    @Override
+    public Address addBillingAddress(String userName, Address address) {
+        Buyer old=buyerRepository.findBuyerByUsername(userName);
+        old.setBillingAddress(address);
+        buyerRepository.save(old);
+        return address;
+    }
+
+    @Override
+    public Address editBillingAddress(long address_id, Address address) {
+        Address oldAddress=addressRepository.findById(address_id).orElse(null);
+        if (oldAddress!=null){
+            if (address.getCountry()!=null)
+                oldAddress.setCountry(address.getCountry());
+            if (address.getCity()!=null)
+                oldAddress.setCity(address.getCity());
+            if (address.getState()!=null)
+                oldAddress.setState(address.getState());
+            if (address.getAddressLine()!=null)
+                oldAddress.setAddressLine(address.getAddressLine());
+            if (address.getZipCode()!=0)
+                oldAddress.setZipCode(address.getZipCode());
+            return addressRepository.save(oldAddress);
+        }
+
+        else return null;
+    }
+
+    @Override
+    public Address addShippingAddress(String userName, Address address) {
+        Buyer old=buyerRepository.findBuyerByUsername(userName);
+        old.setShippingAddress(address);
+        buyerRepository.save(old);
+        return address;
+    }
+
+    @Override
+    public Address editShippingAddress(long address_id, Address address) {
+        Address oldAddress=addressRepository.findById(address_id).orElse(null);
+        if (oldAddress!=null){
+            if (address.getCountry()!=null)
+                oldAddress.setCountry(address.getCountry());
+            if (address.getCity()!=null)
+                oldAddress.setCity(address.getCity());
+            if (address.getState()!=null)
+                oldAddress.setState(address.getState());
+            if (address.getAddressLine()!=null)
+                oldAddress.setAddressLine(address.getAddressLine());
+            if (address.getZipCode()!=0)
+                oldAddress.setZipCode(address.getZipCode());
+            return addressRepository.save(oldAddress);
+        }
+        return null;
+
+    }
+
+    @Override
+    public CreditCard addCreditCard(String userName, CreditCard creditCard) {
+        Buyer old=buyerRepository.findBuyerByUsername(userName);
+        old.setCreditCard(creditCard);
+        buyerRepository.save(old);
+        return creditCard;
+    }
+
+    @Override
+    public CreditCard editCreditCard(long creditCard_id, CreditCard creditCard) {
+        CreditCard oldCard=creditCardRepository.findById(creditCard_id).orElse(null);
+        if (oldCard!=null){
+            if (creditCard.getCardNumber()!=null)
+                oldCard.setCardNumber(creditCard.getCardNumber());
+            if (creditCard.getCvv()!=null)
+                oldCard.setCvv(creditCard.getCvv());
+            if (creditCard.getExpDate()!=null)
+                oldCard.setExpDate(creditCard.getExpDate());
+            creditCardRepository.save(oldCard);
+        }
+        return null;
+    }
+
 
     @Override
     public Order getOrderByBuyerUserNameOrderId(long id, String userName) {

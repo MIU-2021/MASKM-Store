@@ -73,8 +73,10 @@ public class Product {
     private Seller seller;
 
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "Product: \n" +
+                "\n\ttitle : " + title + '\n' +
+                "\n\tdescription : " + description + '\n';
+    }
 }

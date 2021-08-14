@@ -611,7 +611,7 @@ const Dashboard = () => {
                     <Col sm="12">
                       <Card className="mt-0">
                         <CardBody>
-                          <EditProduct EditProductId={EditProductId} />
+                          
                         </CardBody>
                       </Card>
                     </Col>

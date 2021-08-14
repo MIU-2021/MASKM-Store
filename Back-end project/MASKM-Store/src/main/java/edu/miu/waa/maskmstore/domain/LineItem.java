@@ -26,4 +26,11 @@ public class LineItem {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Override
+    public String toString() {
+        return "quantity : " + quantity +
+                "\n\t price : " + price +
+                "\n\t product : " + product;
+    }
 }
