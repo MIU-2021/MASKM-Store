@@ -19,3 +19,19 @@ export const postReviewForproduct = (data, productid) => {
         })
     // .catch(err => { return new (err) });
 };
+
+export const getAllReviewsForAdmin = () => {
+    return _get(`admin/reviews`)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};
+
+export const ApproveReview = (reviewid) => {
+    return _get(`admin/reviews/${reviewid}?approved=true`)
+        .then(response => {
+            return response;
+        })
+    // .catch(err => { return new (err) });
+};

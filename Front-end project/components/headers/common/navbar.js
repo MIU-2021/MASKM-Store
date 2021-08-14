@@ -60,7 +60,7 @@ const NavBar = () => {
     setMainMenu([]);
     const currentUrl = location.pathname;
     let childrenCategories = [];
-    cats.forEach(c => {
+    cats?.forEach(c => {
       childrenCategories.push({
         path: '/shop/right_sidebar/',
         query: { catId: c.id },

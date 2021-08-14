@@ -13,10 +13,7 @@ const EditProduct = ({product}) => {
 
     useEffect(() => {
         fecthAllCategories().then(response => {
-            console.log("filer",response);
             setCategories(response);
-            //setLoading(false);
-            //return response.data;
         }).catch((error) => {
             console.log(error);
         });

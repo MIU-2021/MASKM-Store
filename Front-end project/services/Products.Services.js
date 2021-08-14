@@ -38,8 +38,7 @@ export const fecthProductByCategory = (categoryId) => {
 
 
 export const AddProductForSeller = (username ,categoryId , data) => {
-    console.log("p data",data);
-    console.log("ule",username+ " " + categoryId );
+
     return _post('seller/'+username+'?cat='+categoryId,data)
         .then(response => {
             return response;

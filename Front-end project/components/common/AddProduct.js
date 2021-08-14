@@ -1,25 +1,34 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Form, FormGroup, FormText} from "react-bootstrap";
 import {Input, Label} from "reactstrap";
-import {postReviewForproduct} from "../../services/Reviews.Services";
 import {AddProductForSeller} from "../../services/Products.Services";
+import {fecthAllCategories} from "../../services/Categories.Services";
 
-
-const AddProduct = () => {
+const AddProduct = (props) => {
+    const [categories,setCategories] = useState([]);
     const [productName, setproductName] = useState(null);
     const [productPrice, setProductPrice] = useState(null);
     const [productDescription, setProductDescription] = useState(null);
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState(1);
     const [picture, setPicture] = useState(null);
-    function handleClick()  {
 
-        let datas1 = {"title":productName, "description":productDescription, "price":productPrice, "image":"https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg" };
-        console.log(datas1);
-        AddProductForSeller("milton" , 1 , datas1).then(response => {
-            //console.log("product return",response);
-            //setData(response);
-            //setLoading(false);
-            //return response.data;
+    useEffect(() => {
+        fecthAllCategories().then(response => {
+            setCategories(response);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, []);
+
+    function handleClick()  {
+        let datas1 = {"title":productName,
+            "description":productDescription,
+            "price":productPrice,
+            "image":picture
+        };
+
+        AddProductForSeller("milton" , category , datas1).then(response => {
+            props.onProductAdd();
         }).catch((error) => {
             console.log(error);
         });
@@ -42,20 +51,22 @@ const AddProduct = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="category">Category</Label>
-                    <Input type="select" name="category" id="category" onChange={e => setCategory(e.target.value)}>
-                        <option value="1">Footbal</option>
-                        <option value="5">Sport</option>
+                    <Input type="select" name="category" id="category" onChange={e => setCategory(+e.target.value)}>
+                        {categories.map((c, i) => {
+                            return (
+                                <option value={c.id} key={i}>
+                                    {c.name}
+                                </option>
+                            );
+                        })}
                     </Input>
                 </FormGroup>
 
 
                 <FormGroup>
-                    <Label for="productpicture">Picture</Label>
-                    <Input type="file" name="productpicture" id="productpicture" />
-                    <FormText color="muted">
-                        This is some placeholder block-level help text for the above input.
-                        It's a bit lighter and easily wraps to a new line.
-                    </FormText>
+                    <Label for="image">Picture</Label>
+                    <Input type="text" name="image" id="image" onChange={e => setPicture(e.target.value)} />
+
                 </FormGroup>
 
                 <Button onClick={handleClick}>Add Product</Button>

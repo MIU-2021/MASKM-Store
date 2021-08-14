@@ -35,20 +35,16 @@ import dynamic from "next/dynamic";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-import { apexPieChart, lineChart1 } from "../../../../data/vendorData";
+
 import AddProduct from "../../../../components/common/AddProduct";
-import {Form, FormGroup, FormText} from "react-bootstrap";
 import EditProfile from "../../../../components/common/EditProfile";
 import EditProduct from "../../../../components/common/EditProduct";
-import {RoleAuthenticated, UserAuthenticated} from "../../../../services/User.Services";
-import {fecthProductByID} from "../../../../services/Products.Services";
+import {Logout, RoleAuthenticated, UserAuthenticated} from "../../../../services/User.Services";
 import {
   deleteProductBySeller,
   fetchProductsBySellerUsername,
   getSellerOrders, getSellerProfileData, makeOrderCanceled, makeOrderShipped
 } from "../../../../services/Seller.Services";
-
-
 
 const Summary = ({ img, title, desc }) => {
   return (
@@ -115,7 +111,7 @@ const ProductData = [
   },
 ];
 
-const TrendingProduct = ({ img, productName, price, sales }) => {
+const TrendingProduct = ({ img, productName, price, category }) => {
   return (
       <tr>
         <th scope="row">
@@ -123,7 +119,7 @@ const TrendingProduct = ({ img, productName, price, sales }) => {
         </th>
         <td>{productName}</td>
         <td>{price}</td>
-        <td>{sales}</td>
+        <td>{category}</td>
       </tr>
   );
 };
@@ -195,20 +191,6 @@ const RecentOrder = ({ id, productDetails, status }) => {
   );
 };
 
-
-
-const ProfileData = [
-  { title: "Company Name", detail: "Fashion Store" },
-  { title: "Email Address", detail: "Mark.Enderess@Mail.Com" },
-  { title: "Country / Region", detail: "Downers Grove, IL" },
-  { title: "Year Established", detail: "2021" },
-  { title: "Total Employees", detail: "101 - 200 People" },
-  { title: "Category", detail: "Clothing" },
-  { title: "Street Address", detail: "549 Sulphur Springs Road" },
-  { title: "City/State", detail: "Downers Grove, IL" },
-  { title: "Zip", detail: "60515" },
-];
-
 const ProfileDetail = ({ title, detail }) => {
   return (
       <li>
@@ -263,7 +245,7 @@ const Dashboard = () => {
   const [totalProdustcs , setTotalProducts] = useState(0);
   const [Orders , setOrders] = useState([]);
   const [countOrders , setCountOrders] = useState(0);
-  const [userProfileData , setUserProfileData] = useState(0);
+  const [userProfileData , setUserProfileData] = useState();
 
 
   useEffect(() => {
@@ -285,11 +267,6 @@ const Dashboard = () => {
       img: order,
       title: totalProdustcs,
       desc: "Total Products",
-    },
-    {
-      img: sale,
-      title: "12500",
-      desc: "Total Sales",
     },
     {
       img: homework,
@@ -342,6 +319,7 @@ const Dashboard = () => {
 
   function makeOrderCanceledhandler(username , productid) {
     makeOrderCanceled(username,productid).then(response => {
+      getSellerOrdershandler();
     }).catch((error) => {
       console.log(error);
     });
@@ -357,11 +335,21 @@ const Dashboard = () => {
     });
   }
 
+  function productAdded(){
+    fetchProductsForSellerHandler();
+    setActiveTab("2");
+   console.log("on productAdded")
+  }
 
+  const logoutHandle = () => {
+    Logout();
+    setUserName(null);
+    setRole(null);
+  };
 
   useEffect(fetchProductsForSellerHandler, []);
   useEffect(getSellerOrdershandler, []);
-
+  useEffect(GetProfilePic, []);
 
 
   return (
@@ -372,12 +360,11 @@ const Dashboard = () => {
               <div className="dashboard-sidebar">
                 <div className="profile-top">
                   <div className="profile-image">
-                    <Media src={seventeen} alt="" className="img-fluid" />
+                    <Media src={userProfileData?userProfileData.user.image:""} alt="" className="img-fluid" />
                   </div>
                   <div className="profile-detail">
-                    <h5>Fashion Store</h5>
-                    <h6>750 followers | 10 review</h6>
-                    <h6>mark.enderess@mail.com</h6>
+                    <h5>{userProfileData?userProfileData.user.username:""}</h5>
+                    <h6>{userProfileData?userProfileData.user.email:""}</h6>
                   </div>
                 </div>
                 <div className="faq-tab">
@@ -437,36 +424,7 @@ const Dashboard = () => {
                         })}
                       </Row>
                     </div>
-                    <Row>
-                      <Col md="7">
-                        <Card>
-                          <CardBody>
-                            <div id="chart">
-                              <Chart
-                                  options={lineChart1.options}
-                                  series={lineChart1.series}
-                                  height="170"
-                                  type="area"
-                              />
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                      <Col md="5">
-                        <Card>
-                          <CardBody>
-                            <div id="chart-order">
-                              <Chart
-                                  options={apexPieChart.options}
-                                  series={apexPieChart.series}
-                                  type="donut"
-                                  width={380}
-                              />
-                            </div>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
+
                     <Row>
                       <Col lg="6">
                         <Card className="dashboard-table">
@@ -478,18 +436,19 @@ const Dashboard = () => {
                                 <th scope="col">image</th>
                                 <th scope="col">product name</th>
                                 <th scope="col">price</th>
-                                <th scope="col">sales</th>
+                                <th scope="col">Category</th>
                               </tr>
                               </thead>
                               <tbody>
-                              {ProductData.slice(0, 3).map((data, i) => {
+                              {data.slice(0, 3).map((data, i) => {
                                 return (
                                     <TrendingProduct
                                         key={i}
-                                        img={data.img}
-                                        productName={data.productName}
+                                        img={data.image}
+                                        productName={data.title}
                                         price={data.price}
-                                        sales={data.sales}
+                                        category={data.productCategory.name}
+
                                     />
                                 );
                               })}
@@ -506,18 +465,18 @@ const Dashboard = () => {
                               <thead>
                               <tr>
                                 <th scope="col">order id</th>
-                                <th scope="col">product details</th>
+                                <th scope="col">Creation date</th>
                                 <th scope="col">status</th>
                               </tr>
                               </thead>
                               <tbody>
-                              {OrderData.slice(0, 5).map((data, i) => {
+                              {Orders.slice(0, 5).map((data, i) => {
                                 return (
                                     <RecentOrder
                                         key={i}
                                         id={data.id}
-                                        productDetails={data.productDetails}
-                                        status={data.status}
+                                        productDetails={data.createdOn}
+                                        status={data.orderStatus}
                                     />
                                 );
                               })}
@@ -618,7 +577,7 @@ const Dashboard = () => {
                       <Col sm="12">
                         <Card className="mt-0">
                           <CardBody>
-                            <AddProduct />
+                            <AddProduct onProductAdd={() => productAdded()}/>
                           </CardBody>
                         </Card>
                       </Col>
@@ -652,11 +611,11 @@ const Dashboard = () => {
                   <ModalHeader toggle={toggle}>Logging Out</ModalHeader>
                   <ModalBody className="p-4">Do you want to logout?</ModalBody>
                   <ModalFooter>
-                    <Link href={"/"}>
+                    <Button  onClick={logoutHandle} href={"/"}>
                       <a className="btn-solid btn-custom" color="secondary">
                         Yes
                       </a>
-                    </Link>
+                    </Button>
                     <Button
                         className="btn-solid btn-custom"
                         color="secondary"
