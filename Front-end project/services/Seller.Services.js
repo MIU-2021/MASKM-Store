@@ -1,4 +1,5 @@
 import {_delete, _get, _post} from "./api.services";
+import { UserAuthenticated } from "./User.Services";
 
 export const fetchProductsBySellerUsername = (username) => {
     return _get('products?userName='+username)
@@ -47,4 +48,38 @@ export const getSellerProfileData = (sellerusername) => {
         })
     // .catch(err => { return new (err) });
 };
+
+export const FollowSeller=(sellerUserName)=>{
+    const userName = UserAuthenticated();
+    return _post('buyer/' + userName+'/follow/'+sellerUserName)
+        .then(response => {
+            console.log(response);
+            return response;
+        });    
+}
+
+export const UnFollowSeller=(sellerUserName)=>{
+    const userName = UserAuthenticated();
+    return _post('buyer/' + userName+'/unfollow/'+sellerUserName)
+        .then(response => {
+            console.log(response);
+            return response;
+        });
+}
+
+export const SellerbyProductId=(productId)=>{    
+    return _get('products/' + productId+'/seller')
+        .then(response => {
+            return response;
+        });
+}
+
+export const FollowingSellers =()=>{
+    const userName = UserAuthenticated();
+    return _get('buyer/' + userName+'/follow')
+    .then(response => {
+        return response;
+    });
+}
+
 

@@ -72,7 +72,7 @@ const HeaderOne = ({
 
   return (
     <div>
-      <header id="sticky" className={`sticky ${headerClass}`}>
+      <header id="sticky" /*className={`sticky ${headerClass}`}*/>
         <div className="mobile-fix-option"></div>
         {/*Top Header Component*/}
         {noTopBar ? "" : <TopBarDark topClass={topClass} />}

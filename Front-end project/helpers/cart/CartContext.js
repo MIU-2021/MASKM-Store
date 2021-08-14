@@ -55,6 +55,9 @@ const CartProvider = (props) => {
     setCartItems(cartItems.filter((e) => e.id !== item.id));
   };
 
+  const cleanCart = () => {
+    setCartItems([]);
+  };
   const minusQty = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -102,6 +105,7 @@ const CartProvider = (props) => {
         setQuantity,
         quantity,
         //stock,
+        cleanCart:cleanCart,
         addToCart: addToCart,
         removeFromCart: removeFromCart,
         plusQty: plusQty,
