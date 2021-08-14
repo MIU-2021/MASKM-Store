@@ -1,0 +1,7 @@
+Database_Name:maskm_db
+
+application_configration
+spring.datasource.url=jdbc:mysql://localhost:3306/MASKM_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+server.port=2021
+spring.datasource.username=root
+spring.datasource.password=MASKM@2021
