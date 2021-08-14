@@ -42,7 +42,7 @@ public class Product {
     private double rating=0;
 
     public void setAvgRating() {
-        if (reviews!=null)
+        if (reviews!=null&&!reviews.isEmpty())
         this.rating=reviews.stream().map(Review::getStars).reduce(0.0,Double::sum)/reviews.size();
     }
 

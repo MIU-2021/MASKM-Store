@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 
 @Getter
 @Setter
@@ -23,6 +24,7 @@ public class LineItem {
     private double price;
 
     //@OneToOne(cascade = CascadeType.ALL)
+    @Valid
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;

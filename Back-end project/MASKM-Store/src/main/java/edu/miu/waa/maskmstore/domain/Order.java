@@ -34,6 +34,7 @@ public class Order {
     List<LineItem> lineItems=new ArrayList<>();
 
     Boolean orderPaid=false;
+
     String orderStatus=OrderStatus.Pending.getOrderStatus();
     @ManyToOne
     @JsonIgnore

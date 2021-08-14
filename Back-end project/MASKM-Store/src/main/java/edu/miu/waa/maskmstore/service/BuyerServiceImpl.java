@@ -134,7 +134,7 @@ public class BuyerServiceImpl implements BuyerService{
 
         order.setPrice(order.getLineItems().stream().map(l->l.getPrice()*l.getQuantity()).reduce((double)0,(a,b)->a+b));
         orderRepository.save(order);
-
+        buyer.setPoints( (long) (buyer.getPoints()+order.getPrice()));
         List<Order> orders = orderRepository.findAllOrdersByBuyerId(buyer.getBId());
         orders.add(order);
         buyer.setOrders(orders);
@@ -274,7 +274,7 @@ public class BuyerServiceImpl implements BuyerService{
                 oldCard.setExpDate(creditCard.getExpDate());
             creditCardRepository.save(oldCard);
         }
-        return null;
+        return oldCard;
     }
 
 
