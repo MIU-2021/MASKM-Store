@@ -117,9 +117,7 @@ const DetailBox = ({ item, changeColorVar }) => {
         >
           add to cart
         </a>{" "}
-        <a href="#" className="btn btn-solid">
-          buy now
-        </a>
+        
       </div>
     </div>
   );
